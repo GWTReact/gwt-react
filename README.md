@@ -8,7 +8,7 @@ new JsInterop capabilities introduced in GWT 2.8
 
 ***Please note: the project currently depends on a Snapshot build of GWT 2.8 to work. Consider this project a preview. The API is highly likely to change.***
 
-##Prerequisits
+##Prerequisites
 
 Any documentation assumes you are familiar with [React](https://facebook.github.io/react/). If this is not the case, please take the time
 to learn the basic concepts first. Check out the resources section for useful links.
