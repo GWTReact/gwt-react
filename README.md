@@ -23,8 +23,7 @@ details on how to use the library.
 
 ##Documentation
 
-Check out the [Documentation Wiki](https://github.com/GWTReact/gwt-react/wiki). There are a number of important concepts specific
-to **gwt-react** that may not be obvious, even if you are an experienced GWT developer.
+Check out the [Documentation](https://github.com/GWTReact/gwt-react/blob/master/DOCUMENTATION.md). There are a number of important concepts specific to **gwt-react** that may not be obvious, even if you are an experienced GWT developer.
 
 ##Contributing
 
