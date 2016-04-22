@@ -1,4 +1,21 @@
-##Object literals
+##Contents
+
+1. Object Literals
+2.  gwt-react object literal support
+    * 2.1 Typeless literals
+    * 2.2 Inline initialization
+    * 2.3 Merging objects
+    * 2.4 Removing props from objects
+3. Working with React props
+4. Defining React components
+5. Rendering React components
+   * 5.1 Java type limitations
+6. Java 8 lambda quirks
+7. Working around usages of function binding in javascript
+8. Creating a javascript bundle of 3rd party components
+
+
+##1. Object literals
 
 React makes extensive use of object literals <code>{}</code>. For example, you will see objects defined in calls such as
 
@@ -43,12 +60,12 @@ Secondly, if you subclass one of these types you need to make sure you include t
 <code>@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")</code> annotation on
 the subclass.
 
-##gwt-react object literal support
+##2. gwt-react object literal support
 
 gwt-react introduces the <code>ObjLiteral</code> class to make life easier to work with object literals. This provides
 the following capabilities
 
-####Typeless literals
+####2.1 Typeless literals
 
 You can define an arbritary literal without defining an explicit class. This is useful for quickly converting JS code
 before you introduce types e.g.
@@ -59,7 +76,7 @@ before you introduce types e.g.
    state.set("newTodo", "A new todo")
 ```
 
-####Inline initialization
+####2.2 Inline initialization
 
 Another capability that is very useful is inline initialization e.g.
 
@@ -71,7 +88,7 @@ Another capability that is very useful is inline initialization e.g.
 
 This will also work for typed literals that subclass <code>ObjLiteral</code>.
 
-####Merging objects
+####2.3 Merging objects
 
 One common pattern you will see in React code is to take a set of props and merge in additional props.
 Typically for ES5 code they will use the <code>Object.assign</code> method and for ES2017 code they will use the object
@@ -97,7 +114,7 @@ Using ObjLiteral, you can achieve the same as follows:
 
 This will also work for typed literals that subclass <code>ObjLiteral</code>.
 
-####Removing props from objects
+####2.4 Removing props from objects
 
 Another object operation you will see is where code consumes certain props and then passes the
 remaining props onto a child component. <code>ObjLiteral</code> provides the except method to support this:
@@ -113,7 +130,7 @@ remaining props onto a child component. <code>ObjLiteral</code> provides the exc
 
 You can combine merge and except into a pipeline of operations by chaining them together;
 
-##Working with React props
+##3. Working with React props
 
 React props in gwt-react are defined by the <code>BaseProps</code> class that itself extends <code>ObjLiteral</code>.
 Typically you will want to create a subclass that defines the properties for your component.
@@ -133,14 +150,14 @@ There will however be some situations where you cannot always use strong typing.
 some components will push additional props down to their children. In this case, you will probably
 want to use the typeless access capabilities provided by <code>ObjLiteral</code> to access these properties.
 
-##Defining React components
+##4. Defining React components
 
 gwt-react currently supports two methods for defining React components, <code>React.createClass</code> and Stateless
 component functions. ES6 style components are NOT currently supported due to limitations in the JsInterop
 capabilities. Hopefully, these will be supported in the future. However, you should ideally try and make as
 many of your components stateless functions as possible.
 
-##Rendering React components
+##5. Rendering React components
 
 The majority of javascript React code you will see uses something called JSX. This is just a preprocessor that allows you
 to write React component hierarchies in HTML style e.g.
@@ -212,18 +229,123 @@ Alternatively, you can use the shorthand <code>React.DOM.xxx</code> methods for 
         );
 ```
 
-####Java type limitations
+####5.1 Java type limitations
 
-Todo
+There were a few situations where all the possible combinations of parameters to create elements
+couldn't be represented in Java. The first example is passing child props. In this case, you have to
+bypass the type system by using the <code>GwtReact.castAsReactElement</code> method e.g.
 
-##Working around usages of function binding in javascript
+```java
+    div(null,
+        div(null, "There are " + countChildren + " child components"),
+        castAsReactElement(props.children),
+        br(null)
+    );
+```
 
-Todo
+The second situation is where you want to pass an array of elements e.g.
 
-##Java 8 Lambda limitations
+```java
+    JSLikeArray<ReactElement> newChildren = React.Children.map(<some function>)
 
-Todo
+    div(null,
+        castAsReactElement(newChildren)
+    );
+```
 
-##Creating a JS bundle of 3rd party components
+
+The final situation is passing string literals instead of elements. In this case you
+can use the <code>GwtReact.stringLiteral</code> method e.g.
+
+```java
+    p(null,
+        stringLiteral("Clicked: " + getProps().getInt("value") + " times "),
+        button(new BtnProps().onClick(getOnIncrementFnProp()), "+"),
+        stringLiteral(" "),
+        button(new BtnProps().onClick(getOnDecrementFnProp()), "-"),
+        stringLiteral(" "),
+        button(new BtnProps().onClick(this::incrementIfOdd), "Increment if odd"),
+        stringLiteral(" "),
+        button(new BtnProps().onClick(this::incrementAsync), "Increment async")
+    );
+```
+
+##6. Java 8 Lambda quirks
+
+There are a few quirks with using Java 8 lambdas. For example, you cannot assign a lambda directly
+to a variable or parameter of type Object because the compiler cannot infer the type of Functional
+Interface. This has implications when using typeless properties e.g.
+
+```java
+    // The following won't compile
+    ObjLiteral someProps = $(new ObjLiteral(), "comeCallback", () -> {<some code>));
+
+    //Instead you will have to create a temporary variable
+    JSFunc someCallback = () -> { < some code> };
+    ObjLiteral someProps = $(new ObjLiteral(), "comeCallback", someCallback);
+```
+
+Todo list others.
+
+
+##7. Working around usages of function binding in javascript
+
+In javascript, the concept of what <code>this</code> actually refers to is very nebulous and in may cases can be modified. In addition,
+you can dynamically create a function by taking an existing function and adding arguments. Both these cases are typically achieved
+by using the [bind method](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Function/bind). Java
+doesn't have the same concepts, so when translating some examples you have to work around the limitation. For example, the todomvc
+example passed a set of functions down to each todoitem that had the todo model element bound as an extra argument e.g.
+
+```javascript
+    handleSave: function (todoToSave, text) {
+       .
+    }
+
+    var todoItems = shownTodos.map(function (todo) {
+        return (
+            <TodoItem
+                key={todo.id}
+                todo={todo}
+                onSave={this.handleSave.bind(this, todo)}
+            />
+        );
+    }, this);
+
+    //In the TodoItem component the code just called the props.onSave and the todo item was
+    //automatically added as an extra argument
+
+    handleSubmit: function (event) {
+        this.props.onSave(val);
+    }
+```
+
+Converting this to Java, we have to pass the todo from the other direction
+
+```javascript
+    private void handleSave(TodoModel.Todo todoToSave, String text) {
+        ..
+    }
+
+    JSArray<ReactElement> todoItems = shownTodos.map((todo, index, theArray) -> {
+        TodoItem.TodoItemProps todoProps = new TodoItem.TodoItemProps();
+
+        todoProps.key = todo.id;
+        todoProps.todo = todo;
+        todoProps.doSave = this::handleSave;
+
+        return React.createElement(TodoItem.component, todoProps);
+    });
+
+    //In the TodoItem.component we call the props.doSave function and pass the todo from its props
+
+    private void submitTodo(FocusEvent event) {
+        .
+        getProps().doSave.call(getProps().todo, val);
+        .
+        .
+    }
+```
+
+##8. Creating a javascript bundle of 3rd party components
 
 Todo give example how to use npm and webpack to bundle all the React components / libraries your application needs.
