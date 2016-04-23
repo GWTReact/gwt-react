@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
 
 /**
@@ -42,7 +41,6 @@ public interface Array<T extends Object> {
      * @param a the array
      * @return <code>true</code> if not empty
      */
-    @JsOverlay
     static boolean isNotEmpty(Array a){
 
         return !isEmpty(a);
@@ -54,7 +52,6 @@ public interface Array<T extends Object> {
      * @param a the array
      * @return <code>true</code> if empty or null
      */
-    @JsOverlay
     static boolean isEmpty(Array a){
 
         return null==a || a.length()==0;
