@@ -33,7 +33,7 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 * ~~Verify interop within existing Widget based GWT projects~~ DONE, check out widget_interop in the gwt-react-examples project
 
-* Show how to use npm and webpack to create a javascript bundle
+* ~~Show how to use npm and webpack to create a javascript bundle~~ DONE, check out the documentation.
 
 * Once GWT 2.8 is released, add build and run steps
 
