@@ -278,11 +278,11 @@ Interface. This has implications when using typeless properties e.g.
 
 ```java
     // The following won't compile
-    ObjLiteral someProps = $(new ObjLiteral(), "comeCallback", () -> {<some code>));
+    ObjLiteral someProps = $(new ObjLiteral(), "someCallback", () -> {<some code>));
 
     //Instead you will have to create a temporary variable
     JSFunc someCallback = () -> { < some code> };
-    ObjLiteral someProps = $(new ObjLiteral(), "comeCallback", someCallback);
+    ObjLiteral someProps = $(new ObjLiteral(), "someCallback", someCallback);
 ```
 
 Todo list others.
@@ -348,4 +348,22 @@ Converting this to Java, we have to pass the todo from the other direction
 
 ##8. Creating a javascript bundle of 3rd party components
 
-Todo give example how to use npm and webpack to bundle all the React components / libraries your application needs.
+Most React related libraries and components are published on [npm](https://www.npmjs.com/).
+Some of the projects will provide a UMD build that exposes their API on the global window object. However, many
+don't. The gwt-react project provides an example of how you can use the node package manager and webpack to build a
+single bundle of Javascript you can use with gwt-react and its related projects.
+
+1. First install node 4.4.x from [nodejs.org](https://nodejs.org/en/).
+
+2. Edit _gwt-react/dist/src/index.js_ Comment out any of the imports/window assignments for any of the libaries you don't
+ need. Add any additional libaries your application will be using.
+
+3. If you are adding additional libraries, edit _gwt-react/dist/package.json_ and add the dependencies to the dependencies section.
+
+4. Open a command line and cd to _gwt-react/dist_. Then type <code>npm install</code> This will download all the required packages.
+
+5. Type <code>npm run build</code> to produce a development bundle. The Javascript you need to include in your
+ application will be output to _gwt-react/dist/lib/gwt-react-bundle.js_
+
+6. Type <code>npm run build:min</code> to produce a production minified bundle. The Javascript you need to include in your
+   application will be output to _gwt-react/dist/lib/gwt-react-bundle.min.js_
