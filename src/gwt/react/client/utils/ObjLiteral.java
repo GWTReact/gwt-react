@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
+import gwt.react.shared.utils.JSHelper;
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
@@ -54,7 +55,7 @@ public class ObjLiteral {
                     JSHelper.setObjectProperty(literal, fieldName, ((Boolean) f).booleanValue());
                 else if (f instanceof Byte)
                     JSHelper.setObjectProperty(literal, fieldName, ((Byte) f).intValue());
-                if (f instanceof Byte)
+                else if (f instanceof Byte)
                     JSHelper.setObjectProperty(literal, fieldName, ((Short) f).intValue());
                 else
                     JSHelper.setObjectProperty(literal, fieldName, f);

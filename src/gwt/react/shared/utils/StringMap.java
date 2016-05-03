@@ -21,27 +21,75 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
+import jsinterop.annotations.JsOverlay;
+import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
 /**
  * An interface for a simple javascript based map that maps a string key to an object
- * of type T. The actual implementation could be different the the client and server
+ * of type T. The actual implementation could be different on the client and server
  *
  * @author pstockley
  *
  * @param <T> The type of map entry
  */
-@JsType
+@JsType(isNative = true, namespace = JsPackage.GLOBAL, name="Object")
 public interface StringMap<T> {
-    T get(String key);
 
-    void put(String key, T value);
+    /**
+     * Return the value with the supplied string key
+     *
+     * @param key The key
+     * @return The value or null if no value is defined for that supplied key
+     */
+    @JsOverlay default T get(String key) {
+        return JSHelper.getObjectObjProperty(this, key);
+    }
 
-    void remove(String key);
+    /**
+     * Set the value for the supplied key
+     *
+     * @param key The key.
+     * @param value The value to set
+     */
+    @JsOverlay default void put(String key, T value) {
+        JSHelper.setObjectProperty(this, key, value);
+    }
 
-    boolean hasKey(String key);
+    /**
+     * Remove the value with the supplied key
+     *
+     * @param key The key of the value to remove
+     */
+    @JsOverlay default void remove(String key) {
+        JSHelper.removeProperty(this, key);
+    }
 
-    Array<String> keys();
+    /**
+     * Returns is the supplied key is set in the map
+     *
+     * @param key The key to test
+     * @return <code>true</code> if the key is set
+     */
+    @JsOverlay default boolean hasKey(String key) {
+        return JSHelper.hasProperty(this, key);
+    }
 
-    Array<T> values();
+    /**
+     * Returns the keys defined in the map
+     *
+     * @return
+     */
+    @JsOverlay default Array<String> keys() {
+        return JSHelper.objectProperties(this);
+    }
+
+    /**
+     * Returns the values defined in the map
+     *
+     * @return
+     */
+    @JsOverlay default Array<T> values() {
+        return JSHelper.objectValues(this);
+    }
 }

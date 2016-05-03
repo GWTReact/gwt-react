@@ -2,19 +2,26 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import ReactDOMServer from "react-dom";
+import ReactDOMServer from "react-dom/server";
 import * as ReactRedux from "react-redux";
 import * as Redux from "redux";
 import undoable, {ActionCreators} from "redux-undo";
 import * as ReactRouter from "react-router";
+import * as MobX from "mobx";
+
+//If you don't need rendering to strings comment out the following line
 
 //If you don't use Redux comment out the following lines
 
 //If you don't use React Router comment out the following line
 
+//If you don't MobX comment out the following line
+
 //Export the base React packages to the Window object for GWT to access
 window.React = React;
 window.ReactDOM = ReactDOM;
+
+//If you don't need rendering to strings comment out the following line
 window.ReactDOMServer = ReactDOMServer;
 
 //If you don't use Redux comment out the following lines
@@ -24,6 +31,9 @@ window.ReduxUndo = {"ActionCreators": ActionCreators, "undoable": undoable};
 
 //If you don't use React Router comment out the following line
 window.ReactRouter = ReactRouter;
+
+//If you don't use MobX comment out the following line
+window.MobX = MobX;
 
 //*****************************************************************************
 // Support JS required for GWT React
@@ -62,12 +72,44 @@ GWTReact.makeSpec = function(componentObj) {
     return spec;
 };
 
-GWTReact.$get = function(obj, field) {
+GWTReact.g = function(obj, field) {
     return obj[field];
 };
 
-GWTReact.$set = function(obj, field, val) {
+GWTReact.s = function(obj, field, val) {
     obj[field] = val;
+};
+
+GWTReact.ca = function() {
+    return [];
+}
+
+GWTReact.hasProp = function (obj, key) {
+    return obj[key] !== undefined;
+};
+
+GWTReact.remProp = function (obj, key) {
+    delete  obj[key] !== undefined;
+};
+
+GWTReact.props = function (obj) {
+    var o = [];
+
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) o.push(prop);
+    }
+
+    return o;
+};
+
+GWTReact.values = function (obj) {
+    var o = [];
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            o.push(this[prop]);
+        }
+    }
+    return o;
 };
 
 GWTReact.cast = function(obj) {
