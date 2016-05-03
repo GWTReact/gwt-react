@@ -2,20 +2,20 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
+
+//If you don't need rendering to strings comment out the following line
 import ReactDOMServer from "react-dom/server";
+
+//If you don't use Redux comment out the following lines
 import * as ReactRedux from "react-redux";
 import * as Redux from "redux";
 import undoable, {ActionCreators} from "redux-undo";
-import * as ReactRouter from "react-router";
-import * as MobX from "mobx";
-
-//If you don't need rendering to strings comment out the following line
-
-//If you don't use Redux comment out the following lines
 
 //If you don't use React Router comment out the following line
+import * as ReactRouter from "react-router";
 
 //If you don't MobX comment out the following line
+import * as MobX from "mobx";
 
 //Export the base React packages to the Window object for GWT to access
 window.React = React;
@@ -82,14 +82,14 @@ GWTReact.s = function(obj, field, val) {
 
 GWTReact.ca = function() {
     return [];
-}
+};
 
 GWTReact.hasProp = function (obj, key) {
     return obj[key] !== undefined;
 };
 
 GWTReact.remProp = function (obj, key) {
-    delete  obj[key] !== undefined;
+    delete obj[key];
 };
 
 GWTReact.props = function (obj) {
