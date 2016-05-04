@@ -174,7 +174,7 @@
 	};
 
 	GWTReact.remProp = function (obj, key) {
-	    delete obj[key] !== undefined;
+	    delete obj[key];
 	};
 
 	GWTReact.props = function (obj) {
@@ -191,7 +191,7 @@
 	    var o = [];
 	    for (var prop in obj) {
 	        if (obj.hasOwnProperty(prop)) {
-	            o.push(this[prop]);
+	            o.push(obj[prop]);
 	        }
 	    }
 	    return o;
