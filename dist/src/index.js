@@ -106,7 +106,7 @@ GWTReact.values = function (obj) {
     var o = [];
     for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
-            o.push(this[prop]);
+            o.push(obj[prop]);
         }
     }
     return o;

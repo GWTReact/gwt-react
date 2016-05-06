@@ -39,4 +39,5 @@ public class JSStringMap {
         return (StringMap<T>) new JSStringMap();
     }
 
+
 }
