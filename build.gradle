@@ -1,0 +1,138 @@
+apply plugin: "java"
+apply plugin: "gwt-base"
+apply plugin: "eclipse"
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = 'com.github.gwtreact'
+archivesBaseName = 'gwt-react'
+version = "0.1.0"
+
+buildscript {
+    repositories {
+        jcenter() //repository where to fetch gwt gradle plugin
+    }
+    dependencies {
+        classpath "de.richsource.gradle.plugins:gwt-gradle-plugin:0.6" // GWT
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/google-snapshots/"
+    }
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+sourceSets {
+    main {
+        java {
+            srcDir "src"
+        }
+    }
+}
+
+compileJava{
+    //enable incremental compilation
+    options.incremental = true
+    //options.compilerArgs += ["-verbose"]
+}
+
+dependencies {
+}
+
+gwt {
+    gwtVersion "2.8.0-SNAPSHOT"
+
+    eclipse.addGwtContainer = false;
+
+    minHeapSize = "512M";
+    maxHeapSize = "4096M";
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+task myJavadocs(type: Javadoc) {
+  source = sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar, dependsOn: myJavadocs) {
+    classifier = 'javadoc'
+    from tasks.javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+    file("build/libs/${archivesBaseName}-${version}.jar.asc")
+    file("build/libs/${archivesBaseName}-${version}-javadoc.jar.asc")
+    file("build/libs/${archivesBaseName}-${version}-sources.jar.asc")
+}
+
+jar {
+    from sourceSets.main.allJava
+    manifest {
+        attributes 'Implementation-Title': archivesBaseName,
+                   'Implementation-Version': version
+    }
+}
+
+signing {
+    sign configurations.archives
+}
+
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment {
+        MavenDeployment deployment -> signing.signPom(deployment)
+      }
+
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      pom.project {
+        name 'gwt-react'
+        packaging 'jar'
+        description 'Provides Java GWT bindings for React'
+        url 'https://github.com/GWTReact/gwt-react'
+
+        scm {
+          connection 'https://github.com/GWTReact/gwt-react.git'
+          developerConnection 'https://github.com/GWTReact/gwt-react.git'
+          url 'https://github.com/GWTReact/gwt-react.git'
+        }
+
+        licenses {
+          license {
+            name 'MIT License'
+            url 'http://www.opensource.org/licenses/mit-license.php'
+          }
+        }
+
+        developers {
+          developer {
+            id 'pstockley'
+            name 'Paul Stockley'
+            email emailAddress
+            organization 'GWTReact'
+            organizationUrl 'https://github.com/GWTReact'
+          }
+        }
+      }
+    }
+  }
+}

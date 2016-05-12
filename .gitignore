@@ -1,6 +1,10 @@
 *.class
 .DS_Store
 
+# Gradle stuff
+.gradle/
+build/
+
 # Package Files #
 *.jar
 *.war

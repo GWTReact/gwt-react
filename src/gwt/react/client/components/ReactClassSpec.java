@@ -43,7 +43,7 @@ abstract public class ReactClassSpec<P extends BaseProps, S extends ObjLiteral> 
      * yourself.</p>
      *
      * <p>You can also return null to indicate that you don't want anything rendered.
-     * Behind the scenes, React renders a &lt;noscript> tag to work with our current diffing
+     * Behind the scenes, React renders a &lt;noscript&gt; tag to work with our current diffing
      * algorithm.</p>
      *
      * <p>The render() function should be pure, meaning that it does not modify component

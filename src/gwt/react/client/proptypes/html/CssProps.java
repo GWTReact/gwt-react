@@ -1191,7 +1191,7 @@ public class CssProps extends ObjLiteral {
 
     /**
      * The font-kerning property allows contextual adjustment of inter-glyph spacing, i.e. the
-     * spaces between the characters in text. This property controls <bold>metric kerning</bold>
+     * spaces between the characters in text. This property controls metric kerning
      * - that utilizes adjustment data contained in the font. Optical Kerning is not supported as
      * yet.
      */
@@ -2210,8 +2210,6 @@ public class CssProps extends ObjLiteral {
     /**
      * A future level of CSS Shapes will define a shape-inside property, which will define a
      * shape to wrap content within the element. See Editor's Draft
-     * <http://dev.w3.org/csswg/css-shapes/> and CSSWG wiki page on next-level plans
-     * <http://wiki.csswg.org/spec/css-shapes>
      */
     @JsOverlay public final CssProps shapeInside(String shapeInside) {
         setShapeInside(shapeInside);
@@ -2596,7 +2594,7 @@ public class CssProps extends ObjLiteral {
 
     /**
      * The CSS text-shadow property applies one or more drop shadows to the text and
-     * <text-decorations> of an element. Each shadow is specified as an offset from the text,
+     * text-decorations of an element. Each shadow is specified as an offset from the text,
      * along with optional color and blur radius values.
      */
     @JsOverlay public final CssProps textShadow(String textShadow) {
