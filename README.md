@@ -31,17 +31,27 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 ##Roadmap
 
-* ~~Verify interop within existing Widget based GWT projects~~ DONE, check out widget_interop in the gwt-react-examples project
+* Prepare project(s) for publishing to Maven e.g. add Gradle build/release files
 
-* ~~Show how to use npm and webpack to create a javascript bundle~~ DONE, check out the documentation.
+* Publish project(s) to Maven
 
-* Once GWT 2.8 is released, add build and run steps
+* Add facility to create factory interfaces like <code>React.DOM.xxx</code>
 
-* Remove any dependencies on com.google.gwt.dom.*. Replace with Elemental 2 or something equivalent
+* Investigate writing an Annotation processor to create fluent prop classes
+
+* Add server implementation of Array and StringSet (to allow a JSON structure to be modelled on client/server with one class)
+
+* Investigate splitting ObjectLiteraL, Array, StringSet... into it's own project
 
 * Refine the different prop types for basic HTML elements
 
 * Refine the CSS prop types and add enumerations and more useful setter methods where possible
+
+* Remove any dependencies on com.google.gwt.dom.*. Replace with Elemental 2 or something equivalent
+
+* ~~Verify interop within existing Widget based GWT projects~~ DONE, check out widget_interop in the gwt-react-examples project
+
+* ~~Show how to use npm and webpack to create a javascript bundle~~ DONE, check out the documentation.
 
 ##Change log
 
@@ -49,6 +59,10 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 ##Resources
 
-*TODO*
+* [Official React documentation](https://facebook.github.io/react/docs/displaying-data.html)
+* [Learn Raw React — no JSX, no Flux, no ES6, no Webpack…](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/)
+* [20 Free Online React Tutorials](https://www.icicletech.com/blog/reactjs-free-20-online-tutorials)
+* [Exploring ES6](http://exploringjs.com/es6/)
+
 
 

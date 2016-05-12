@@ -101,7 +101,7 @@ spread operator <code>...</code> e.g.
 
    // mergedProps will now be {a : 1, b : 2, c : 3}
 
-   //ES2016 equivalent using the spread operator
+   //ES2017 equivalent using the spread operator
    var mergedProps =  { ...props, b : 2, c : 3 };
 ```
 
@@ -194,7 +194,7 @@ This preprocessor compiles down to a bunch of <code>React.createElement</code> c
 
 A good introduction to this more traditional approach can be found here:
 [Learn Raw React — no JSX, no Flux, no ES6, no Webpack…](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/).
-Also check out the [official React documentation](https://facebook.github.io/react/docs/displaying-data.html).
+Also check out the [Official React documentation](https://facebook.github.io/react/docs/displaying-data.html).
 
 gwt-react uses this more traditional <code>React.createElement</code>
 approach. The above example would be written in Java as follows:
