@@ -32,6 +32,10 @@ sourceSets {
         java {
             srcDir "src"
         }
+
+        resources {
+            srcDir 'src'
+        }
     }
 }
 
@@ -39,9 +43,6 @@ compileJava{
     //enable incremental compilation
     options.incremental = true
     //options.compilerArgs += ["-verbose"]
-}
-
-dependencies {
 }
 
 gwt {
@@ -59,7 +60,8 @@ task sourcesJar(type: Jar) {
 }
 
 task myJavadocs(type: Javadoc) {
-  source = sourceSets.main.allJava
+    source = sourceSets.main.allJava
+    //classpath = sourceSets.main.output + sourceSets.main.compileClasspath
 }
 
 task javadocJar(type: Jar, dependsOn: myJavadocs) {
