@@ -21,6 +21,12 @@ You should also be familiar with the GWT 2.8 JsInterop specification. You can fi
 Please take a look at the [gwt-react-examples](https://github.com/GWTReact/gwt-react-examples) project for
 details on how to use the library.
 
+You can download the latest release .jar from Maven Central using the following coordinates:
+
+* **groupId**&nbsp;&nbsp;&nbsp; com.github.gwtreact
+* **artifactId**&nbsp;&nbsp;gwt-react
+* **version**&nbsp;&nbsp;&nbsp;  0.1.0
+
 ##Documentation
 
 Check out the [Documentation](https://github.com/GWTReact/gwt-react/blob/master/DOCUMENTATION.md). There are a number of important concepts specific to **gwt-react** that may not be obvious, even if you are an experienced GWT developer.
@@ -30,10 +36,6 @@ Check out the [Documentation](https://github.com/GWTReact/gwt-react/blob/master/
 Once the project is stable we will be happy to except pull requests. If you find any problems please file issues.
 
 ##Roadmap
-
-* Prepare project(s) for publishing to Maven e.g. add Gradle build/release files
-
-* Publish project(s) to Maven
 
 * Add facility to create factory interfaces like <code>React.DOM.xxx</code>
 
@@ -49,13 +51,19 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 * Remove any dependencies on com.google.gwt.dom.*. Replace with Elemental 2 or something equivalent
 
+* ~~Prepare project(s) for publishing to Maven e.g. add Gradle build/release files~~ , DONE
+
+* ~~Publish project(s) to Maven~~ , DONE
+
 * ~~Verify interop within existing Widget based GWT projects~~ DONE, check out widget_interop in the gwt-react-examples project
 
 * ~~Show how to use npm and webpack to create a javascript bundle~~ DONE, check out the documentation.
 
 ##Change log
 
-*Not released yet*
+| Date | Version | Description |
+| :---      | :---  | :---  |
+| 5/13/2016 | 0.1.0 | Initial preview release to Maven Central   |
 
 ##Resources
 
