@@ -86,6 +86,10 @@
 
 	var MobX = _interopRequireWildcard(_mobx);
 
+	var _mobxReact = __webpack_require__(259);
+
+	var MobXReact = _interopRequireWildcard(_mobxReact);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -93,16 +97,16 @@
 	//Export the base React packages to the Window object for GWT to access
 
 
-	//If you don't use React Router comment out the following line
-
-
-	//If you don't need rendering to strings comment out the following line
-	window.React = _react2.default;
-
 	//If you don't MobX comment out the following line
 
 
 	//If you don't use Redux comment out the following lines
+	window.React = _react2.default;
+
+	//If you don't use React Router comment out the following line
+
+
+	//If you don't need rendering to strings comment out the following line
 
 	window.ReactDOM = _reactDom2.default;
 
@@ -119,6 +123,7 @@
 
 	//If you don't use MobX comment out the following line
 	window.MobX = MobX;
+	window.MobXReact = MobXReact;
 
 	//*****************************************************************************
 	// Support JS required for GWT React
@@ -27961,7 +27966,8 @@
 /* 258 */
 /***/ function(module, exports) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var __extends = (this && this.__extends) || function (d, b) {
+	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
 	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -28091,7 +28097,7 @@
 	                onCleanup(lastValue, this.sourceObject);
 	        };
 	        return Transformer;
-	    })(ComputedValue);
+	    }(ComputedValue));
 	    return function (object) {
 	        if (resetId !== globalState.resetId) {
 	            objectCache = {};
@@ -28378,13 +28384,16 @@
 	        return source;
 	    if (Array.isArray(source) || source instanceof ObservableArray) {
 	        var res = cache([]);
-	        res.push.apply(res, source.map(function (value) { return toJSON(value, detectCycles, __alreadySeen); }));
+	        var toAdd = source.map(function (value) { return toJSON(value, detectCycles, __alreadySeen); });
+	        res.length = toAdd.length;
+	        for (var i = 0, l = toAdd.length; i < l; i++)
+	            res[i] = toAdd[i];
 	        return res;
 	    }
 	    if (source instanceof ObservableMap) {
-	        var res = cache({});
-	        source.forEach(function (value, key) { return res[key] = toJSON(value, detectCycles, __alreadySeen); });
-	        return res;
+	        var res_1 = cache({});
+	        source.forEach(function (value, key) { return res_1[key] = toJSON(value, detectCycles, __alreadySeen); });
+	        return res_1;
 	    }
 	    if (typeof source === "object" && isPlainObject(source)) {
 	        var res = cache({});
@@ -28446,7 +28455,7 @@
 	        return this.name + "@" + this.id;
 	    };
 	    return Atom;
-	})();
+	}());
 	exports.Atom = Atom;
 	var ComputedValue = (function () {
 	    function ComputedValue(derivation, scope, compareStructural, name) {
@@ -28523,7 +28532,9 @@
 	        return autorun(function () {
 	            var newValue = _this.get();
 	            if (!firstTime || fireImmediately) {
+	                globalState.inUntracked++;
 	                listener(newValue, prevValue);
+	                globalState.inUntracked--;
 	            }
 	            firstTime = false;
 	            prevValue = newValue;
@@ -28533,7 +28544,7 @@
 	        return this.name + "@" + this.id + "[" + this.derivation.toString() + "]";
 	    };
 	    return ComputedValue;
-	})();
+	}());
 	function isComputingDerivation() {
 	    return globalState.derivationStack.length > 0;
 	}
@@ -28619,7 +28630,7 @@
 	        this.resetId = 0;
 	    }
 	    return MobXGlobals;
-	})();
+	}());
 	var globalState = (function () {
 	    var res = new MobXGlobals();
 	    if (global.__mobservableTrackingStack || global.__mobservableViewStack)
@@ -28741,7 +28752,7 @@
 	        return "Reaction[" + this.name + "]";
 	    };
 	    return Reaction;
-	})();
+	}());
 	exports.Reaction = Reaction;
 	var MAX_REACTION_ITERATIONS = 100;
 	function runReactions() {
@@ -28796,21 +28807,21 @@
 	        assertUnwrapped(value, "Modifiers are not allowed to be nested");
 	    }
 	    return AsReference;
-	})();
+	}());
 	var AsStructure = (function () {
 	    function AsStructure(value) {
 	        this.value = value;
 	        assertUnwrapped(value, "Modifiers are not allowed to be nested");
 	    }
 	    return AsStructure;
-	})();
+	}());
 	var AsFlat = (function () {
 	    function AsFlat(value) {
 	        this.value = value;
 	        assertUnwrapped(value, "Modifiers are not allowed to be nested");
 	    }
 	    return AsFlat;
-	})();
+	}());
 	function getValueModeFromValue(value, defaultMode) {
 	    if (value instanceof AsReference)
 	        return [ValueMode.Reference, value.value];
@@ -28867,7 +28878,7 @@
 	    function StubArray() {
 	    }
 	    return StubArray;
-	})();
+	}());
 	StubArray.prototype = [];
 	function getArrayLength(adm) {
 	    adm.atom.reportObserved();
@@ -29054,7 +29065,7 @@
 	        return "[mobx.array] " + Array.prototype.toLocaleString.apply(this.$mobx.values, arguments);
 	    };
 	    return ObservableArray;
-	})(StubArray);
+	}(StubArray));
 	makeNonEnumerable(ObservableArray.prototype, [
 	    "constructor",
 	    "observe",
@@ -29316,7 +29327,7 @@
 	        return this._events.on(callback);
 	    };
 	    return ObservableMap;
-	})();
+	}());
 	exports.ObservableMap = ObservableMap;
 	function map(initialValues, valueModifier) {
 	    return new ObservableMap(initialValues, valueModifier);
@@ -29456,7 +29467,7 @@
 	        return this.name + "@" + this.id + "[" + this.value + "]";
 	    };
 	    return ObservableValue;
-	})(Atom);
+	}(Atom));
 	var SimpleEventEmitter = (function () {
 	    function SimpleEventEmitter() {
 	        this.listeners = [];
@@ -29483,7 +29494,7 @@
 	        return subscription;
 	    };
 	    return SimpleEventEmitter;
-	})();
+	}());
 	exports.SimpleEventEmitter = SimpleEventEmitter;
 	var EMPTY_ARRAY = [];
 	Object.freeze(EMPTY_ARRAY);
@@ -29601,24 +29612,239 @@
 	        if (currentSearch >= currentLength)
 	            currentExhausted = true;
 	        if (!currentExhausted && current[currentSearch] === base[baseIndex]) {
-	            added.push.apply(added, current.slice(currentIndex, currentSearch));
+	            added = added.concat(current.slice(currentIndex, currentSearch));
 	            currentIndex = currentSearch + 1;
 	            baseIndex++;
 	            isSearching = false;
 	        }
 	        else if (!baseExhausted && base[baseSearch] === current[currentIndex]) {
-	            removed.push.apply(removed, base.slice(baseIndex, baseSearch));
+	            removed = removed.concat(base.slice(baseIndex, baseSearch));
 	            baseIndex = baseSearch + 1;
 	            currentIndex++;
 	            isSearching = false;
 	        }
 	    }
-	    added.push.apply(added, current.slice(currentIndex));
-	    removed.push.apply(removed, base.slice(baseIndex));
-	    return [added, removed];
+	    return [
+	        added.concat(current.slice(currentIndex)),
+	        removed.concat(base.slice(baseIndex))
+	    ];
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	(function() {
+	    function mrFactory(mobx, React, ReactDOM) {
+	        if (!mobx)
+	            throw new Error("mobx-react requires the MobX package")
+	        if (!React)
+	            throw new Error("mobx-react requires React to be available");
+
+	        var isDevtoolsEnabled = false;
+
+	        // WeakMap<Node, Object>;
+	        var componentByNodeRegistery = typeof WeakMap !== "undefined" ? new WeakMap() : undefined;
+	        var renderReporter = new mobx.SimpleEventEmitter();
+
+	        function findDOMNode(component) {
+	            if (ReactDOM)
+	                return ReactDOM.findDOMNode(component);
+	            return null;
+	        }
+
+	        function reportRendering(component) {
+	            var node = findDOMNode(component);
+	            if (node)
+	                componentByNodeRegistery.set(node, component);
+
+	            renderReporter.emit({
+	                event: 'render',
+	                renderTime: component.__$mobRenderEnd - component.__$mobRenderStart,
+	                totalTime: Date.now() - component.__$mobRenderStart,
+	                component: component,
+	                node: node
+	            });
+	        }
+
+	        var reactiveMixin = {
+	            componentWillMount: function() {
+	                // Generate friendly name for debugging
+	                var name = [
+	                    this.displayName || this.name || (this.constructor && (this.constructor.displayName || this.constructor.name)) || "<component>",
+	                    "#", this._reactInternalInstance && this._reactInternalInstance._rootNodeID,
+	                    ".render()"
+	                ].join("");
+
+	                var baseRender = this.render.bind(this);
+	                var self = this;
+	                var reaction = null;
+	                var isRenderingPending = false;
+	                function initialRender() {
+	                    reaction = new mobx.Reaction(name, function() {
+	                        if (!isRenderingPending) {
+	                            isRenderingPending = true;
+	                            if (typeof self.componentWillReact === "function")
+	                                self.componentWillReact();
+	                            React.Component.prototype.forceUpdate.call(self)
+	                        }
+	                    });
+	                    reactiveRender.$mobx = reaction;
+	                    self.render = reactiveRender;
+	                    return reactiveRender();
+	                }
+
+	                function reactiveRender() {
+	                    isRenderingPending = false;
+	                    var rendering;
+	                    reaction.track(function() {
+	                        if (isDevtoolsEnabled)
+	                            self.__$mobRenderStart = Date.now();
+	                        rendering = mobx.extras.allowStateChanges(false, baseRender);
+	                        if (isDevtoolsEnabled)
+	                            self.__$mobRenderEnd = Date.now();
+	                    });
+	                    return rendering;
+	                }
+
+	                this.render = initialRender;
+	            },
+
+	            componentWillUnmount: function() {
+	                this.render.$mobx && this.render.$mobx.dispose();
+	                if (isDevtoolsEnabled) {
+	                    var node = findDOMNode(this);
+	                    if (node) {
+	                        componentByNodeRegistery.delete(node);
+	                    }
+	                    renderReporter.emit({
+	                        event: 'destroy',
+	                        component: this,
+	                        node: node
+	                    });
+	                }
+	            },
+
+	            componentDidMount: function() {
+	                if (isDevtoolsEnabled)
+	                    reportRendering(this);
+	            },
+
+	            componentDidUpdate: function() {
+	                if (isDevtoolsEnabled)
+	                    reportRendering(this);
+	            },
+
+	            shouldComponentUpdate: function(nextProps, nextState) {
+	                // TODO: if context changed, return true.., see #18
+	                
+	                // if props or state did change, but a render was scheduled already, no additional render needs to be scheduled
+	                if (this.render.$mobx && this.render.$mobx.isScheduled() === true)
+	                    return false;
+	                
+	                // update on any state changes (as is the default)
+	                if (this.state !== nextState)
+	                    return true;
+	                // update if props are shallowly not equal, inspired by PureRenderMixin
+	                var keys = Object.keys(this.props);
+	                var key;
+	                if (keys.length !== Object.keys(nextProps).length)
+	                    return true;
+	                for(var i = keys.length -1; i >= 0, key = keys[i]; i--) {
+	                    var newValue = nextProps[key];
+	                    if (newValue !== this.props[key]) {
+	                        return true;
+	                    } else if (newValue && typeof newValue === "object" && !mobx.isObservable(newValue)) {
+	                        /**
+	                         * If the newValue is still the same object, but that object is not observable,
+	                         * fallback to the default React behavior: update, because the object *might* have changed.
+	                         * If you need the non default behavior, just use the React pure render mixin, as that one
+	                         * will work fine with mobx as well, instead of the default implementation of
+	                         * observer.
+	                         */
+	                        return true;
+	                    }
+	                }
+	                return false;
+	            }
+	        }
+
+	        function patch(target, funcName) {
+	            var base = target[funcName];
+	            var mixinFunc = reactiveMixin[funcName];
+	            if (!base) {
+	                target[funcName] = mixinFunc;
+	            } else {
+	                target[funcName] = function() {
+	                    base.apply(this, arguments);
+	                    mixinFunc.apply(this, arguments);
+	                }
+	            }
+	        }
+
+	        function observer(componentClass) {
+	            // If it is function but doesn't seem to be a react class constructor,
+	            // wrap it to a react class automatically
+	            if (typeof componentClass === "function" && !componentClass.prototype.render && !componentClass.isReactClass && !React.Component.isPrototypeOf(componentClass)) {
+	                return observer(React.createClass({
+	                    displayName:     componentClass.displayName || componentClass.name,
+	                    propTypes:       componentClass.propTypes,
+	                    contextTypes:    componentClass.contextTypes,
+	                    getDefaultProps: function() { return componentClass.defaultProps; },
+	                    render:          function() { return componentClass.call(this, this.props, this.context); }
+	                }));
+	            }
+
+	            if (!componentClass)
+	                throw new Error("Please pass a valid component to 'observer'");
+	            var target = componentClass.prototype || componentClass;
+
+	            [
+	                "componentWillMount",
+	                "componentWillUnmount",
+	                "componentDidMount",
+	                "componentDidUpdate"
+	            ].forEach(function(funcName) {
+	                patch(target, funcName)
+	            });
+
+	            if (!target.shouldComponentUpdate)
+	                target.shouldComponentUpdate = reactiveMixin.shouldComponentUpdate;
+	            componentClass.isMobXReactObserver = true;
+	            return componentClass;
+	        }
+
+	        function trackComponents() {
+	            if (typeof WeakMap === "undefined")
+	                throw new Error("[mobx-react] tracking components is not supported in this browser.");
+	            if (!isDevtoolsEnabled)
+	                isDevtoolsEnabled = true;
+	        }
+
+	        return ({
+	            observer: observer,
+	            reactiveComponent: function() {
+	                console.warn("[mobx-react] `reactiveComponent` has been renamed to `observer` and will be removed in 1.1.");
+	                return observer.apply(null, arguments);
+	            },
+	            renderReporter: renderReporter,
+	            componentByNodeRegistery: componentByNodeRegistery,
+	            trackComponents: trackComponents
+	        });
+	    }
+
+	    // UMD
+	    if (true) {
+	        module.exports = mrFactory(__webpack_require__(258), __webpack_require__(2), __webpack_require__(33));
+	    } else if (typeof define === 'function' && define.amd) {
+	        define('mobx-react', ['mobx', 'react', 'react-dom'], mrFactory);
+	    } else {
+	        this.mobxReact = mrFactory(this['mobx'], this['React'], this['ReactDOM']);
+	    }
+	})();
+
 
 /***/ }
 /******/ ]);

@@ -16,6 +16,7 @@ import * as ReactRouter from "react-router";
 
 //If you don't MobX comment out the following line
 import * as MobX from "mobx";
+import * as MobXReact from "mobx-react";
 
 //Export the base React packages to the Window object for GWT to access
 window.React = React;
@@ -32,8 +33,9 @@ window.ReduxUndo = {"ActionCreators": ActionCreators, "undoable": undoable};
 //If you don't use React Router comment out the following line
 window.ReactRouter = ReactRouter;
 
-//If you don't use MobX comment out the following line
+//If you don't use MobX comment out the following lines
 window.MobX = MobX;
+window.MobXReact = MobXReact;
 
 //*****************************************************************************
 // Support JS required for GWT React
