@@ -3,7 +3,7 @@ GWT Java bindings for React
 
 ##Introduction
 
-gwt-react provides Java [GWT](http://www.gwtproject.org/) bindings for [React v15.0.1](https://facebook.github.io/react/) based on the
+gwt-react provides Java [GWT](http://www.gwtproject.org/) bindings for [React v15.1.0](https://facebook.github.io/react/) based on the
 new JsInterop capabilities introduced in GWT 2.8
 
 ***Please note: the project currently depends on a Snapshot build of GWT 2.8 to work. Consider this project a preview. The API is highly likely to change.***
@@ -68,7 +68,7 @@ Once the project is stable we will be happy to except pull requests. If you find
 ##Resources
 
 * [Official React documentation](https://facebook.github.io/react/docs/displaying-data.html)
-* [Learn Raw React — no JSX, no Flux, no ES6, no Webpack…](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/)
+* [Learn Raw React ï¿½ no JSX, no Flux, no ES6, no Webpackï¿½](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/)
 * [20 Free Online React Tutorials](https://www.icicletech.com/blog/reactjs-free-20-online-tutorials)
 * [Exploring ES6](http://exploringjs.com/es6/)
 

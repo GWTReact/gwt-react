@@ -21,10 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
+import gwt.interop.utils.shared.functional.JsProcedure;
 import gwt.react.client.components.StatelessComponent;
 import gwt.react.client.elements.DOMElement;
 import gwt.react.client.elements.ReactElement;
-import gwt.react.client.utils.JSFunc;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
@@ -46,11 +46,11 @@ public class ReactDOM {
      * @return a reference to the component or returns nothing for stateless components
      */
     public static native <C> ReactElement render(DOMElement element, C container);
-    public static native <C> ReactElement render(DOMElement element, C container, JSFunc onUpdate);
+    public static native <C> ReactElement render(DOMElement element, C container, JsProcedure onUpdate);
     public static native <C> ReactElement render(ReactElement element, C container);
-    public static native <C> ReactElement render(ReactElement element, C container, JSFunc onUpdate);
+    public static native <C> ReactElement render(ReactElement element, C container, JsProcedure onUpdate);
     public static native <C> void render(StatelessComponent<?,?> component, C container);
-    public static native <C> void render(StatelessComponent<?,?> component, C container, JSFunc onUpdate);
+    public static native <C> void render(StatelessComponent<?,?> component, C container, JsProcedure onUpdate);
 
     /**
      * Remove a mounted React component from the DOM and clean up its event handlers and state. If

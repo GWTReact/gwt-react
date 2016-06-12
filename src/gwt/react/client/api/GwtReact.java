@@ -21,11 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
+import gwt.interop.utils.shared.collections.Array;
 import gwt.react.client.components.ReactClassSpec;
 import gwt.react.client.components.InternalClassSpec;
 import gwt.react.client.elements.ReactElement;
 import gwt.react.client.elements.ReactElementChildren;
-import gwt.react.shared.utils.Array;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;

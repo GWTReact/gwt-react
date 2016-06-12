@@ -82,8 +82,12 @@ Another capability that is very useful is inline initialization e.g.
 
 ```java
    import static gwt.react.client.utils.ObjLiteral.$;
+   import static gwt.react.client.utils.ObjLiteral.$literal;
 
-   ObjLiteral state = $(new ObjLiteral(), "editingId", 1, newTodo", "A new todo");
+   ObjLiteral state = $literal("editingId", 1, newTodo", "A new todo");
+
+   //You can also initialize a typed literal in a similar way e.g.
+   MyStateLiteral state = $(new MyStateLiteral(), "editingId", 1, newTodo", "A new todo");
 ```
 
 This will also work for typed literals that subclass <code>ObjLiteral</code>.
@@ -108,8 +112,8 @@ spread operator <code>...</code> e.g.
 Using ObjLiteral, you can achieve the same as follows:
 
 ```java
-   ObjLiteral props = $(new ObjLiteral(), "a", 1, "b", 1);
-   ObjLiteral mergedProps = props.merge($(new ObjLiteral(), "b", 2, "c", 3));
+   ObjLiteral props = $literal("a", 1, "b", 1);
+   ObjLiteral mergedProps = props.merge($literal("b", 2, "c", 3));
 ```
 
 This will also work for typed literals that subclass <code>ObjLiteral</code>.
@@ -120,7 +124,7 @@ Another object operation you will see is where code consumes certain props and t
 remaining props onto a child component. <code>ObjLiteral</code> provides the except method to support this:
 
 ```java
-   ObjLiteral props = $(new ObjLiteral(), "a", 1, "b", 2, "c", 3, "d", 4);
+   ObjLiteral props = $literal("a", 1, "b", 2, "c", 3, "d", 4);
    int a = props.getInt("a");
    int b = props.getInt("b");
    ObjLiteral remainingProps = props.except("a","b");
@@ -141,8 +145,8 @@ This will give your the advantage of strong typing e.g.
     static class TodoItemProps extends BaseProps {
         TodoModel.Todo todo;
         boolean isEditing;
-        JSFunc2Args<TodoModel.Todo, String> doSave;
-        JSFunc2Args<TodoList.Action, TodoModel.Todo> doAction;
+        JsBiConsumer<TodoModel.Todo, String> doSave;
+        JsBiConsumer<TodoList.Action, TodoModel.Todo> doAction;
     }
 ```
 
@@ -278,11 +282,11 @@ Interface. This has implications when using typeless properties e.g.
 
 ```java
     // The following won't compile
-    ObjLiteral someProps = $(new ObjLiteral(), "someCallback", () -> {<some code>));
+    ObjLiteral someProps = $literal("someCallback", () -> {<some code>));
 
     //Instead you will have to create a temporary variable
-    JSFunc someCallback = () -> { < some code> };
-    ObjLiteral someProps = $(new ObjLiteral(), "someCallback", someCallback);
+    JsProcedure someCallback = () -> { < some code> };
+    ObjLiteral someProps = $literal("someCallback", someCallback);
 ```
 
 Todo list others.

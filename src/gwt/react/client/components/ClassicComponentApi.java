@@ -1,12 +1,13 @@
 package gwt.react.client.components;
 
+import gwt.interop.utils.client.plainobjects.JsPlainObj;
+import gwt.interop.utils.shared.functional.JsProcedure;
 import gwt.react.client.proptypes.BaseProps;
-import gwt.react.client.utils.JSFunc;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
-public class ClassicComponentApi<P extends BaseProps, S> {
+public class ClassicComponentApi<P extends BaseProps, S extends JsPlainObj> {
 
     /**
      * Performs a shallow merge of nextState into current state. This is the primary method you
@@ -24,7 +25,7 @@ public class ClassicComponentApi<P extends BaseProps, S> {
      * @param callback callback function that will be executed once setState is completed and
      *                 the component is re-rendered.
      */
-    protected native void setState(S state, JSFunc callback);
+    protected native void setState(S state, JsProcedure callback);
 
 
     /**
@@ -56,7 +57,7 @@ public class ClassicComponentApi<P extends BaseProps, S> {
      *
      * @param callBack callback function that will be executed once the component has been updated
      */
-    protected native void forceUpdate(JSFunc callBack);
+    protected native void forceUpdate(JsProcedure callBack);
     protected native void forceUpdate();
 
     /**

@@ -21,14 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
+import gwt.interop.utils.shared.collections.Array;
+import gwt.interop.utils.client.plainobjects.JsPlainObj;
 import gwt.react.client.components.*;
 import gwt.react.client.elements.DOMElement;
 import gwt.react.client.elements.ReactElement;
 import gwt.react.client.elements.ReactElementChildren;
 import gwt.react.client.proptypes.*;
 import gwt.react.client.proptypes.html.*;
-import gwt.react.shared.utils.Array;
-import gwt.react.client.utils.ObjLiteral;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsPackage;
@@ -50,7 +50,7 @@ public class React {
      *                  {@link React#createFactory}
      */
     @JsOverlay
-    public static <P extends BaseProps, S extends ObjLiteral> ReactClass<P> createClass(ReactClassSpec<P,S> component) {
+    public static <P extends BaseProps, S extends JsPlainObj> ReactClass<P> createClass(ReactClassSpec<P,S> component) {
         return _createClass(makeSpec(component));
     }
 

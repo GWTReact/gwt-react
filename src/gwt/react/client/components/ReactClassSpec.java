@@ -1,9 +1,9 @@
 package gwt.react.client.components;
 
+import gwt.interop.utils.client.plainobjects.JsPlainObj;
 import gwt.react.client.api.React;
 import gwt.react.client.elements.ReactElement;
 import gwt.react.client.proptypes.BaseProps;
-import gwt.react.client.utils.ObjLiteral;
 import jsinterop.annotations.JsType;
 
 /**
@@ -24,7 +24,7 @@ import jsinterop.annotations.JsType;
  * @param <S> the type of state this component maintains
  */
 @JsType
-abstract public class ReactClassSpec<P extends BaseProps, S extends ObjLiteral> extends ClassicComponentApi<P,S> {
+abstract public class ReactClassSpec<P extends BaseProps, S extends JsPlainObj> extends ClassicComponentApi<P,S> {
     /**
      * Invoked once before the component is mounted. The return value will be used as the initial value of
      * this.state.

@@ -1,11 +1,12 @@
-package gwt.react.shared.utils;
+package gwt.react.client.utils;
 
+import gwt.interop.utils.shared.collections.Array;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name="GWTReact")
-public class JSHelper {
+public class JSGwtReactHelper {
 
     @JsMethod(name="s")
     public static native <O> void setObjectProperty(O o, String property, int v);
