@@ -6,7 +6,7 @@ apply plugin: 'signing'
 
 group = 'com.github.gwtreact'
 archivesBaseName = 'gwt-react'
-version = "0.1.0"
+version = "0.2.0"
 
 buildscript {
     repositories {
@@ -52,6 +52,10 @@ gwt {
 
     minHeapSize = "512M";
     maxHeapSize = "4096M";
+
+    dependencies {
+        gwt group: 'com.github.gwtreact', name: 'gwt-interop-utils', version: '0.1.0'
+    }
 }
 
 task sourcesJar(type: Jar) {
@@ -60,7 +64,9 @@ task sourcesJar(type: Jar) {
 }
 
 task myJavadocs(type: Javadoc) {
-    source = sourceSets.main.allJava
+    failOnError = false
+    options.memberLevel = JavadocMemberLevel.PUBLIC
+    source = sourceSets.main.java
     //classpath = sourceSets.main.output + sourceSets.main.compileClasspath
 }
 

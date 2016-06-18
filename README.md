@@ -25,7 +25,7 @@ You can download the latest release .jar from Maven Central using the following 
 
 * **groupId**&nbsp;&nbsp;&nbsp; com.github.gwtreact
 * **artifactId**&nbsp;&nbsp;gwt-react
-* **version**&nbsp;&nbsp;&nbsp;  0.1.0
+* **version**&nbsp;&nbsp;&nbsp;  0.2.0
 
 ##Documentation
 
@@ -41,15 +41,15 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 * Investigate writing an Annotation processor to create fluent prop classes
 
-* Add server implementation of Array and StringSet (to allow a JSON structure to be modelled on client/server with one class)
-
-* Investigate splitting ObjectLiteraL, Array, StringSet... into it's own project
-
 * Refine the different prop types for basic HTML elements
 
 * Refine the CSS prop types and add enumerations and more useful setter methods where possible
 
 * Remove any dependencies on com.google.gwt.dom.*. Replace with Elemental 2 or something equivalent
+
+* ~~Add server implementation of Array and StringSet (to allow a JSON structure to be modelled on client/server with one class)~~, DONE
+
+* ~~Investigate splitting ObjectLiteraL, Array, StringSet... into it's own project~~, DONE
 
 * ~~Prepare project(s) for publishing to Maven e.g. add Gradle build/release files~~ , DONE
 
@@ -63,6 +63,7 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 | Date | Version | Description |
 | :---      | :---  | :---  |
+| 6/18/2016 | 0.2.0 | Update to use gwt-interop-utils library   |
 | 5/13/2016 | 0.1.0 | Initial preview release to Maven Central   |
 
 ##Resources
