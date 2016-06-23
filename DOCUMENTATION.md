@@ -1,144 +1,23 @@
 ##Contents
 
-1. Object Literals
-2.  gwt-react object literal support
-    * 2.1 Typeless literals
-    * 2.2 Inline initialization
-    * 2.3 Merging objects
-    * 2.4 Removing props from objects
-3. Working with React props
-4. Defining React components
-5. Rendering React components
-   * 5.1 Java type limitations
-6. Java 8 lambda quirks
-7. Working around usages of function binding in javascript
-8. Creating a javascript bundle of 3rd party components
+1. Working with React props
+2. Defining React components
+3. Rendering React components
+    * 3.1 Java type limitations
+4. Java 8 lambda quirks
+5. Working around usages of function binding in javascript
+6. Creating a javascript bundle of 3rd party components
 
 
-##1. Object literals
 
-React makes extensive use of object literals <code>{}</code>. For example, you will see objects defined in calls such as
+##1. Working with React props
 
-```javascript
-   this.setState({editText: event.target.value});
-
-   React.createElement('a', {href: 'mailto:someone@somecompany.com'}, 'someone@somecompany.com')
-```
-
-In GWT, the closest we can get to this is defining a JsType annotated class as follows
-
-```java
-   @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
-   static class TodoListState {
-       String editingId;
-       String newTodo;
-   };
-
-   TodoListState state = new TodoListState();
-   state.editingId = 1;
-   state.newTodo = "A new todo";
-```
-
-The important point to realize with these literal classes is that when you call new on them, the fields are NOT defined on
-the object until you actually assign a value to them. So in the above example, after the call to new, state actually
-points to a javascript object that looks like <code>{}</code>. After the two assignments, state will look like
-<code>{editingId: 1, newTodo: "A new todo"}</code>.
-
-Native JsType classes have a few limitations. Firstly, you cannot define a constructor with any arguments.
-To get around this, you can define a static factory method as follows:
-
-```java
-   @JsOverlay
-   public static TodoListState makeState(int editingId, String newTodo) {
-      TodoListState o = new TodoListState();
-      o.editingId = editingId;
-      o.newTodo = newTodo;
-      return o;
-   }
-```
-Secondly, if you subclass one of these types you need to make sure you include the
-<code>@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")</code> annotation on
-the subclass.
-
-##2. gwt-react object literal support
-
-gwt-react introduces the <code>ObjLiteral</code> class to make life easier to work with object literals. This provides
-the following capabilities
-
-####2.1 Typeless literals
-
-You can define an arbritary literal without defining an explicit class. This is useful for quickly converting JS code
-before you introduce types e.g.
-
-```java
-   ObjLiteral state = new ObjLiteral();
-   state.set("editingId", 1);
-   state.set("newTodo", "A new todo")
-```
-
-####2.2 Inline initialization
-
-Another capability that is very useful is inline initialization e.g.
-
-```java
-   import static gwt.react.client.utils.ObjLiteral.$;
-   import static gwt.react.client.utils.ObjLiteral.$literal;
-
-   ObjLiteral state = $literal("editingId", 1, newTodo", "A new todo");
-
-   //You can also initialize a typed literal in a similar way e.g.
-   MyStateLiteral state = $(new MyStateLiteral(), "editingId", 1, newTodo", "A new todo");
-```
-
-This will also work for typed literals that subclass <code>ObjLiteral</code>.
-
-####2.3 Merging objects
-
-One common pattern you will see in React code is to take a set of props and merge in additional props.
-Typically for ES5 code they will use the <code>Object.assign</code> method and for ES2017 code they will use the object
-spread operator <code>...</code> e.g.
-
-```javascript
-   //ES5
-   var props = {a : 1, b : 1};
-   var mergedProps = Object.assign({}, props , {b : 2, c : 3});
-
-   // mergedProps will now be {a : 1, b : 2, c : 3}
-
-   //ES2017 equivalent using the spread operator
-   var mergedProps =  { ...props, b : 2, c : 3 };
-```
-
-Using ObjLiteral, you can achieve the same as follows:
-
-```java
-   ObjLiteral props = $literal("a", 1, "b", 1);
-   ObjLiteral mergedProps = props.merge($literal("b", 2, "c", 3));
-```
-
-This will also work for typed literals that subclass <code>ObjLiteral</code>.
-
-####2.4 Removing props from objects
-
-Another object operation you will see is where code consumes certain props and then passes the
-remaining props onto a child component. <code>ObjLiteral</code> provides the except method to support this:
-
-```java
-   ObjLiteral props = $literal("a", 1, "b", 2, "c", 3, "d", 4);
-   int a = props.getInt("a");
-   int b = props.getInt("b");
-   ObjLiteral remainingProps = props.except("a","b");
-
-   // remainingProps will now be {c : 3, d : 4}
-```
-
-You can combine merge and except into a pipeline of operations by chaining them together;
-
-##3. Working with React props
-
-React props in gwt-react are defined by the <code>BaseProps</code> class that itself extends <code>ObjLiteral</code>.
+gwt-react builds on many of the features offered by gwt-interop-utils. Please familiarise yourself with this first
+by reading the supplied [documentation](https://github.com/GWTReact/gwt-interop-utils/blob/master/DOCUMENTATION.md)
+ 
+<p>React props in gwt-react are defined by the <code>BaseProps</code> class that itself extends <code>JsPlainObj</code>.
 Typically you will want to create a subclass that defines the properties for your component.
-This will give your the advantage of strong typing e.g.
+This will give your the advantage of strong typing e.g.</p>
 
 ```java
     @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
@@ -150,21 +29,21 @@ This will give your the advantage of strong typing e.g.
     }
 ```
 
-There will however be some situations where you cannot always use strong typing. For example,
+<p>There will however be some situations where you cannot always use strong typing. For example,
 some components will push additional props down to their children. In this case, you will probably
-want to use the typeless access capabilities provided by <code>ObjLiteral</code> to access these properties.
+want to use the typeless access capabilities provided by <code>JsPlainObj</code> to access these properties.</p>
 
-##4. Defining React components
+##2. Defining React components
 
-gwt-react currently supports two methods for defining React components, <code>React.createClass</code> and Stateless
+<p>gwt-react currently supports two methods for defining React components, <code>React.createClass</code> and Stateless
 component functions. ES6 style components are NOT currently supported due to limitations in the JsInterop
 capabilities. Hopefully, these will be supported in the future. However, you should ideally try and make as
-many of your components stateless functions as possible.
+many of your components stateless functions as possible.</p>
 
-##5. Rendering React components
+##3. Rendering React components
 
-The majority of javascript React code you will see uses something called JSX. This is just a preprocessor that allows you
-to write React component hierarchies in HTML style e.g.
+<p>The majority of javascript React code you will see uses something called JSX. This is just a preprocessor that allows you
+to write React component hierarchies in HTML style e.g.</p>
 
 ```javascript
 var rootElement =
@@ -179,7 +58,7 @@ var rootElement =
     </div>);
 ```
 
-This preprocessor compiles down to a bunch of <code>React.createElement</code> calls.
+The JSX preprocessor compiles the above down to a bunch of <code>React.createElement</code> calls e.g.
 
 ```javascript
     var rootElement =
@@ -192,16 +71,12 @@ This preprocessor compiles down to a bunch of <code>React.createElement</code> c
                 )
             )
         )
-
-    ReactDOM.render(rootElement, document.getElementById('react-app'))
 ```
 
-A good introduction to this more traditional approach can be found here:
-[Learn Raw React — no JSX, no Flux, no ES6, no Webpack…](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/).
-Also check out the [Official React documentation](https://facebook.github.io/react/docs/displaying-data.html).
+A good introduction to this more traditional createElement approach can be found here:
+[Learn Raw React — no JSX, no Flux, no ES6, no Webpack…](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/). Also check out the [Official React documentation](https://facebook.github.io/react/docs/displaying-data.html).
 
-gwt-react uses this more traditional <code>React.createElement</code>
-approach. The above example would be written in Java as follows:
+<p>gwt-react uses this <code>React.createElement</code> approach. The above example would be written in Java as follows:</p>
 
 ```java
     DOMElement<HtmlProps> rootElement =
@@ -216,7 +91,7 @@ approach. The above example would be written in Java as follows:
         );
 ```
 
-Alternatively, you can use the shorthand <code>React.DOM.xxx</code> methods for the common HTML elements e.g.
+<p>Alternatively, you can use the shorthand <code>React.DOM.xxx</code> methods for the common HTML elements e.g.</p>
 
 ```java
     import static gwt.react.client.api.React.DOM.*;
@@ -233,11 +108,11 @@ Alternatively, you can use the shorthand <code>React.DOM.xxx</code> methods for 
         );
 ```
 
-####5.1 Java type limitations
+####3.1 Java type limitations
 
-There were a few situations where all the possible combinations of parameters to create elements
+<p>There were a few situations where all the possible combinations of parameters to create elements
 couldn't be represented in Java. The first example is passing child props. In this case, you have to
-bypass the type system by using the <code>GwtReact.castAsReactElement</code> method e.g.
+bypass the type system by using the <code>GwtReact.castAsReactElement</code> method e.g.</p>
 
 ```java
     div(null,
@@ -250,7 +125,7 @@ bypass the type system by using the <code>GwtReact.castAsReactElement</code> met
 The second situation is where you want to pass an array of elements e.g.
 
 ```java
-    JSLikeArray<ReactElement> newChildren = React.Children.map(<some function>)
+    Array<ReactElement> newChildren = React.Children.map(<some function>)
 
     div(null,
         castAsReactElement(newChildren)
@@ -258,8 +133,8 @@ The second situation is where you want to pass an array of elements e.g.
 ```
 
 
-The final situation is passing string literals instead of elements. In this case you
-can use the <code>GwtReact.stringLiteral</code> method e.g.
+<p>The final situation is passing string literals instead of elements. In this case you
+can use the <code>GwtReact.stringLiteral</code> method e.g.</p>
 
 ```java
     p(null,
@@ -274,31 +149,29 @@ can use the <code>GwtReact.stringLiteral</code> method e.g.
     );
 ```
 
-##6. Java 8 Lambda quirks
+##4. Java 8 Lambda quirks
 
-There are a few quirks with using Java 8 lambdas. For example, you cannot assign a lambda directly
-to a variable or parameter of type Object because the compiler cannot infer the type of Functional
-Interface. This has implications when using typeless properties e.g.
+<p>There are a few quirks with using Java 8 lambdas. For example, you cannot assign a lambda directly
+to a variable or parameter of type Object. This is because the compiler cannot infer the type of Functional
+Interface. This has implications when using typeless properties e.g.</p>
 
 ```java
     // The following won't compile
-    ObjLiteral someProps = $literal("someCallback", () -> {<some code>));
+    JsPlainObj someProps = $jsPlainObj("someCallback", () -> {<some code>));
 
     //Instead you will have to create a temporary variable
     JsProcedure someCallback = () -> { < some code> };
-    ObjLiteral someProps = $literal("someCallback", someCallback);
+    JsPlainObj someProps = $jsPlainObj("someCallback", someCallback);
 ```
 
-Todo list others.
 
+##5. Working around usages of function binding in javascript
 
-##7. Working around usages of function binding in javascript
-
-In javascript, the concept of what <code>this</code> actually refers to is very nebulous and in may cases can be modified. In addition,
+<p>In javascript, the concept of what <code>this</code> actually refers to is very nebulous and in may cases can be modified. In addition,
 you can dynamically create a function by taking an existing function and adding arguments. Both these cases are typically achieved
 by using the [bind method](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Function/bind). Java
 doesn't have the same concepts, so when translating some examples you have to work around the limitation. For example, the todomvc
-example passed a set of functions down to each todoitem that had the todo model element bound as an extra argument e.g.
+example passed a set of functions down to each todoitem that had the todo model element bound as an extra argument e.g.</p>
 
 ```javascript
     handleSave: function (todoToSave, text) {
@@ -330,7 +203,7 @@ Converting this to Java, we have to pass the todo from the other direction
         ..
     }
 
-    JSArray<ReactElement> todoItems = shownTodos.map((todo, index, theArray) -> {
+    Array<ReactElement> todoItems = shownTodos.map((todo, index, theArray) -> {
         TodoItem.TodoItemProps todoProps = new TodoItem.TodoItemProps();
 
         todoProps.key = todo.id;
@@ -350,12 +223,12 @@ Converting this to Java, we have to pass the todo from the other direction
     }
 ```
 
-##8. Creating a javascript bundle of 3rd party components
+##6. Creating a javascript bundle of 3rd party components
 
 Most React related libraries and components are published on [npm](https://www.npmjs.com/).
-Some of the projects will provide a UMD build that exposes their API on the global window object. However, many
+<p>Some of the projects will provide a UMD build that exposes their API on the global window object. However, many
 don't. The gwt-react project provides an example of how you can use the node package manager and webpack to build a
-single bundle of Javascript you can use with gwt-react and its related projects.
+single bundle of Javascript you can use with gwt-react and its related projects.</p>
 
 1. First install node 4.4.x from [nodejs.org](https://nodejs.org/en/).
 
@@ -371,3 +244,5 @@ single bundle of Javascript you can use with gwt-react and its related projects.
 
 6. Type <code>npm run build:min</code> to produce a production minified bundle. The Javascript you need to include in your
    application will be output to _gwt-react/dist/lib/gwt-react-bundle.min.js_
+
+Under gwt-react/dist/lib you will find additional bundles that include common combinations of projects offered by GWTReact
