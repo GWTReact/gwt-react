@@ -54,6 +54,7 @@
     "redux-undo": "1.0.0-beta7",
     "react-router": "^2.4.1",
     "mobx": "^2.3.2",
-    "mobx-react": "^3.3.1"
+    "mobx-react": "^3.3.1",
+    "mobx-react-devtools": "^4.2.0"
   }
 }
