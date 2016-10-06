@@ -4,6 +4,7 @@
 2. Defining React components
 3. Rendering React components
     * 3.1 Java type limitations
+    * 3.2 Creating Factory methods
 4. Java 8 lambda quirks
 5. Working around usages of function binding in javascript
 6. Creating a javascript bundle of 3rd party components
@@ -147,6 +148,82 @@ can use the <code>GwtReact.stringLiteral</code> method e.g.</p>
         stringLiteral(" "),
         button(new BtnProps().onClick(this::incrementAsync), "Increment async")
     );
+```
+
+####3.2 Creating Factory methods
+
+<p>Unfortunately you cannot use JSX syntax in Java. However, you can create simple factory methods to make your 
+code more readable and provide better type checking</p>
+ 
+<p>For example, given a simple stateless component defined as follows</p>
+ 
+```java
+public class Todo {
+    @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
+    public static class Props extends BaseProps {
+        //Some properties
+    }
+    
+    public static StatelessComponent<Props, BaseContext> component = (props, context) -> {
+        return
+            li(new HtmlProps()
+                   .style(new CssProps()
+                        .textDecoration(props.completed ? "line-through" : "none"))
+                   .onClick((e) -> props.onClickToToggle.call()),
+               props.text);
+    };
+}
+
+// You would instantiate one of these components as follows:
+
+    Todo.Props someProps = new Todo.Props();
+    //Set props appropriately
+    
+    Element newElement = React.createElement(Todo.component, someProps)
+```
+
+To make this component a bit cleaner to use you can create a factory method similar to the <code>React.DOM.xxx</code> methods e.g.
+
+```java
+public class Todo {
+public class Todo {
+    @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
+    public static class Props extends BaseProps {
+        //Some properties
+    }
+    
+    private static StatelessComponent<Props, BaseContext> component = (props, context) -> {
+        return
+            li(new HtmlProps()
+                   .style(new CssProps()
+                        .textDecoration(props.completed ? "line-through" : "none"))
+                   .onClick((e) -> props.onClickToToggle.call()),
+               props.text);
+    };
+    
+    static ReactElement<Props, ?> todo(Props props) { return React.createElement(component, props); }
+}
+
+// You can then use the slightly more readable factory method to instantiate one of these components as follows:
+
+    import static ...Todo.todo;
+    
+    Todo.Props someProps = new Todo.Props();
+    //Set props appropriately
+    
+    ReactElement newElement = todo(someProps);
+```
+
+Depending on the component, a factory method can also provide a nice way of explicitly passing additional information such as text values or child elements e.g.
+
+```java
+    static ReactElement<Props, ?> someButtonComp(ButtonProps props, String btnText) { return React.createElement(component, props, btnText); }
+    
+    static ReactElement<Props, ?> someComponentThatTakesASingleChild(FormProps props, ReactElement child) { return React.createElement(component, props, child); }
+    
+    static ReactElement<Props, ?> someComponentThatTakesASpecificChild(FormProps props, ButtonComponent child) { return React.createElement(component, props, child); }
+    
+    static ReactElement<Props, ?> someComponentThatTakesManyChildren(FormProps props, ReactElement ...children) { return React.createElement(component, props, children); }
 ```
 
 ##4. Java 8 Lambda quirks
