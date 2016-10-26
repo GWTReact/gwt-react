@@ -19,6 +19,7 @@ public class AnchorProps extends HtmlGlobalFields {
     @JsOverlay public final AnchorProps hrefLang(String s) { setHrefLang(s); return this; }
     @JsOverlay public final AnchorProps media(String s) { setMedia(s); return this; }
     @JsOverlay public final AnchorProps rel(String s) { setRel(s); return this; }
+    @JsOverlay public final AnchorProps referrerPolicy(String s) { setReferrerPolicy(s); return this; }
     @JsOverlay public final AnchorProps target(String s) { setTarget(s); return this; }
     @JsOverlay public final AnchorProps type(String t) { setType(t); return this; }
 

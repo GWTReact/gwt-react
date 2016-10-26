@@ -72,7 +72,7 @@ public class React {
      * Create and return a new ReactElement of the given type.
      *
      * @param type a ReactClass (created via React.createClass).
-     * @param props
+     * @param props the props to pass to the element
      * @return a {@link ReactElement}
      */
     public static native <P extends BaseProps> ReactElement<P, ReactClass<P>> createElement(ReactClass<P> type, P props);
@@ -85,16 +85,6 @@ public class React {
     public static native <P extends BaseProps> ReactElement<P, String> createElement(StatelessComponent type, P props, ReactElement ...child);
 
     //Create ES6 Components (NOT SUPPORTED CURRENTLY)
-
-    /**
-     * Return a function that produces ReactElements of a given type. Like React.createElement,
-     * the type argument can be either an html tag name string (eg. 'div', 'span', etc), or a
-     * ReactClass.
-     *
-     * @param componentClass The class of the compoment to create the factory for
-     * @return
-     */
-    public static native <P extends BaseProps> ElementFactory<P> createFactory(ReactClass<P> componentClass);
 
     /**
      * <p>Clone and return a new ReactElement using element as the starting point. The resulting
@@ -210,7 +200,7 @@ public class React {
          *
          * @param children  The opaque children structure to iterate over
          * @param Fn The function to execute
-         * @return
+         * @return An Array of child ReactElements
          */
         public final static native Array<ReactElement> map(ReactElementChildren children, ChildrenMapFn Fn); // Object thisArg);
 

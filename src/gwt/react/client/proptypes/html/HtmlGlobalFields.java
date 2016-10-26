@@ -281,6 +281,9 @@ public class HtmlGlobalFields extends BaseProps {
     @JsProperty public native String getRel();
     @JsProperty public native void setRel(String rel);
 
+    @JsProperty public native String getReferrerPolicy();
+    @JsProperty public native void setReferrerPolicy(String rel);
+
     @JsProperty public native boolean isRequired();
     @JsProperty public native void setRequired(boolean required);
 

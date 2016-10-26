@@ -36,7 +36,8 @@ public class ClassicComponentApi<P extends BaseProps, S extends JsPlainObj> {
      * This can be useful in some cases when you want to enqueue an atomic update that
      * consults the previous value of state+props before setting any values</p>
      *
-     * @param callback
+     * @param callback callback function that will be executed once setState is completed and
+     *                 the component is re-rendered.
      */
     protected native void setState(SetStateCallback<S,P> callback);
 
