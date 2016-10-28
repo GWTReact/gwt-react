@@ -3,10 +3,7 @@ GWT Java bindings for React
 
 ##Introduction
 
-gwt-react provides Java [GWT](http://www.gwtproject.org/) bindings for [React v15.1.0](https://facebook.github.io/react/) based on the
-new JsInterop capabilities introduced in GWT 2.8
-
-***Please note: the project currently depends on a Snapshot build of GWT 2.8 to work. Consider this project a preview. The API is highly likely to change.***
+gwt-react provides Java [GWT](http://www.gwtproject.org/) bindings for [React v15.3.2](https://facebook.github.io/react/) based on the new JsInterop capabilities introduced in GWT 2.8
 
 ##Prerequisites
 
@@ -25,7 +22,7 @@ You can download the latest release .jar from Maven Central using the following 
 
 * **groupId**&nbsp;&nbsp;&nbsp; com.github.gwtreact
 * **artifactId**&nbsp;&nbsp;gwt-react
-* **version**&nbsp;&nbsp;&nbsp;  0.2.0
+* **version**&nbsp;&nbsp;&nbsp;  0.3.0
 
 ##Documentation
 
@@ -37,7 +34,6 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 ##Roadmap
 
-* Add facility to create factory interfaces like <code>React.DOM.xxx</code>
 
 * Investigate writing an Annotation processor to create fluent prop classes
 
@@ -46,6 +42,8 @@ Once the project is stable we will be happy to except pull requests. If you find
 * Refine the CSS prop types and add enumerations and more useful setter methods where possible
 
 * Remove any dependencies on com.google.gwt.dom.*. Replace with Elemental 2 or something equivalent
+
+* ~~Add facility to create factory interfaces like <code>React.DOM.xxx</code>~~, DONE
 
 * ~~Add server implementation of Array and StringSet (to allow a JSON structure to be modelled on client/server with one class)~~, DONE
 
@@ -63,6 +61,7 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 | Date | Version | Description |
 | :---      | :---  | :---  |
+| 10/28/2016 | 0.3.0 | Support react 15.3.2 and GWT 2.8 final release   |
 | 6/18/2016 | 0.2.0 | Update to use gwt-interop-utils library   |
 | 5/13/2016 | 0.1.0 | Initial preview release to Maven Central   |
 
