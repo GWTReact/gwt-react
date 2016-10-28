@@ -6,7 +6,7 @@ apply plugin: 'signing'
 
 group = 'com.github.gwtreact'
 archivesBaseName = 'gwt-react'
-version = "0.2.0"
+version = "0.3.0"
 
 buildscript {
     repositories {
@@ -46,7 +46,7 @@ compileJava{
 }
 
 gwt {
-    gwtVersion "2.8.0-SNAPSHOT"
+    gwtVersion "2.8.0"
 
     eclipse.addGwtContainer = false;
 
@@ -54,7 +54,7 @@ gwt {
     maxHeapSize = "4096M";
 
     dependencies {
-        gwt group: 'com.github.gwtreact', name: 'gwt-interop-utils', version: '0.1.0'
+        gwt group: 'com.github.gwtreact', name: 'gwt-interop-utils', version: '0.2.0'
     }
 }
 
