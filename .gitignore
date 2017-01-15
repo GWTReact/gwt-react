@@ -34,3 +34,4 @@ www-test/
 
 #node modules
 dist/node_modules
+/bin/

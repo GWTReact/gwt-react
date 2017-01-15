@@ -22,36 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
 import gwt.interop.utils.shared.functional.JsProcedure;
-import gwt.react.client.components.StatelessComponent;
-import gwt.react.client.elements.DOMElement;
 import gwt.react.client.elements.ReactElement;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true, namespace = JsPackage.GLOBAL)
 public class ReactDOM {
-
+	private ReactDOM() {}
+	
     /**
-     * <p>Render a ReactElement into the DOM in the supplied container and return a reference to
+     * <p>Render a ReactElement<?, ?> into the DOM in the supplied container and return a reference to
      * the component (or returns nothing for stateless components).</p>
      *
-     * <p>If the ReactElement was previously rendered into container, this will perform an update
+     * <p>If the ReactElement<?, ?> was previously rendered into container, this will perform an update
      * on it and only mutate the DOM as necessary to reflect the latest React component.</p>
      *
      * <p>If the optional callback is provided, it will be executed after the component is rendered
      * or updated.</p>
      *
-     * @param element the react element to render]
+     * @param element the react element to render
      * @param container the DOM container to render into
      * @return a reference to the component or returns nothing for stateless components
      */
-    public static native <C> ReactElement render(DOMElement element, C container);
-    public static native <C> ReactElement render(DOMElement element, C container, JsProcedure onUpdate);
-    public static native <C> ReactElement render(ReactElement element, C container);
-    public static native <C> ReactElement render(ReactElement element, C container, JsProcedure onUpdate);
-    public static native <C> void render(StatelessComponent<?,?> component, C container);
-    public static native <C> void render(StatelessComponent<?,?> component, C container, JsProcedure onUpdate);
-
+    public static native <C> ReactElement<?, ?> render(ReactElement<?, ?> element, C container);
+    public static native <C> ReactElement<?, ?> render(ReactElement<?, ?> element, C container, JsProcedure onUpdate);
+    
     /**
      * Remove a mounted React component from the DOM and clean up its event handlers and state. If
      * no component was mounted in the container, calling this function does nothing.

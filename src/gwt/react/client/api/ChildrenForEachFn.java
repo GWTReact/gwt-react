@@ -26,5 +26,5 @@ import jsinterop.annotations.JsFunction;
 
 @JsFunction
 public interface ChildrenForEachFn {
-    void forEachChild(ReactElement childElement);
+    void forEachChild(ReactElement<?, ?> childElement);
 }

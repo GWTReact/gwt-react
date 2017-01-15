@@ -1,21 +1,27 @@
 package gwt.react.client.components;
 
-import gwt.interop.utils.client.plainobjects.JsPlainObj;
 import gwt.interop.utils.shared.functional.JsProcedure;
+import gwt.react.client.proptypes.BaseContext;
 import gwt.react.client.proptypes.BaseProps;
-import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
-@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
-public class ClassicComponentApi<P extends BaseProps, S extends JsPlainObj> {
-
+@JsType(isNative = true, namespace = "React", name = "Component")
+public abstract class NativeComponent<P extends BaseProps, C extends BaseContext, S> {
+	@JsConstructor
+	protected NativeComponent(P props, C context, JsProcedure updater) {
+	}
+	
     /**
      * Performs a shallow merge of nextState into current state. This is the primary method you
      * use to trigger UI updates from event handlers and server request callbacks.
      *
      * @param state  Object Literal (containing zero or more keys to update)
      */
-    protected native void setState(S state);
+    @JsMethod
+    protected final native void setState(S partialState);
 
     /**
      * Performs a shallow merge of nextState into current state. This is the primary method you
@@ -25,7 +31,8 @@ public class ClassicComponentApi<P extends BaseProps, S extends JsPlainObj> {
      * @param callback callback function that will be executed once setState is completed and
      *                 the component is re-rendered.
      */
-    protected native void setState(S state, JsProcedure callback);
+    @JsMethod
+    protected final native void setState(S partialState, JsProcedure callback);
 
 
     /**
@@ -39,7 +46,8 @@ public class ClassicComponentApi<P extends BaseProps, S extends JsPlainObj> {
      * @param callback callback function that will be executed once setState is completed and
      *                 the component is re-rendered.
      */
-    protected native void setState(SetStateCallback<S,P> callback);
+    @JsMethod
+    protected final native void setState(SetStateCallback<S, P> callback);
 
     /**
      * <p>By default, when your component's state or props change, your component will re-render.
@@ -58,21 +66,29 @@ public class ClassicComponentApi<P extends BaseProps, S extends JsPlainObj> {
      *
      * @param callBack callback function that will be executed once the component has been updated
      */
-    protected native void forceUpdate(JsProcedure callBack);
-    protected native void forceUpdate();
+    @JsMethod
+    protected final native void forceUpdate(JsProcedure callBack);
+    
+    @JsMethod
+    protected final native void forceUpdate();
 
     /**
      * Return the props for this component
      *
      * @return the props
      */
+    @JsProperty
     protected native P getProps();
 
+    @JsProperty
+    protected native C getContext();
+    
     /**
      * Return the state for this component
      *
      * @return the state
      */
+    @JsProperty
     protected native S getState();
 
     /**
