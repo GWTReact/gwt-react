@@ -14,6 +14,9 @@ public abstract class NativeComponent<P extends BaseProps, C extends BaseContext
 	protected NativeComponent(P props, C context, JsProcedure updater) {
 	}
 	
+	@JsProperty
+	protected S state;
+	
     /**
      * Performs a shallow merge of nextState into current state. This is the primary method you
      * use to trigger UI updates from event handlers and server request callbacks.
@@ -83,14 +86,6 @@ public abstract class NativeComponent<P extends BaseProps, C extends BaseContext
     @JsProperty
     protected native C getContext();
     
-    /**
-     * Return the state for this component
-     *
-     * @return the state
-     */
-    @JsProperty
-    protected native S getState();
-
     /**
      * Return the DOM or React element for the specified reference
      *
