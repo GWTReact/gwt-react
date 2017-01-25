@@ -34,4 +34,6 @@ www-test/
 
 #node modules
 dist/node_modules
+
+# Eclipse specific build directory
 /bin/
