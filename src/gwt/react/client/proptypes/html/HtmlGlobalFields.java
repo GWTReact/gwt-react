@@ -1,16 +1,6 @@
 package gwt.react.client.proptypes.html;
 
-import gwt.react.client.events.ClipboardEventHandler;
-import gwt.react.client.events.CompositionEventHandler;
-import gwt.react.client.events.DragEventHandler;
-import gwt.react.client.events.FocusEventHandler;
-import gwt.react.client.events.FormEventHandler;
-import gwt.react.client.events.KeyboardEventHandler;
-import gwt.react.client.events.MouseEventHandler;
-import gwt.react.client.events.ReactEventHandler;
-import gwt.react.client.events.TouchEventHandler;
-import gwt.react.client.events.UIEventHandler;
-import gwt.react.client.events.WheelEventHandler;
+import gwt.react.client.events.*;
 import gwt.react.client.proptypes.BaseProps;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsProperty;

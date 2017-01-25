@@ -28,7 +28,11 @@ import jsinterop.annotations.JsType;
 
 @JsType(isNative = true, namespace = JsPackage.GLOBAL)
 public class ReactDOMServer {
-	private ReactDOMServer() {}
+    /**
+     * This is a static class.
+     */
+	private ReactDOMServer() {
+	}
 	
     /**
      * <p>Render a ReactElement to its initial HTML. This should only be used on the server. React

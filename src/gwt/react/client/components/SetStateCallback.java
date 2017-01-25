@@ -1,9 +1,10 @@
 package gwt.react.client.components;
 
+import gwt.interop.utils.client.plainobjects.JsPlainObj;
 import gwt.react.client.proptypes.BaseProps;
 import jsinterop.annotations.JsFunction;
 
 @JsFunction
-public interface SetStateCallback<S, P extends BaseProps> {
+public interface SetStateCallback<S extends JsPlainObj, P extends BaseProps> {
     void onSetState(S previousState, P currentProps);
 }

@@ -28,7 +28,11 @@ import jsinterop.annotations.JsType;
 
 @JsType(isNative = true, namespace = JsPackage.GLOBAL)
 public class ReactDOM {
-	private ReactDOM() {}
+    /**
+     * This is a static class.
+     */
+	private ReactDOM() {
+	}
 	
     /**
      * <p>Render a ReactElement<?, ?> into the DOM in the supplied container and return a reference to
