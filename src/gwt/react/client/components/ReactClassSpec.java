@@ -31,7 +31,7 @@ abstract public class ReactClassSpec<P extends BaseProps, S extends JsPlainObj> 
      *
      * @return  The state or null if this component maintains no state
      */
-    abstract public S getInitialState();
+	protected abstract S getInitialState();
 
     /**
      * The render() method is required.
@@ -55,5 +55,5 @@ abstract public class ReactClassSpec<P extends BaseProps, S extends JsPlainObj> 
      *
      * @return  A single {@link ReactElement}
      */
-    abstract public ReactElement render();
+    protected abstract ReactElement<?, ?> render();
 }
