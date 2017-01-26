@@ -4,6 +4,7 @@ import gwt.interop.utils.client.plainobjects.JsPlainObj;
 import gwt.react.client.api.React;
 import gwt.react.client.elements.ReactElement;
 import gwt.react.client.proptypes.BaseProps;
+import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsType;
 
 /**
@@ -31,6 +32,7 @@ abstract public class ReactClassSpec<P extends BaseProps, S extends JsPlainObj> 
      *
      * @return  The state or null if this component maintains no state
      */
+	@JsMethod
 	protected abstract S getInitialState();
 
     /**
@@ -55,5 +57,6 @@ abstract public class ReactClassSpec<P extends BaseProps, S extends JsPlainObj> 
      *
      * @return  A single {@link ReactElement}
      */
+	@JsMethod
     protected abstract ReactElement<?, ?> render();
 }
