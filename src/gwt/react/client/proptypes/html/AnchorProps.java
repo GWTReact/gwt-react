@@ -10,7 +10,6 @@ import jsinterop.annotations.JsType;
 /**
  * Props for a elements. Refer to http://www.w3schools.com/tags/tag_a.asp
  */
-@SuppressWarnings("unused")
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
 public class AnchorProps extends HtmlGlobalFields {
 

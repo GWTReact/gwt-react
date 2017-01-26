@@ -13,7 +13,7 @@ import jsinterop.annotations.JsFunction;
  * their input, with zero boilerplate.</p>
  *
  * <p>In an ideal world, most of your components would be stateless functions because
- * in the future we’ll also be able to make performance optimizations specific to these
+ * in the future we'll also be able to make performance optimizations specific to these
  * components by avoiding unnecessary checks and memory allocations. This is the
  * recommended pattern, when possible.</p>
  *
@@ -42,5 +42,5 @@ public interface StatelessComponent<P extends BaseProps, C extends BaseContext> 
      * @param context   Any context
      * @return          A single {@link ReactElement}
      */
-    ReactElement render(P props, C context);
+    ReactElement<?, ?> render(P props, C context);
 }

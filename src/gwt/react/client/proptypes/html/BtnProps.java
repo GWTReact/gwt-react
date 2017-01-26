@@ -11,7 +11,6 @@ import jsinterop.annotations.JsType;
 /**
  * Props for button elements. Refer to http://www.w3schools.com/tags/tag_button.asp
  */
-@SuppressWarnings("unused")
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
 public class BtnProps extends HtmlGlobalFields {
 

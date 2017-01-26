@@ -12,7 +12,6 @@ import jsinterop.annotations.JsType;
  * NOTE: this is very much a work in progress. Further refinements will include
  * defining enumerations for many of the properties
  */
-@SuppressWarnings("unused")
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
 public class CssProps extends JsPlainObj {
 
@@ -304,7 +303,7 @@ public class CssProps extends JsPlainObj {
     @JsProperty public native void setBackfaceVisibility(String backfaceVisibility);
 
     /**
-     * Determines whether or not the “back” side of a transformed element is visible when facing
+     * Determines whether or not the "back" side of a transformed element is visible when facing
      * the viewer.
      */
     @JsOverlay public final CssProps backfaceVisibility(String backfaceVisibility) {
@@ -319,7 +318,7 @@ public class CssProps extends JsPlainObj {
      * This property describes how the element's background images should blend with each other
      * and the element's background color. The value is a list of blend modes that corresponds
      * to each background image. Each element in the list will apply to the corresponding
-     * element of background-image. If a property doesn’t have enough comma-separated values to
+     * element of background-image. If a property doesn't have enough comma-separated values to
      * match the number of layers, the UA must calculate its used value by repeating the list of
      * values until there are enough.
      */
@@ -447,10 +446,10 @@ public class CssProps extends JsPlainObj {
     /**
      * The CSS border-color property sets the color of an element's four borders. This property can
      * have from one to four values, made up of the elementary properties:
-     *      •       border-top-color
-     *      •       border-right-color
-     *      •       border-bottom-color
-     *      •       border-left-color The default color is the currentColor of each of these values.
+     *      - border-top-color
+     *      - border-right-color
+     *      - border-bottom-color
+     *      - border-left-color The default color is the currentColor of each of these values.
      * If you provide one value, it sets the color for the element. Two values set the horizontal
      * and vertical values, respectively. Providing three values sets the top, vertical, and bottom
      * values, in that order. Four values set all for sides: top, right, bottom, and left, in that
@@ -507,7 +506,7 @@ public class CssProps extends JsPlainObj {
      * Shorthand property that defines the border-width, border-style and border-color of an
      * element's left border in a single declaration. Note that you can use the corresponding
      * longhand properties to set specific individual properties of the left
-     * border — border-left-width, border-left-style and border-left-color.
+     * border: border-left-width, border-left-style and border-left-color.
      */
     @JsOverlay public final CssProps borderLeft(String borderLeft) {
         setBorderLeft(borderLeft);
@@ -560,8 +559,8 @@ public class CssProps extends JsPlainObj {
     /**
      * Shorthand property that defines the border-width, border-style and border-color of an
      * element's right border in a single declaration. Note that you can use the corresponding
-     * longhand properties to set specific individual properties of the right border
-     * — border-right-width, border-right-style and border-right-color.
+     * longhand properties to set specific individual properties of the right border:
+     * border-right-width, border-right-style and border-right-color.
      */
     @JsOverlay public final CssProps borderRight(String borderRight) {
         setBorderRight(borderRight);
@@ -641,7 +640,7 @@ public class CssProps extends JsPlainObj {
     /**
      * Shorthand property that defines the border-width, border-style and border-color of an
      * element's top border in a single declaration. Note that you can use the corresponding
-     * longhand properties to set specific individual properties of the top border —
+     * longhand properties to set specific individual properties of the top border:
      * border-top-width, border-top-style and border-top-color.
      */
     @JsOverlay public final CssProps borderTop(String borderTop) {
@@ -1031,10 +1030,10 @@ public class CssProps extends JsPlainObj {
     @JsProperty public native void setFill(String fill);
 
     /**
-     * The ‘fill’ property paints the interior of the given graphical element. The area to be
+     * The "fill" property paints the interior of the given graphical element. The area to be
      * painted consists of any areas inside the outline of the shape. To determine the inside of
      * the shape, all subpaths are considered, and the interior is determined according to the
-     * rules associated with the current value of the ‘fill-rule’ property. The zero-width
+     * rules associated with the current value of the "fill-rule" property. The zero-width
      * geometric outline of a shape is included in the area to be painted.
      */
     @JsOverlay public final CssProps fill(String fill) {
@@ -1046,12 +1045,12 @@ public class CssProps extends JsPlainObj {
     @JsProperty public native void setFillRule(String fillRule);
 
     /**
-     * The ‘fill-rule’ property indicates the algorithm which is to be used to determine what
+     * The "fill-rule" property indicates the algorithm which is to be used to determine what
      * parts of the canvas are included inside the shape. For a simple, non-intersecting path, it
      * is intuitively clear what region lies "inside"; however, for a more complex path, such as
      * a path that intersects itself or where one subpath encloses another, the interpretation of
      * "inside" is not so obvious.
-     * The ‘fill-rule’ property provides two options for how the inside of a shape is determined:
+     * The "fill-rule" property provides two options for how the inside of a shape is determined:
      */
     @JsOverlay public final CssProps fillRule(String fillRule) {
         setFillRule(fillRule);
@@ -1340,7 +1339,7 @@ public class CssProps extends JsPlainObj {
     @JsProperty public native void setGridRowEnd(String gridRowEnd);
 
     /**
-     * Determines a grid item’s placement by specifying the block-end. A grid item's placement in
+     * Determines a grid item's placement by specifying the block-end. A grid item's placement in
      * a grid area consists of a grid position and a grid span. The grid-row-end property
      * (with grid-row-start, grid-column-start, and grid-column-end) determines a grid item's
      * placement by specifying the grid lines of a grid item's grid area.
@@ -1389,7 +1388,7 @@ public class CssProps extends JsPlainObj {
 
     /**
      * Specifies (with grid-template-rows) the line names and track sizing functions of the grid.
-     * Each sizing function can be specified as a length, a percentage of the grid container’s
+     * Each sizing function can be specified as a length, a percentage of the grid container's
      * size, a measurement of the contents occupying the column or row, or a fraction of the free
      * space in the grid.
      */
@@ -1404,7 +1403,7 @@ public class CssProps extends JsPlainObj {
     /**
      * Specifies (with grid-template-columns) the line names and track sizing functions of the
      * grid. Each sizing function can be specified as a length, a percentage of the grid
-     * container’s size, a measurement of the contents occupying the column or row, or a
+     * container's size, a measurement of the contents occupying the column or row, or a
      * fraction of the free space in the grid.
      */
     @JsOverlay public final CssProps gridTemplateRows(String gridTemplateRows) {
@@ -1439,7 +1438,7 @@ public class CssProps extends JsPlainObj {
     @JsProperty public native void setHyphenateLimitLines(String hyphenateLimitLines);
 
     /**
-     * Indicates the maximum number of successive hyphenated lines in an element. The ‘no-limit’
+     * Indicates the maximum number of successive hyphenated lines in an element. The "no-limit"
      * value means that there is no limit.
      */
     @JsOverlay public final CssProps hyphenateLimitLines(String hyphenateLimitLines) {
@@ -1824,8 +1823,8 @@ public class CssProps extends JsPlainObj {
      * individual outline properties outline-style, outline-width and outline-color in a single
      * rule. In most cases the use of this shortcut is preferable and more convenient.
      * Outlines differ from borders in the following ways:
-     *      •       Outlines do not take up space, they are drawn above the content.
-     *      •       Outlines may be non-rectangular. They are rectangular in Gecko/Firefox.
+     *      - Outlines do not take up space, they are drawn above the content.
+     *      - Outlines may be non-rectangular. They are rectangular in Gecko/Firefox.
      *              Internet Explorer attempts to place the smallest contiguous outline around
      *              all elements or shapes that are indicated to have an outline. Opera draws a
      *              non-rectangular shape around a construct.
@@ -2385,7 +2384,7 @@ public class CssProps extends JsPlainObj {
     @JsProperty public native void setTextDecorationSkip(String textDecorationSkip);
 
     /**
-     * Specifies what parts of an element’s content are skipped over when applying any text decoration.
+     * Specifies what parts of an element's content are skipped over when applying any text decoration.
      */
     @JsOverlay public final CssProps textDecorationSkip(String textDecorationSkip) {
         setTextDecorationSkip(textDecorationSkip);
@@ -2511,8 +2510,8 @@ public class CssProps extends JsPlainObj {
 
     /**
      * The text-overflow shorthand CSS property determines how overflowed content that is not
-     * displayed is signaled to the users. It can be clipped, display an ellipsis ('…',
-     * U+2026 HORIZONTAL ELLIPSIS) or a Web author-defined string. It covers the two long-hand
+     * displayed is signaled to the users. It can be clipped, display an ellipsis (HORIZONTAL ELLIPSIS) 
+     * or a Web author-defined string. It covers the two long-hand
      * properties text-overflow-mode and text-overflow-ellipsis
      */
     @JsOverlay public final CssProps textOverflow(String textOverflow) {
@@ -2705,7 +2704,7 @@ public class CssProps extends JsPlainObj {
     @JsProperty public native void setTransitionDelay(String transitionDelay);
 
     /**
-     * Defines when the transition will start. A value of ‘0s’ means the transition will execute
+     * Defines when the transition will start. A value of "0s" means the transition will execute
      * as soon as the property is changed. Otherwise, the value specifies an offset from the
      * moment the property is changed, and the transition will delay execution by that offset.
      */

@@ -22,15 +22,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-import gwt.react.client.components.StatelessComponent;
-import gwt.react.client.elements.DOMElement;
 import gwt.react.client.elements.ReactElement;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true, namespace = JsPackage.GLOBAL)
 public class ReactDOMServer {
-
+    /**
+     * This is a static class.
+     */
+	private ReactDOMServer() {
+	}
+	
     /**
      * <p>Render a ReactElement to its initial HTML. This should only be used on the server. React
      * will return an HTML string. You can use this method to generate HTML on the server and send
@@ -44,9 +47,7 @@ public class ReactDOMServer {
      * @param element the element to render
      * @return the HTML markup
      */
-    static public native String renderToString(DOMElement element);
-    static public native String renderToString(ReactElement element);
-    static public native String renderToString(StatelessComponent<?,?> component);
+    public static native String renderToString(ReactElement<?, ?> element);
 
     /**
      * <p>Similar to renderToString, except this doesn't create extra DOM attributes such as
@@ -57,7 +58,5 @@ public class ReactDOMServer {
      * @param element the element to render
      * @return the HTML markup
      */
-    static public native String renderToStaticMarkup(DOMElement element);
-    static public native String renderToStaticMarkup(ReactElement element);
-    static public native String renderToStaticMarkup(StatelessComponent<?,?> component);
+    public static native String renderToStaticMarkup(ReactElement<?, ?> element);
 }

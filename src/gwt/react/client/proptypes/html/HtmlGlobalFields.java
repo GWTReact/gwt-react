@@ -6,7 +6,6 @@ import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
-@SuppressWarnings("unused")
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
 public class HtmlGlobalFields extends BaseProps {
 

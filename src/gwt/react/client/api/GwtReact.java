@@ -32,16 +32,22 @@ import jsinterop.annotations.JsType;
 
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name="GWTReact")
 public class GwtReact {
-    public static native InternalClassSpec makeSpec(ReactClassSpec component);
+    /**
+     * This is a static class.
+     */
+	private GwtReact() {
+	}
+	
+    public static native InternalClassSpec makeSpec(ReactClassSpec<?, ?> component);
 
     //The following methods are used to work around limitations in the Java type system when
     //creating React Elements
     @JsMethod(name = "cast")
-    public static native ReactElement castAsReactElement(Array<ReactElement> children);
+    public static native ReactElement<?, ?> castAsReactElement(Array<? extends ReactElement<?, ?>> children);
 
     @JsMethod(name = "cast")
-    public static native ReactElement castAsReactElement(ReactElementChildren children);
+    public static native ReactElement<?, ?> castAsReactElement(ReactElementChildren children);
 
     @JsMethod(name = "cast")
-    public static native ReactElement stringLiteral(String value);
+    public static native ReactElement<?, ?> stringLiteral(String value);
 }

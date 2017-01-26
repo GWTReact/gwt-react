@@ -34,3 +34,9 @@ www-test/
 
 #node modules
 dist/node_modules
+
+# Eclipse specific files and directories
+bin/
+.settings/
+.classpath
+.project
