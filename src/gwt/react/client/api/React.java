@@ -101,7 +101,7 @@ public class React {
      * @param props the props to merge
      * @return the cloned element
      */
-    public static native <P extends BaseProps, T> ReactElement<P, T> cloneElement(ReactElement<P, T> element, P props);
+    public static native <P extends BaseProps, T> ReactElement<P, T> cloneElement(ReactElement<P, T> element, JsPlainObj props);
 
     public static native boolean isValidElement(Object object);
 
@@ -217,7 +217,7 @@ public class React {
          * @param Fn The function to execute
          * @return An Array of child ReactElements
          */
-        public static native Array<? extends ReactElement<?, ?>> map(ReactElementChildren children, ChildrenMapFn Fn); // Object thisArg);
+        public static native Array<ReactElement<?, ?>> map(ReactElementChildren children, ChildrenMapFn Fn); // Object thisArg);
 
         /**
          * Like React.Children.map() but does not return an array.
@@ -253,7 +253,7 @@ public class React {
          * @param children The opaque children structure to iterate over
          * @return a {@link Array} of {@link ReactElement}
          */
-        public static native Array<? extends ReactElement<?, ?>> toArray(ReactElementChildren children);
+        public static native Array<ReactElement<?, ?>> toArray(ReactElementChildren children);
     }
 
     @JsType(isNative = true, name="Component")
