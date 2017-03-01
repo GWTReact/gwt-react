@@ -29,37 +29,6 @@ window.ReduxUndo = {"ActionCreators": ActionCreators, "undoable": undoable};
 
 var GWTReact = {};
 
-GWTReact.makeSpec = function(componentObj) {
-    var prototype = componentObj.__proto__;
-    var spec = {
-        getState: function() {
-            return this.state;
-        }
-        ,getProps: function() {
-            return this.props;
-        },
-        getRef: function(refId) {
-            return this.refs[refId];
-        }
-    };
-
-    for (var p in prototype) {
-        if (p != 'constructor' && prototype.hasOwnProperty(p)) {
-            spec[p] = prototype[p];
-            // console.log("proto fn " + p);
-        }
-    }
-
-    for (p in componentObj) {
-        if (p != 'constructor' && componentObj.hasOwnProperty(p)) {
-            spec[p] = componentObj[p];
-            //console.log("obj prop " + p);
-        }
-    }
-    //console.log("");
-    return spec;
-};
-
 GWTReact.cast = function(obj) {
     return obj;
 };
