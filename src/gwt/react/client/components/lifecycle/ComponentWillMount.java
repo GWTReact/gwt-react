@@ -1,4 +1,4 @@
-package gwt.react.client.api;
+package gwt.react.client.components.lifecycle;
 /* The MIT License (MIT)
 
 Copyright (c) 2016 GWT React
@@ -21,29 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-import gwt.interop.utils.shared.collections.Array;
-import gwt.react.client.elements.ReactElement;
-import gwt.react.client.elements.ReactElementChildren;
+import gwt.react.client.components.Component;
+import gwt.react.client.components.PureComponent;
 import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
-@JsType(isNative = true, namespace = JsPackage.GLOBAL, name="GWTReact")
-public class GwtReact {
-    /**
-     * This is a static class.
-     */
-    private GwtReact() {
-    }
-
-    //The following methods are used to work around limitations in the Java type system when
-    //creating React Elements
-    @JsMethod(name = "cast")
-    public static native ReactElement<?, ?> castAsReactElement(Array<? extends ReactElement<?, ?>> children);
-
-    @JsMethod(name = "cast")
-    public static native ReactElement<?, ?> castAsReactElement(ReactElementChildren children);
-
-    @JsMethod(name = "cast")
-    public static native ReactElement<?, ?> stringLiteral(String value);
+/**
+ * Implement this interface when using {@link Component} or {@link PureComponent} to receive the {@link #componentWillMount()} lifecycle event.
+ */
+@JsType
+public interface ComponentWillMount {
+	/**
+	 * {@link #componentWillMount()} is invoked immediately before mounting occurs. 
+	 * It is called before {@link #render()}, therefore setting state in this method will not trigger a re-rendering. 
+	 * Avoid introducing any side-effects or subscriptions in this method.
+	 * This is the only lifecycle hook called on server rendering. Generally, we recommend using the constructor instead. 
+	 */
+	@JsMethod
+	void componentWillMount();
 }

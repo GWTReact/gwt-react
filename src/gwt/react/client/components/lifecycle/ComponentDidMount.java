@@ -1,4 +1,4 @@
-package gwt.react.client.api;
+package gwt.react.client.components.lifecycle;
 /* The MIT License (MIT)
 
 Copyright (c) 2016 GWT React
@@ -21,29 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-import gwt.interop.utils.shared.collections.Array;
-import gwt.react.client.elements.ReactElement;
-import gwt.react.client.elements.ReactElementChildren;
+import gwt.react.client.components.Component;
+import gwt.react.client.components.PureComponent;
 import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
-@JsType(isNative = true, namespace = JsPackage.GLOBAL, name="GWTReact")
-public class GwtReact {
-    /**
-     * This is a static class.
-     */
-    private GwtReact() {
-    }
-
-    //The following methods are used to work around limitations in the Java type system when
-    //creating React Elements
-    @JsMethod(name = "cast")
-    public static native ReactElement<?, ?> castAsReactElement(Array<? extends ReactElement<?, ?>> children);
-
-    @JsMethod(name = "cast")
-    public static native ReactElement<?, ?> castAsReactElement(ReactElementChildren children);
-
-    @JsMethod(name = "cast")
-    public static native ReactElement<?, ?> stringLiteral(String value);
+/**
+ * Implement this interface when using {@link Component} or {@link PureComponent} to receive the {@link #componentDidMount()} lifecycle event.
+ */
+@JsType
+public interface ComponentDidMount {
+	/**
+	 * {@link #componentDidMount()} is invoked immediately after a component is mounted. 
+	 * Initialization that requires DOM nodes should go here. If you need to load data from a remote endpoint, 
+	 * this is a good place to instantiate the network request. 
+	 * Setting state in this method will trigger a re-rendering.	 
+	 */
+	@JsMethod
+	void componentDidMount();
 }

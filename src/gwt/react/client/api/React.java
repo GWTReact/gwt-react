@@ -29,37 +29,17 @@ import gwt.react.client.elements.ReactElement;
 import gwt.react.client.elements.ReactElementChildren;
 import gwt.react.client.proptypes.*;
 import gwt.react.client.proptypes.html.*;
-import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
-
-import static gwt.react.client.api.GwtReact.makeSpec;
 
 @JsType(isNative = true, namespace = JsPackage.GLOBAL)
 public class React {
     /**
      * This is a static class.
      */
-	private React() {
-	}
-
-    /**
-     * Create a component class, given a specification. A component implements a render method which returns
-     * one single child. That child may have an arbitrarily deep child structure.
-     *
-     * @param component A class derived from {@link ReactClassSpec} to create the class from
-     * @param <P>       The type of Props the component accepts
-     * @return          A component class that can be passed to {@link React#createElement} or
-     *                  {@link React#createFactory}
-     */
-    @JsOverlay
-    public static <P extends BaseProps, S extends JsPlainObj> ReactClass<P> createClass(ReactClassSpec<P,S> component) {
-        return _createClass(makeSpec(component));
+    private React() {
     }
-
-    @JsMethod(name="createClass")
-    private static native <P extends BaseProps> ReactClass<P> _createClass(InternalClassSpec spec);
 
     /**
      * <p>Create and return a new ReactElement of the given type.
@@ -79,16 +59,47 @@ public class React {
      * @param props the props to pass to the element
      * @return a {@link ReactElement}
      */
-    public static native <P extends BaseProps> ReactElement<P, ReactClass<P>> createElement(ReactClass<P> type, P props);
-    public static native <P extends BaseProps> ReactElement<P, ReactClass<P>> createElement(ReactClass<P> type, P props, ReactElement<?, ?> ...child);
 
     //Create Stateless Components
 
-    public static native <P extends BaseProps, C extends BaseContext> ReactElement<P, StatelessComponent<P, C>> createElement(StatelessComponent<P, C> type, P props);
-    public static native <P extends BaseProps, C extends BaseContext> ReactElement<P, StatelessComponent<P, C>> createElement(StatelessComponent<P, C> type, P props, String value);
-    public static native <P extends BaseProps, C extends BaseContext> ReactElement<P, StatelessComponent<P, C>> createElement(StatelessComponent<P, C> type, P props, ReactElement<?, ?> ...child);
+    public static native <P extends BaseProps> ReactElement<P, StatelessComponent<P>> createElement(StatelessComponent<P> type, P props);
+    public static native <P extends BaseProps> ReactElement<P, StatelessComponent<P>> createElement(StatelessComponent<P> type, P props, String value);
+    public static native <P extends BaseProps> ReactElement<P, StatelessComponent<P>> createElement(StatelessComponent<P> type, P props, ReactElement<?, ?> ...child);
 
-    //Create ES6 Components (NOT SUPPORTED CURRENTLY)
+    //Create ES6 Components
+
+    /**
+     * <p>Create and return a new {@link ReactElement} for the provided React component class.</p>
+     *
+     * <p>Note that calling this method will have undefined results in the following circumstances:</p>
+     *
+     * <p>1) when invoked for Java classes that are not exported to JavaScript via {@link JsType}</p>
+     * <p>2) with Java classes exported to JavaScript under a different name (i.e. when the class was renamed using the 'namespace' and/or 'name' attributes
+     * of the {@link JsType} annotation)</p>
+     * <p>3) When class data is disabled when building</p>
+     *
+     * @param type the {@link Class} object of a React component extending {@link Component} or {@link PureComponent}
+     * @param props the props to pass to the element
+     * @return a {@link ReactElement}
+     */
+    @JsOverlay
+    public static <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(Class<T> type, P props) {
+        return createElement(ComponentUtils.getCtorFn(type), props);
+    }
+
+    @JsOverlay
+    public static <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(Class<T> type, P props, String value) {
+        return createElement(ComponentUtils.getCtorFn(type), props, value);
+    }
+
+    @JsOverlay
+    public static <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(Class<T> type, P props, ReactElement<?, ?> ...child) {
+        return createElement(ComponentUtils.getCtorFn(type), props, child);
+    }
+
+    public static native <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(ComponentConstructorFn<P> type, P props);
+    public static native <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(ComponentConstructorFn<P> type, P props, String value);
+    public static native <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(ComponentConstructorFn<P> type, P props, ReactElement<?, ?> ...child);
 
     /**
      * <p>Clone and return a new ReactElement using element as the starting point. The resulting
@@ -114,9 +125,9 @@ public class React {
         /**
          * This is a static class.
          */
-    	private DOM() {
-    	}
-    	
+        private DOM() {
+        }
+
         public static native DOMElement<HtmlProps> a(AnchorProps props, String value);
         public static native DOMElement<HtmlProps> a(AnchorProps props, ReactElement<?, ?> ...child);
 
@@ -205,8 +216,8 @@ public class React {
         /**
          * This is a static class.
          */
-    	private Children() {
-    	}
+        private Children() {
+        }
 
         /**
          * Invoke fn on every immediate child contained within children. If children is a nested
@@ -254,14 +265,5 @@ public class React {
          * @return a {@link Array} of {@link ReactElement}
          */
         public static native Array<ReactElement<?, ?>> toArray(ReactElementChildren children);
-    }
-
-    @JsType(isNative = true, name="Component")
-    public static class Component {
-        /**
-         * Objects of this class cannot be directly instantiated by the user.
-         */
-    	private Component() {
-		}
     }
 }

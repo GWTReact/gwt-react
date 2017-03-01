@@ -1,7 +1,6 @@
 package gwt.react.client.components;
 
 import gwt.react.client.elements.ReactElement;
-import gwt.react.client.proptypes.BaseContext;
 import gwt.react.client.proptypes.BaseProps;
 import jsinterop.annotations.JsFunction;
 
@@ -18,10 +17,9 @@ import jsinterop.annotations.JsFunction;
  * recommended pattern, when possible.</p>
  *
  * @param <P> The type of props this component expects
- * @param <C> The type of any Context defined for this component (Rarely used)
  */
 @JsFunction
-public interface StatelessComponent<P extends BaseProps, C extends BaseContext> {
+public interface StatelessComponent<P extends BaseProps> {
     /**
      * The render() method is required.
      *
@@ -39,8 +37,7 @@ public interface StatelessComponent<P extends BaseProps, C extends BaseContext> 
      * or write to the DOM or otherwise interact with the browser (e.g., by using setTimeout).</p>
      *
      * @param props     The props for this component
-     * @param context   Any context
      * @return          A single {@link ReactElement}
      */
-    ReactElement<?, ?> render(P props, C context);
+    ReactElement<?, ?> render(P props);
 }
