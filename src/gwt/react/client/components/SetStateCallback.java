@@ -6,5 +6,5 @@ import jsinterop.annotations.JsFunction;
 
 @JsFunction
 public interface SetStateCallback<S extends JsPlainObj, P extends BaseProps> {
-    void onSetState(S previousState, P currentProps);
+    S onSetState(S previousState, P currentProps);
 }

@@ -41,21 +41,26 @@ import jsinterop.annotations.JsType;
 /**
  * <p>You can subclass {@link Component} to define a stateful, ES6-style React component</p>
  *
- * <p>To create {@link ReactElement} based on this component, call {@link React#createElement(Class, BaseProps, ReactElement...)}.
- * In case you need to have the component exported in JavaScript under a name which does not match its Java name, you have to </p>
+ * <p>To create a {@link ReactElement} based on this component, call {@link React#createElement(Class, BaseProps, ReactElement...)}.
+ * In cases where  you have exported a Component in JavaScript under a name that does not match its Java name, or you have
+ * disabled class meta data, you cannot use a Class reference. Instead, pass the result of calling
+ * ComponentUtils.getCtorFn(Fully qualified name) e.g.</p>
  *
- * <p>To create {@link ReactElement} based on this component, call {@link React#createElement(Class, BaseProps, ReactElement...)}</p>
+ * <pre>
+ * React.createElement(ComponentUtils.getCtorFn("SomeComponentName"), someProps, ReactElement...)
+ * </pre>
  *
- * <p>In addition to the methods defined in this class, you can also define the following lifecyle
- * methods as needed:</p>
+ * In addition to the methods defined in this class, you can also define the following lifecyle methods as needed:
  *
- * <p>void componentWillMount()</p>
- * <p>void componentDidMount()</p>
- * <p>void componentWillReceiveProps(P nextProps)</p>
- * <p>boolean shouldComponentUpdate(P nextProps, S nextState)</p>
- * <p>void componentWillUpdate(P nextProps, S nextState)</p>
- * <p>void componentDidUpdate(P prevProps, S prevState)</p>
- * <p>void componentWillUnmount()</p>
+ * <Pre>
+ * void componentWillMount()
+ * void componentDidMount()
+ * void componentWillReceiveProps(P nextProps)
+ * boolean shouldComponentUpdate(P nextProps, S nextState)
+ * void componentWillUpdate(P nextProps, S nextState)
+ * void componentDidUpdate(P prevProps, S prevState)
+ * void componentWillUnmount()
+ * </Pre>
  * 
  * <p>To have extra type safety when defining some of the above methods, you can implement one or more of the following interfaces:</p>
  * <p>{@link ComponentWillMount}</p> 
