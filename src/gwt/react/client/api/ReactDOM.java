@@ -35,10 +35,10 @@ public class ReactDOM {
 	}
 	
     /**
-     * <p>Render a ReactElement<?, ?> into the DOM in the supplied container and return a reference to
+     * <p>Render a ReactElement&lt;?, ?&gt; into the DOM in the supplied container and return a reference to
      * the component (or returns nothing for stateless components).</p>
      *
-     * <p>If the ReactElement<?, ?> was previously rendered into container, this will perform an update
+     * <p>If the ReactElement&lt;?, ?&gt; was previously rendered into container, this will perform an update
      * on it and only mutate the DOM as necessary to reflect the latest React component.</p>
      *
      * <p>If the optional callback is provided, it will be executed after the component is rendered

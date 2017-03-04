@@ -36,11 +36,11 @@ public interface ComponentWillReceiveProps<P extends BaseProps> {
 	/**
 	 * {@link #componentWillReceiveProps(BaseProps)} is invoked before a mounted component receives new props. 
 	 * If you need to update the state in response to prop changes (for example, to reset it), you may compare 
-	 * this.props and nextProps and perform state transitions using {@link #setState(JsPlainObj)} in this method.
+	 * this.props and nextProps and perform state transitions using {@link Component#setState(JsPlainObj)} in this method.
 	 * Note that React may call this method even if the props have not changed, so make sure to compare the current 
 	 * and next values if you only want to handle changes. This may occur when the parent component causes your component to re-render.
 	 * React doesn't call {@link #componentWillReceiveProps(BaseProps)} with initial props during mounting. It only calls this method 
-	 * if some of component's props may update. Calling {@link #setState(JsPlainObj)} generally doesn't trigger 
+	 * if some of component's props may update. Calling {@link Component#setState(JsPlainObj)} generally doesn't trigger
 	 * {@link #componentWillReceiveProps(BaseProps)}
 	 * 
 	 * @param nextProps

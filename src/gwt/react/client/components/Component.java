@@ -44,7 +44,7 @@ import jsinterop.annotations.JsType;
  * <p>To create a {@link ReactElement} based on this component, call {@link React#createElement(Class, BaseProps, ReactElement...)}.
  * In cases where  you have exported a Component in JavaScript under a name that does not match its Java name, or you have
  * disabled class meta data, you cannot use a Class reference. Instead, pass the result of calling
- * ComponentUtils.getCtorFn(Fully qualified name) e.g.</p>
+ * {@link ComponentUtils#getCtorFn(String)} with the fully qualified name of the class e.g.</p>
  *
  * <pre>
  * React.createElement(ComponentUtils.getCtorFn("SomeComponentName"), someProps, ReactElement...)

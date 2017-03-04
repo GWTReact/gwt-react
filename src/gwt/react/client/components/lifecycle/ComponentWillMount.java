@@ -33,7 +33,7 @@ import jsinterop.annotations.JsType;
 public interface ComponentWillMount {
 	/**
 	 * {@link #componentWillMount()} is invoked immediately before mounting occurs. 
-	 * It is called before {@link #render()}, therefore setting state in this method will not trigger a re-rendering. 
+	 * It is called before {@link Component#render()}, therefore setting state in this method will not trigger a re-rendering.
 	 * Avoid introducing any side-effects or subscriptions in this method.
 	 * This is the only lifecycle hook called on server rendering. Generally, we recommend using the constructor instead. 
 	 */

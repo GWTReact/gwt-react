@@ -34,12 +34,12 @@ import jsinterop.annotations.JsType;
 @JsType
 public interface ComponentDidUpdate<P extends BaseProps, S extends JsPlainObj> {
 	/**
-	 * {@link #componentDidUpdate(BaseProps, JsPlainObj)} is invoked immediately after updating occurs. This method is not called for the initial render.
+	 * {@link #componentDidUpdate(P, S)} is invoked immediately after updating occurs. This method is not called for the initial render.
 	 * 
 	 * Use this as an opportunity to operate on the DOM when the component has been updated. This is also a good place to do network requests as long as 
 	 * you compare the current props to previous props (e.g. a network request may not be necessary if the props have not changed).
 	 * 
-	 * Note: {@link #componentDidUpdate()} will not be invoked if {@link ShouldComponentUpdate#shouldComponentUpdate(BaseProps, JsPlainObj)} returns false.
+	 * Note: {@link #componentDidUpdate(P, S)} will not be invoked if {@link ShouldComponentUpdate#shouldComponentUpdate(BaseProps, JsPlainObj)} returns false.
 	 * 
 	 * @param nextProps
 	 * @param nextState

@@ -43,13 +43,13 @@ public interface ShouldComponentUpdate<P extends BaseProps, S extends JsPlainObj
 	 *
 	 * Returning false does not prevent child components from re-rendering when their state changes.
 	 * 
-	 * Currently, if {@link #shouldComponentUpdate(BaseProps, JsPlainObj)} returns false, then {@link Component#componentWillUpdate}, 
-	 * {@link #render(), and {@link #componentDidUpdate} will not be invoked. Note that in the future React may treat 
-	 * {@link #shouldComponentUpdate(BaseProps, JsPlainObj)} as a hint rather than a strict directive, and returning false may still 
+	 * Currently, if {@link ShouldComponentUpdate#shouldComponentUpdate(P, S)} returns false, then {@link ComponentWillUpdate#componentWillUpdate},
+	 * {@link Component#render()}, and {@link ComponentDidUpdate#componentDidUpdate} will not be invoked. Note that in the future React may treat
+	 * {@link #shouldComponentUpdate(P, S)} as a hint rather than a strict directive, and returning false may still
 	 * result in a re-rendering of the component.
 	 * 
 	 * If you determine a specific component is slow after profiling, you may change it to inherit from React.PureComponent which implements 
-	 * {@link #shouldComponentUpdate(BaseProps, JsPlainObj)} with a shallow prop and state comparison. If you are confident you want to write 
+	 * {@link #shouldComponentUpdate(P, S)} with a shallow prop and state comparison. If you are confident you want to write
 	 * it by hand, you may compare this.props with nextProps and this.state with nextState and return false to tell React the update can be skipped.
 	 * 
 	 * @param nextProps
