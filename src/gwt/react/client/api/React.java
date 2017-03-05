@@ -97,9 +97,9 @@ public class React {
         return createElement(ComponentUtils.getCtorFn(type), props, child);
     }
 
-    public static native <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(ComponentConstructorFn<P> type, P props);
-    public static native <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(ComponentConstructorFn<P> type, P props, String value);
-    public static native <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(ComponentConstructorFn<P> type, P props, ReactElement<?, ?> ...child);
+    public static native <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(ComponentConstructorFn<P, T> type, P props);
+    public static native <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(ComponentConstructorFn<P, T> type, P props, String value);
+    public static native <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ReactElement<P, T> createElement(ComponentConstructorFn<P, T> type, P props, ReactElement<?, ?> ...child);
 
     /**
      * <p>Clone and return a new ReactElement using element as the starting point. The resulting

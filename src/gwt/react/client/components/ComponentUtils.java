@@ -12,14 +12,15 @@ public class ComponentUtils {
     private ComponentUtils() {
     }
 
-    private static StringMap<ComponentConstructorFn> constructorLookup = JsStringMap.create() ;
+    private static StringMap<ComponentConstructorFn<?, ?>> constructorLookup = JsStringMap.create() ;
 
-    public static <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ComponentConstructorFn<P> getCtorFn(Class<T> cls) {
+    public static <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ComponentConstructorFn<P, T> getCtorFn(Class<T> cls) {
         return getCtorFn(cls.getName());
     }
 
-    public static <P extends BaseProps> ComponentConstructorFn<P> getCtorFn(String className) {
-        ComponentConstructorFn<P> fn = constructorLookup.get(className);
+    public static <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ComponentConstructorFn<P, T> getCtorFn(String className) {
+        @SuppressWarnings("unchecked")
+		ComponentConstructorFn<P, T> fn = (ComponentConstructorFn<P, T>)constructorLookup.get(className);
 
         if (fn == null) {
             fn = getJSConstructorFn(className);
@@ -33,7 +34,7 @@ public class ComponentUtils {
     /**
      * TODO find a more efficient way of obtaining the constructor function
      */
-    private static native <P extends BaseProps> ComponentConstructorFn<P> getJSConstructorFn(String className) /*-{
+    private static native <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ComponentConstructorFn<P, T> getJSConstructorFn(String className) /*-{
         var namespaces = className.split(".");
         var context = $wnd;
 
