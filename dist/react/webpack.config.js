@@ -38,6 +38,16 @@ if (process.env.NODE_ENV === 'production') {
 		    minRatio: 0
 	    })
     ];
+}else {
+	useplugins = [
+		new webpack.optimize.UglifyJsPlugin({
+			mangle: false,
+			beautify: true,
+			output: {
+				comments: false,
+			}
+		})
+	]
 }
 
 module.exports = {
