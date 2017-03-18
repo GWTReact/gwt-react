@@ -23,23 +23,24 @@ public class ComponentUtils {
      * @return The constructor function
      */
     public static <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ComponentConstructorFn<P> getCtorFn(Class<T> cls) {
-        return getCtorFn(cls.getName());
+        return getCtorFn(cls, cls.getName());
     }
 
     /**
      * Given the fully qualified name of a JsType annotated {@link Component} class, return the constructor function to use in Javascript
-     * @param className The fully qualified name
+     * @param cls The Class
+     * @param actualClassName The fully qualified name. This is useful if it does not match the className of cls.
      * @param <P>
      * @return The constructor function
      */
-    public static <P extends BaseProps> ComponentConstructorFn<P> getCtorFn(String className) {
-        ComponentConstructorFn<P> fn = constructorLookup.get(className);
+    public static <P extends BaseProps, S extends JsPlainObj, T extends Component<P, S>> ComponentConstructorFn<P> getCtorFn(Class<T> cls, String actualClassName) {
+        ComponentConstructorFn<P> fn = constructorLookup.get(actualClassName);
 
         if (fn == null) {
-            fn = getJSConstructorFn(className);
+            fn = getJSConstructorFn(actualClassName);
             assert(fn != null);
 
-            constructorLookup.put(className, fn);
+            constructorLookup.put(actualClassName, fn);
         }
         return fn;
     }

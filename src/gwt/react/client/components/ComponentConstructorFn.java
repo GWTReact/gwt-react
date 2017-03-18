@@ -7,5 +7,5 @@ import jsinterop.annotations.JsFunction;
  */
 @JsFunction
 public interface ComponentConstructorFn<P> {
-    void onCreate(P props);
+    void create(P props);
 }
