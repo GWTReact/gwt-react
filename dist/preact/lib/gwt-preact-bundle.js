@@ -1,7 +1,7 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+i
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 
@@ -1273,7 +1273,7 @@
 	            if (!stack.length) stack.push(attributes.children);
 	            delete attributes.children;
 	        }
-	        while (stack.length) if ((child = stack.pop()) instanceof Array) for (i = child.length; i--; ) stack.push(child[i]); else if (null != child && child !== !0 && child !== !1) {
+	        while (stack.length) if ((child = stack.pop()) && Array.isArray(child)) for (i = child.length; i--; ) stack.push(child[i]); else if (null != child && child !== !0 && child !== !1) {
 	            if ('number' == typeof child) child = String(child);
 	            simple = 'string' == typeof child;
 	            if (simple && lastSimple) children[children.length - 1] += child; else {
