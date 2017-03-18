@@ -1,7 +1,9 @@
 package gwt.react.client.proptypes.html;
 
+import gwt.interop.utils.client.plainobjects.JsPlainObj;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.BaseProps;
+import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
@@ -9,7 +11,13 @@ import jsinterop.annotations.JsType;
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
 public class HtmlGlobalFields extends BaseProps {
 
-    public native void dangerouslySetInnerHTML(String __html);
+    @JsOverlay public final void setDangerouslyInnerHTML(String __html) {
+        JsPlainObj o = new JsPlainObj();
+        o.set("__html", __html);
+        setDangerouslySetInnerHTML(o);
+    }
+
+    @JsProperty protected native void setDangerouslySetInnerHTML(JsPlainObj __html);
 
     //React Specific
     @JsProperty public native boolean isDefaultChecked();
