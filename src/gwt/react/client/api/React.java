@@ -21,13 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-import gwt.interop.utils.shared.collections.Array;
 import gwt.interop.utils.client.plainobjects.JsPlainObj;
+import gwt.interop.utils.shared.collections.Array;
 import gwt.react.client.components.*;
 import gwt.react.client.elements.DOMElement;
 import gwt.react.client.elements.ReactElement;
 import gwt.react.client.elements.ReactElementChildren;
-import gwt.react.client.proptypes.*;
+import gwt.react.client.proptypes.BaseProps;
 import gwt.react.client.proptypes.html.*;
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsPackage;
@@ -195,6 +195,8 @@ public class React {
         public static native DOMElement<HtmlProps> source(SourceProps props);
 
         public static native DOMElement<HtmlProps> table(HtmlProps props, ReactElement<?, ?> ...child);
+
+        public static native DOMElement<HtmlProps> textarea(TextAreaProps props);
 
         public static native DOMElement<HtmlProps> td(TdProps props, String value);
         public static native DOMElement<HtmlProps> td(TdProps props, ReactElement<?, ?> ...child);
