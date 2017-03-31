@@ -20,6 +20,8 @@ public class SelectProps extends HtmlGlobalFields {
     @JsOverlay public final SelectProps name(String s) { setName(s); return this; }
     @JsOverlay public final SelectProps required(boolean b) { setRequired(b); return this; }
     @JsOverlay public final SelectProps size(int b) { setSize(b); return this; }
+    @JsOverlay public final SelectProps value(String s) { setValue(s); return this; }
+    @JsOverlay public final SelectProps defaultValue(String s) { setDefaultValue(s); return this; }
 
     //React Specific
     @JsOverlay public final SelectProps ref(String s) { ref = s; return this; }
