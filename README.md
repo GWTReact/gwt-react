@@ -1,12 +1,12 @@
 # gwt-react
 GWT Java bindings for React
 
-##Introduction
+## Introduction
 
 <p>gwt-react provides Java [GWT](http://www.gwtproject.org/) bindings for [React v15.4.2](https://facebook.github.io/react/) based on the new JsInterop capabilities introduced in GWT 2.8</p>
 <p>In addition, you can now use the same bindings with [Preact v7.2.0](https://github.com/developit/preact)</p>
 
-##Prerequisites
+## Prerequisites
 
 Any documentation assumes you are familiar with [React](https://facebook.github.io/react/). If this is not the case, please take the time
 to learn the basic concepts first. Check out the resources section for useful links.
@@ -14,7 +14,7 @@ to learn the basic concepts first. Check out the resources section for useful li
 You should also be familiar with the GWT 2.8 JsInterop specification. You can find the specification
 [here.](https://docs.google.com/document/d/10fmlEYIHcyead_4R1S5wKGs1t2I7Fnp_PaNaa7XTEk0/edit#heading=h.o7amqk9edhb9)
 
-##Getting Started
+## Getting Started
 
 Please take a look at the [gwt-react-examples](https://github.com/GWTReact/gwt-react-examples) project for
 details on how to use the library.
@@ -25,15 +25,15 @@ You can download the latest release .jar from Maven Central using the following 
 * **artifactId**&nbsp;&nbsp;gwt-react
 * **version**&nbsp;&nbsp;&nbsp;  0.5.0
 
-##Documentation
+## Documentation
 
 Check out the [Documentation](https://github.com/GWTReact/gwt-react/blob/master/DOCUMENTATION.md). There are a number of important concepts specific to **gwt-react** that may not be obvious, even if you are an experienced GWT developer.
 
-##Contributing
+## Contributing
 
 Once the project is stable we will be happy to except pull requests. If you find any problems please file issues.
 
-##Roadmap
+## Roadmap
 
 
 * Investigate writing an Annotation processor to create fluent prop classes
@@ -58,7 +58,7 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 * ~~Show how to use npm and webpack to create a javascript bundle~~ DONE, check out the documentation.
 
-##Change log
+## Change log
 
 | Date | Version | Description |
 | :---      | :---  | :---  |
@@ -67,12 +67,9 @@ Once the project is stable we will be happy to except pull requests. If you find
 | 6/18/2016 | 0.2.0 | Update to use gwt-interop-utils library   |
 | 5/13/2016 | 0.1.0 | Initial preview release to Maven Central   |
 
-##Resources
+## Resources
 
 * [Official React documentation](https://facebook.github.io/react/docs/displaying-data.html)
 * [Learn Raw React � no JSX, no Flux, no ES6, no Webpack�](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/)
 * [20 Free Online React Tutorials](https://www.icicletech.com/blog/reactjs-free-20-online-tutorials)
 * [Exploring ES6](http://exploringjs.com/es6/)
-
-
-
