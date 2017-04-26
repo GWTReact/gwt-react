@@ -135,6 +135,7 @@ public class React {
         public static native DOMElement<HtmlProps> audio(AudioProps props, ReactElement<?, ?> ...child);
 
         public static native DOMElement<BtnProps> br(HtmlProps props);
+        public static native DOMElement<BtnProps> br();
 
         public static native DOMElement<BtnProps> button(BtnProps props);
         public static native DOMElement<BtnProps> button(BtnProps props, String value);
