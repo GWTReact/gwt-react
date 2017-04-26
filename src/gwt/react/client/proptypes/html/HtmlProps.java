@@ -20,6 +20,9 @@ public class HtmlProps extends HtmlGlobalFields {
     //Global HTML props
     @JsOverlay public final HtmlProps accessKey(String s) { setAccessKey(s);return this;}
     @JsOverlay public final HtmlProps className(String s) { setClassName(s); return this; }
+    @JsOverlay public final HtmlProps className(String s1, String s2) { setClassName(s1 + " " + s2); return this; }
+    @JsOverlay public final HtmlProps className(String s1, String s2, String s3) { setClassName(s1 + " " + s2 + " " + s3); return this; }
+
     @JsOverlay public final HtmlProps contentEditable(boolean b) { setContentEditable(b); return this; }
     @JsOverlay public final HtmlProps contextMenu(String s) { setContextMenu(s); return this; }
     @JsOverlay public final HtmlProps dir(String s) { setDir(s); return this; }
