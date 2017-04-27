@@ -9,13 +9,7 @@
     "build:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p src/index-react.js lib/gwt-react-bundle.min.js",
 
     "build-react-router": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack src/index-react-router.js lib/gwt-react-router-bundle.js",
-    "build-react-router:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p src/index-react-router.js lib/gwt-react-router-bundle.min.js",
-
-    "build-mobx-react": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack src/index-react-mobx.js lib/gwt-mobx-react-bundle.js",
-    "build-mobx-react:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p src/index-react-mobx.js lib/gwt-mobx-react-bundle.min.js",
-
-    "build-redux-react": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack src/index-react-redux.js lib/gwt-redux-react-bundle.js",
-    "build-redux-react:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p src/index-react-redux.js lib/gwt-redux-react-bundle.min.js"
+    "build-react-router:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p src/index-react-router.js lib/gwt-react-router-bundle.min.js"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
@@ -47,14 +41,8 @@
     "rimraf": "^2.3.4"
   },
   "dependencies": {
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "redux": "^3.5.2",
-    "react-redux": "^4.4.5",
-    "redux-undo": "1.0.0-beta7",
-    "react-router": "^2.4.1",
-    "mobx": "^2.5.2",
-    "mobx-react": "^3.5.6",
-    "mobx-react-devtools": "^4.2.6"
+    "react": "^15.5",
+    "react-dom": "^15.5",
+    "react-router": "^3.0.5"
   }
 }

@@ -1,7 +1,7 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-i
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 
@@ -42,7 +42,7 @@ i
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -54,7 +54,7 @@ i
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _server = __webpack_require__(5);
+	var _server = __webpack_require__(12);
 
 	var _server2 = _interopRequireDefault(_server);
 
@@ -82,13 +82,13 @@ i
 
 	window.GWTReact = GWTReact;
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {(function (global, factory) {
-		 true ? module.exports = factory(__webpack_require__(3), __webpack_require__(4)) :
-		typeof define === 'function' && define.amd ? define(['proptypes', 'preact'], factory) :
+		 true ? module.exports = factory(__webpack_require__(3), __webpack_require__(11)) :
+		typeof define === 'function' && define.amd ? define(['prop-types', 'preact'], factory) :
 		(global.preactCompat = factory(global.PropTypes,global.preact));
 	}(this, (function (PropTypes,preact) {
 
@@ -165,13 +165,11 @@ i
 			vnode.preactCompatUpgraded = true;
 
 			var tag = vnode.nodeName,
-				attrs = vnode.attributes;
-
-			if (!attrs) { attrs = vnode.attributes = {}; }
+				attrs = vnode.attributes = extend({}, vnode.attributes);
 
 			if (typeof tag==='function') {
 				if (tag[COMPONENT_WRAPPER_KEY]===true || (tag.prototype && 'isReactComponent' in tag.prototype)) {
-					if (vnode.children && !vnode.children.length) { vnode.children = undefined; }
+					if (vnode.children && String(vnode.children)==='') { vnode.children = undefined; }
 					if (vnode.children) { attrs.children = vnode.children; }
 
 					if (!vnode.preactCompatNormalized) {
@@ -181,7 +179,7 @@ i
 				}
 			}
 			else {
-				if (vnode.children && !vnode.children.length) { vnode.children = undefined; }
+				if (vnode.children && String(vnode.children)==='') { vnode.children = undefined; }
 				if (vnode.children) { attrs.children = vnode.children; }
 
 				if (attrs.defaultValue) {
@@ -226,7 +224,7 @@ i
 
 	// proxy render() since React returns a Component reference.
 	function render$1(vnode, parent, callback) {
-		var prev = parent && parent._preactCompatRendered;
+		var prev = parent && parent._preactCompatRendered && parent._preactCompatRendered.base;
 
 		// ignore impossible previous renders
 		if (prev && prev.parentNode!==parent) { prev = null; }
@@ -242,9 +240,9 @@ i
 		}
 
 		var out = preact.render(vnode, parent, prev);
-		if (parent) { parent._preactCompatRendered = out; }
+		if (parent) { parent._preactCompatRendered = out && (out._component || { base: out }); }
 		if (typeof callback==='function') { callback(); }
-		return out && out._component || out.base;
+		return out && out._component || out;
 	}
 
 
@@ -261,12 +259,12 @@ i
 		var wrap = preact.h(ContextProvider, { context: parentComponent.context }, vnode);
 		var c = render$1(wrap, container);
 		if (callback) { callback(c); }
-		return c;
+		return c._component || c.base;
 	}
 
 
 	function unmountComponentAtNode(container) {
-		var existing = container._preactCompatRendered;
+		var existing = container._preactCompatRendered && container._preactCompatRendered.base;
 		if (existing && existing.parentNode===container) {
 			preact.render(preact.h(EmptyComponent), container, existing);
 			return true;
@@ -301,6 +299,7 @@ i
 			return children[0];
 		},
 		toArray: function(children) {
+			if (children == null) { return []; }
 			return Array.isArray && Array.isArray(children) ? children : ARR.concat(children);
 		}
 	};
@@ -406,7 +405,16 @@ i
 			elementProps,
 			element.children || elementProps && elementProps.children
 		);
-		return normalizeVNode(preact.cloneElement.apply(void 0, [ node, props ].concat( children )));
+		// Only provide the 3rd argument if needed.
+		// Arguments 3+ overwrite element.children in preactCloneElement
+		var cloneArgs = [node, props];
+		if (children && children.length) {
+			cloneArgs.push(children);
+		}
+		else if (props && props.children) {
+			cloneArgs.push(props.children);
+		}
+		return normalizeVNode(preact.cloneElement.apply(void 0, cloneArgs));
 	}
 
 
@@ -595,8 +603,6 @@ i
 
 
 	function propsHook(props, context) {
-		var this$1 = this;
-
 		if (!props) { return; }
 
 		// React annoyingly special-cases single children, and some react components are ridiculously strict about this.
@@ -615,14 +621,10 @@ i
 		if (DEV) {
 			var ctor = typeof this==='function' ? this : this.constructor,
 				propTypes = this.propTypes || ctor.propTypes;
+			var displayName = this.displayName || ctor.name;
+
 			if (propTypes) {
-				for (var prop in propTypes) {
-					if (propTypes.hasOwnProperty(prop) && typeof propTypes[prop]==='function') {
-						var displayName = this$1.displayName || ctor.name;
-						var err = propTypes[prop](props, prop, displayName, 'prop');
-						if (err) { console.error(new Error(err.message || err)); }
-					}
-				}
+				PropTypes.checkPropTypes(propTypes, props, 'prop', displayName);
 			}
 		}
 	}
@@ -712,9 +714,9 @@ i
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// shim for using process in browser
 	var process = module.exports = {};
@@ -886,6 +888,10 @@ i
 	process.removeListener = noop;
 	process.removeAllListeners = noop;
 	process.emit = noop;
+	process.prependListener = noop;
+	process.prependOnceListener = noop;
+
+	process.listeners = function (name) { return [] }
 
 	process.binding = function (name) {
 	    throw new Error('process.binding is not supported');
@@ -898,50 +904,84 @@ i
 	process.umask = function() { return 0; };
 
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
-	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, module], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	  } else if (typeof exports !== 'undefined' && typeof module !== 'undefined') {
-	    factory(exports, module);
-	  } else {
-	    var mod = {
-	      exports: {}
-	    };
-	    factory(mod.exports, mod);
-	    global.PropTypes = mod.exports;
-	  }
-	})(this, function (exports, module) {
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
 
-	  'use strict';
+	if (process.env.NODE_ENV !== 'production') {
+	  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+	    Symbol.for &&
+	    Symbol.for('react.element')) ||
+	    0xeac7;
 
-	  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol['for']('react.element') || 0xeac7;
-
-	  var ReactElement = {};
-
-	  ReactElement.isValidElement = function (object) {
-	    return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+	  var isValidElement = function(object) {
+	    return typeof object === 'object' &&
+	      object !== null &&
+	      object.$$typeof === REACT_ELEMENT_TYPE;
 	  };
 
-	  var ReactPropTypeLocationNames = {
-	    prop: 'prop',
-	    context: 'context',
-	    childContext: 'child context'
-	  };
+	  // By explicitly using `prop-types` you are opting into new development behavior.
+	  // http://fb.me/prop-types-in-prod
+	  var throwOnDirectAccess = true;
+	  module.exports = __webpack_require__(4)(isValidElement, throwOnDirectAccess);
+	} else {
+	  // By explicitly using `prop-types` you are opting into new production behavior.
+	  // http://fb.me/prop-types-in-prod
+	  module.exports = __webpack_require__(10)();
+	}
 
-	  var emptyFunction = {
-	    thatReturns: function thatReturns(what) {
-	      return function () {
-	        return what;
-	      };
-	    }
-	  };
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	'use strict';
+
+	var emptyFunction = __webpack_require__(5);
+	var invariant = __webpack_require__(6);
+	var warning = __webpack_require__(7);
+
+	var ReactPropTypesSecret = __webpack_require__(8);
+	var checkPropTypes = __webpack_require__(9);
+
+	module.exports = function(isValidElement, throwOnDirectAccess) {
+	  /* global Symbol */
 	  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
-	  var FAUX_ITERATOR_SYMBOL = '@@iterator';
+	  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
+
+	  /**
+	   * Returns the iterator method function contained on the iterable object.
+	   *
+	   * Be sure to invoke the function with the iterable as context:
+	   *
+	   *     var iteratorFn = getIteratorFn(myIterable);
+	   *     if (iteratorFn) {
+	   *       var iterator = iteratorFn.call(myIterable);
+	   *       ...
+	   *     }
+	   *
+	   * @param {?object} maybeIterable
+	   * @return {?function}
+	   */
 	  function getIteratorFn(maybeIterable) {
 	    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
 	    if (typeof iteratorFn === 'function') {
@@ -949,8 +989,57 @@ i
 	    }
 	  }
 
+	  /**
+	   * Collection of methods that allow declaration and validation of props that are
+	   * supplied to React components. Example usage:
+	   *
+	   *   var Props = require('ReactPropTypes');
+	   *   var MyArticle = React.createClass({
+	   *     propTypes: {
+	   *       // An optional string prop named "description".
+	   *       description: Props.string,
+	   *
+	   *       // A required enum prop named "category".
+	   *       category: Props.oneOf(['News','Photos']).isRequired,
+	   *
+	   *       // A prop named "dialog" that requires an instance of Dialog.
+	   *       dialog: Props.instanceOf(Dialog).isRequired
+	   *     },
+	   *     render: function() { ... }
+	   *   });
+	   *
+	   * A more formal specification of how these methods are used:
+	   *
+	   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+	   *   decl := ReactPropTypes.{type}(.isRequired)?
+	   *
+	   * Each and every declaration produces a function with the same signature. This
+	   * allows the creation of custom validation functions. For example:
+	   *
+	   *  var MyLink = React.createClass({
+	   *    propTypes: {
+	   *      // An optional string or URI prop named "href".
+	   *      href: function(props, propName, componentName) {
+	   *        var propValue = props[propName];
+	   *        if (propValue != null && typeof propValue !== 'string' &&
+	   *            !(propValue instanceof URI)) {
+	   *          return new Error(
+	   *            'Expected a string or an URI for ' + propName + ' in ' +
+	   *            componentName
+	   *          );
+	   *        }
+	   *      }
+	   *    },
+	   *    render: function() {...}
+	   *  });
+	   *
+	   * @internal
+	   */
+
 	  var ANONYMOUS = '<<anonymous>>';
 
+	  // Important!
+	  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
 	  var ReactPropTypes = {
 	    array: createPrimitiveTypeChecker('array'),
 	    bool: createPrimitiveTypeChecker('boolean'),
@@ -971,14 +1060,85 @@ i
 	    shape: createShapeTypeChecker
 	  };
 
+	  /**
+	   * inlined Object.is polyfill to avoid requiring consumers ship their own
+	   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+	   */
+	  /*eslint-disable no-self-compare*/
+	  function is(x, y) {
+	    // SameValue algorithm
+	    if (x === y) {
+	      // Steps 1-5, 7-10
+	      // Steps 6.b-6.e: +0 != -0
+	      return x !== 0 || 1 / x === 1 / y;
+	    } else {
+	      // Step 6.a: NaN == NaN
+	      return x !== x && y !== y;
+	    }
+	  }
+	  /*eslint-enable no-self-compare*/
+
+	  /**
+	   * We use an Error-like object for backward compatibility as people may call
+	   * PropTypes directly and inspect their output. However, we don't use real
+	   * Errors anymore. We don't inspect their stack anyway, and creating them
+	   * is prohibitively expensive if they are created too often, such as what
+	   * happens in oneOfType() for any type before the one that matched.
+	   */
+	  function PropTypeError(message) {
+	    this.message = message;
+	    this.stack = '';
+	  }
+	  // Make `instanceof Error` still work for returned errors.
+	  PropTypeError.prototype = Error.prototype;
+
 	  function createChainableTypeChecker(validate) {
-	    function checkType(isRequired, props, propName, componentName, location, propFullName) {
+	    if (process.env.NODE_ENV !== 'production') {
+	      var manualPropTypeCallCache = {};
+	      var manualPropTypeWarningCount = 0;
+	    }
+	    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
 	      componentName = componentName || ANONYMOUS;
 	      propFullName = propFullName || propName;
+
+	      if (secret !== ReactPropTypesSecret) {
+	        if (throwOnDirectAccess) {
+	          // New behavior only for users of `prop-types` package
+	          invariant(
+	            false,
+	            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+	            'Use `PropTypes.checkPropTypes()` to call them. ' +
+	            'Read more at http://fb.me/use-check-prop-types'
+	          );
+	        } else if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined') {
+	          // Old behavior for people using React.PropTypes
+	          var cacheKey = componentName + ':' + propName;
+	          if (
+	            !manualPropTypeCallCache[cacheKey] &&
+	            // Avoid spamming the console because they are often not actionable except for lib authors
+	            manualPropTypeWarningCount < 3
+	          ) {
+	            warning(
+	              false,
+	              'You are manually calling a React.PropTypes validation ' +
+	              'function for the `%s` prop on `%s`. This is deprecated ' +
+	              'and will throw in the standalone `prop-types` package. ' +
+	              'You may be seeing this warning due to a third-party PropTypes ' +
+	              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.',
+	              propFullName,
+	              componentName
+	            );
+	            manualPropTypeCallCache[cacheKey] = true;
+	            manualPropTypeWarningCount++;
+	          }
+	        }
+	      }
 	      if (props[propName] == null) {
-	        var locationName = ReactPropTypeLocationNames[location];
 	        if (isRequired) {
-	          return new Error('Required ' + locationName + ' `' + propFullName + '` was not specified in ' + ('`' + componentName + '`.'));
+	          if (props[propName] === null) {
+	            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+	          }
+	          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
 	        }
 	        return null;
 	      } else {
@@ -993,15 +1153,16 @@ i
 	  }
 
 	  function createPrimitiveTypeChecker(expectedType) {
-	    function validate(props, propName, componentName, location, propFullName) {
+	    function validate(props, propName, componentName, location, propFullName, secret) {
 	      var propValue = props[propName];
 	      var propType = getPropType(propValue);
 	      if (propType !== expectedType) {
-	        var locationName = ReactPropTypeLocationNames[location];
-
+	        // `propValue` being instance of, say, date/regexp, pass the 'object'
+	        // check, but we can offer a more precise error message here rather than
+	        // 'of type `object`'.
 	        var preciseType = getPreciseType(propValue);
 
-	        return new Error('Invalid ' + locationName + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
 	      }
 	      return null;
 	    }
@@ -1009,19 +1170,21 @@ i
 	  }
 
 	  function createAnyTypeChecker() {
-	    return createChainableTypeChecker(emptyFunction.thatReturns(null));
+	    return createChainableTypeChecker(emptyFunction.thatReturnsNull);
 	  }
 
 	  function createArrayOfTypeChecker(typeChecker) {
 	    function validate(props, propName, componentName, location, propFullName) {
+	      if (typeof typeChecker !== 'function') {
+	        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+	      }
 	      var propValue = props[propName];
 	      if (!Array.isArray(propValue)) {
-	        var locationName = ReactPropTypeLocationNames[location];
 	        var propType = getPropType(propValue);
-	        return new Error('Invalid ' + locationName + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
 	      }
 	      for (var i = 0; i < propValue.length; i++) {
-	        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']');
+	        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
 	        if (error instanceof Error) {
 	          return error;
 	        }
@@ -1033,9 +1196,10 @@ i
 
 	  function createElementTypeChecker() {
 	    function validate(props, propName, componentName, location, propFullName) {
-	      if (!ReactElement.isValidElement(props[propName])) {
-	        var locationName = ReactPropTypeLocationNames[location];
-	        return new Error('Invalid ' + locationName + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a single ReactElement.'));
+	      var propValue = props[propName];
+	      if (!isValidElement(propValue)) {
+	        var propType = getPropType(propValue);
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
 	      }
 	      return null;
 	    }
@@ -1045,10 +1209,9 @@ i
 	  function createInstanceTypeChecker(expectedClass) {
 	    function validate(props, propName, componentName, location, propFullName) {
 	      if (!(props[propName] instanceof expectedClass)) {
-	        var locationName = ReactPropTypeLocationNames[location];
 	        var expectedClassName = expectedClass.name || ANONYMOUS;
 	        var actualClassName = getClassName(props[propName]);
-	        return new Error('Invalid ' + locationName + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
 	      }
 	      return null;
 	    }
@@ -1057,37 +1220,37 @@ i
 
 	  function createEnumTypeChecker(expectedValues) {
 	    if (!Array.isArray(expectedValues)) {
-	      return createChainableTypeChecker(function () {
-	        return new Error('Invalid argument supplied to oneOf, expected an instance of array.');
-	      });
+	      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
+	      return emptyFunction.thatReturnsNull;
 	    }
 
 	    function validate(props, propName, componentName, location, propFullName) {
 	      var propValue = props[propName];
 	      for (var i = 0; i < expectedValues.length; i++) {
-	        if (propValue === expectedValues[i]) {
+	        if (is(propValue, expectedValues[i])) {
 	          return null;
 	        }
 	      }
 
-	      var locationName = ReactPropTypeLocationNames[location];
 	      var valuesString = JSON.stringify(expectedValues);
-	      return new Error('Invalid ' + locationName + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+	      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
 	    }
 	    return createChainableTypeChecker(validate);
 	  }
 
 	  function createObjectOfTypeChecker(typeChecker) {
 	    function validate(props, propName, componentName, location, propFullName) {
+	      if (typeof typeChecker !== 'function') {
+	        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+	      }
 	      var propValue = props[propName];
 	      var propType = getPropType(propValue);
 	      if (propType !== 'object') {
-	        var locationName = ReactPropTypeLocationNames[location];
-	        return new Error('Invalid ' + locationName + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
 	      }
 	      for (var key in propValue) {
 	        if (propValue.hasOwnProperty(key)) {
-	          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key);
+	          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
 	          if (error instanceof Error) {
 	            return error;
 	          }
@@ -1100,21 +1263,19 @@ i
 
 	  function createUnionTypeChecker(arrayOfTypeCheckers) {
 	    if (!Array.isArray(arrayOfTypeCheckers)) {
-	      return createChainableTypeChecker(function () {
-	        return new Error('Invalid argument supplied to oneOfType, expected an instance of array.');
-	      });
+	      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+	      return emptyFunction.thatReturnsNull;
 	    }
 
 	    function validate(props, propName, componentName, location, propFullName) {
 	      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
 	        var checker = arrayOfTypeCheckers[i];
-	        if (checker(props, propName, componentName, location, propFullName) == null) {
+	        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
 	          return null;
 	        }
 	      }
 
-	      var locationName = ReactPropTypeLocationNames[location];
-	      return new Error('Invalid ' + locationName + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+	      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
 	    }
 	    return createChainableTypeChecker(validate);
 	  }
@@ -1122,8 +1283,7 @@ i
 	  function createNodeChecker() {
 	    function validate(props, propName, componentName, location, propFullName) {
 	      if (!isNode(props[propName])) {
-	        var locationName = ReactPropTypeLocationNames[location];
-	        return new Error('Invalid ' + locationName + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
 	      }
 	      return null;
 	    }
@@ -1135,15 +1295,14 @@ i
 	      var propValue = props[propName];
 	      var propType = getPropType(propValue);
 	      if (propType !== 'object') {
-	        var locationName = ReactPropTypeLocationNames[location];
-	        return new Error('Invalid ' + locationName + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
 	      }
 	      for (var key in shapeTypes) {
 	        var checker = shapeTypes[key];
 	        if (!checker) {
 	          continue;
 	        }
-	        var error = checker(propValue, key, componentName, location, propFullName + '.' + key);
+	        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
 	        if (error) {
 	          return error;
 	        }
@@ -1165,7 +1324,7 @@ i
 	        if (Array.isArray(propValue)) {
 	          return propValue.every(isNode);
 	        }
-	        if (propValue === null || ReactElement.isValidElement(propValue)) {
+	        if (propValue === null || isValidElement(propValue)) {
 	          return true;
 	        }
 
@@ -1180,6 +1339,7 @@ i
 	              }
 	            }
 	          } else {
+	            // Iterator will provide entry [k,v] tuples rather than values.
 	            while (!(step = iterator.next()).done) {
 	              var entry = step.value;
 	              if (entry) {
@@ -1200,14 +1360,17 @@ i
 	  }
 
 	  function isSymbol(propType, propValue) {
+	    // Native Symbol.
 	    if (propType === 'symbol') {
 	      return true;
 	    }
 
+	    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
 	    if (propValue['@@toStringTag'] === 'Symbol') {
 	      return true;
 	    }
 
+	    // Fallback for non-spec compliant Symbols which are polyfilled.
 	    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
 	      return true;
 	    }
@@ -1215,12 +1378,16 @@ i
 	    return false;
 	  }
 
+	  // Equivalent of `typeof` but with special handling for array and regexp.
 	  function getPropType(propValue) {
 	    var propType = typeof propValue;
 	    if (Array.isArray(propValue)) {
 	      return 'array';
 	    }
 	    if (propValue instanceof RegExp) {
+	      // Old webkits (at least until Android 4.0) return 'function' rather than
+	      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+	      // passes PropTypes.object.
 	      return 'object';
 	    }
 	    if (isSymbol(propType, propValue)) {
@@ -1229,6 +1396,8 @@ i
 	    return propType;
 	  }
 
+	  // This handles more types than `getPropType`. Only used for error messages.
+	  // See `createPrimitiveTypeChecker`.
 	  function getPreciseType(propValue) {
 	    var propType = getPropType(propValue);
 	    if (propType === 'object') {
@@ -1241,6 +1410,7 @@ i
 	    return propType;
 	  }
 
+	  // Returns class name of the object, if any.
 	  function getClassName(propValue) {
 	    if (!propValue.constructor || !propValue.constructor.name) {
 	      return ANONYMOUS;
@@ -1248,138 +1418,429 @@ i
 	    return propValue.constructor.name;
 	  }
 
-	  module.exports = ReactPropTypes;
-	});
+	  ReactPropTypes.checkPropTypes = checkPropTypes;
+	  ReactPropTypes.PropTypes = ReactPropTypes;
 
-	//# sourceMappingURL=index.js.map
+	  return ReactPropTypes;
+	};
 
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
-	!function(global, factory) {
-	     true ? factory(exports) : 'function' == typeof define && define.amd ? define([ 'exports' ], factory) : factory(global.preact = global.preact || {});
-	}(this, function(exports) {
-	    function VNode(nodeName, attributes, children) {
-	        this.nodeName = nodeName;
-	        this.attributes = attributes;
-	        this.children = children;
-	        this.key = attributes && attributes.key;
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * 
+	 */
+
+	function makeEmptyFunction(arg) {
+	  return function () {
+	    return arg;
+	  };
+	}
+
+	/**
+	 * This function accepts and discards inputs; it has no side effects. This is
+	 * primarily useful idiomatically for overridable function endpoints which
+	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+	 */
+	var emptyFunction = function emptyFunction() {};
+
+	emptyFunction.thatReturns = makeEmptyFunction;
+	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+	emptyFunction.thatReturnsThis = function () {
+	  return this;
+	};
+	emptyFunction.thatReturnsArgument = function (arg) {
+	  return arg;
+	};
+
+	module.exports = emptyFunction;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	/**
+	 * Use invariant() to assert state which your program assumes to be true.
+	 *
+	 * Provide sprintf-style format (only %s is supported) and arguments
+	 * to provide information about what broke and what you were
+	 * expecting.
+	 *
+	 * The invariant message will be stripped in production, but the invariant
+	 * will remain to ensure logic does not differ in production.
+	 */
+
+	var validateFormat = function validateFormat(format) {};
+
+	if (process.env.NODE_ENV !== 'production') {
+	  validateFormat = function validateFormat(format) {
+	    if (format === undefined) {
+	      throw new Error('invariant requires an error message argument');
 	    }
+	  };
+	}
+
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  validateFormat(format);
+
+	  if (!condition) {
+	    var error;
+	    if (format === undefined) {
+	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+	    } else {
+	      var args = [a, b, c, d, e, f];
+	      var argIndex = 0;
+	      error = new Error(format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      }));
+	      error.name = 'Invariant Violation';
+	    }
+
+	    error.framesToPop = 1; // we don't care about invariant's own frame
+	    throw error;
+	  }
+	}
+
+	module.exports = invariant;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+
+	'use strict';
+
+	var emptyFunction = __webpack_require__(5);
+
+	/**
+	 * Similar to invariant but only logs a warning if the condition is not met.
+	 * This can be used to log issues in development environments in critical
+	 * paths. Removing the logging code for production environments will keep the
+	 * same logic and follow the same code paths.
+	 */
+
+	var warning = emptyFunction;
+
+	if (process.env.NODE_ENV !== 'production') {
+	  (function () {
+	    var printWarning = function printWarning(format) {
+	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        args[_key - 1] = arguments[_key];
+	      }
+
+	      var argIndex = 0;
+	      var message = 'Warning: ' + format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      });
+	      if (typeof console !== 'undefined') {
+	        console.error(message);
+	      }
+	      try {
+	        // --- Welcome to debugging React ---
+	        // This error was thrown as a convenience so that you can use this stack
+	        // to find the callsite that caused this warning to fire.
+	        throw new Error(message);
+	      } catch (x) {}
+	    };
+
+	    warning = function warning(condition, format) {
+	      if (format === undefined) {
+	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	      }
+
+	      if (format.indexOf('Failed Composite propType: ') === 0) {
+	        return; // Ignore CompositeComponent proptype check.
+	      }
+
+	      if (!condition) {
+	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+	          args[_key2 - 2] = arguments[_key2];
+	        }
+
+	        printWarning.apply(undefined, [format].concat(args));
+	      }
+	    };
+	  })();
+	}
+
+	module.exports = warning;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	'use strict';
+
+	var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+	module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	'use strict';
+
+	if (process.env.NODE_ENV !== 'production') {
+	  var invariant = __webpack_require__(6);
+	  var warning = __webpack_require__(7);
+	  var ReactPropTypesSecret = __webpack_require__(8);
+	  var loggedTypeFailures = {};
+	}
+
+	/**
+	 * Assert that the values match with the type specs.
+	 * Error messages are memorized and will only be shown once.
+	 *
+	 * @param {object} typeSpecs Map of name to a ReactPropType
+	 * @param {object} values Runtime values that need to be type-checked
+	 * @param {string} location e.g. "prop", "context", "child context"
+	 * @param {string} componentName Name of the component for error messages.
+	 * @param {?Function} getStack Returns the component stack.
+	 * @private
+	 */
+	function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+	  if (process.env.NODE_ENV !== 'production') {
+	    for (var typeSpecName in typeSpecs) {
+	      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+	        var error;
+	        // Prop type validation may throw. In case they do, we don't want to
+	        // fail the render phase where it didn't fail before. So we log it.
+	        // After these have been cleaned up, we'll let them throw.
+	        try {
+	          // This is intentionally an invariant that gets caught. It's the same
+	          // behavior as without this statement except with a better message.
+	          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+	          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+	        } catch (ex) {
+	          error = ex;
+	        }
+	        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+	        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+	          // Only monitor this failure once because there tends to be a lot of the
+	          // same error.
+	          loggedTypeFailures[error.message] = true;
+
+	          var stack = getStack ? getStack() : '';
+
+	          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+	        }
+	      }
+	    }
+	  }
+	}
+
+	module.exports = checkPropTypes;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	'use strict';
+
+	var emptyFunction = __webpack_require__(5);
+	var invariant = __webpack_require__(6);
+
+	module.exports = function() {
+	  // Important!
+	  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+	  function shim() {
+	    invariant(
+	      false,
+	      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+	      'Use PropTypes.checkPropTypes() to call them. ' +
+	      'Read more at http://fb.me/use-check-prop-types'
+	    );
+	  };
+	  shim.isRequired = shim;
+	  function getShim() {
+	    return shim;
+	  };
+	  var ReactPropTypes = {
+	    array: shim,
+	    bool: shim,
+	    func: shim,
+	    number: shim,
+	    object: shim,
+	    string: shim,
+	    symbol: shim,
+
+	    any: shim,
+	    arrayOf: getShim,
+	    element: shim,
+	    instanceOf: getShim,
+	    node: shim,
+	    objectOf: getShim,
+	    oneOf: getShim,
+	    oneOfType: getShim,
+	    shape: getShim
+	  };
+
+	  ReactPropTypes.checkPropTypes = emptyFunction;
+	  ReactPropTypes.PropTypes = ReactPropTypes;
+
+	  return ReactPropTypes;
+	};
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	!function() {
+	    'use strict';
+	    function VNode() {}
 	    function h(nodeName, attributes) {
-	        var children, lastSimple, child, simple, i;
+	        var lastSimple, child, simple, i, children = EMPTY_CHILDREN;
 	        for (i = arguments.length; i-- > 2; ) stack.push(arguments[i]);
-	        if (attributes && attributes.children) {
+	        if (attributes && null != attributes.children) {
 	            if (!stack.length) stack.push(attributes.children);
 	            delete attributes.children;
 	        }
-	        while (stack.length) if ((child = stack.pop()) && Array.isArray(child)) for (i = child.length; i--; ) stack.push(child[i]); else if (null != child && child !== !0 && child !== !1) {
-	            if ('number' == typeof child) child = String(child);
-	            simple = 'string' == typeof child;
-	            if (simple && lastSimple) children[children.length - 1] += child; else {
-	                (children || (children = [])).push(child);
-	                lastSimple = simple;
-	            }
+	        while (stack.length) if ((child = stack.pop()) && void 0 !== child.pop) for (i = child.length; i--; ) stack.push(child[i]); else {
+	            if (child === !0 || child === !1) child = null;
+	            if (simple = 'function' != typeof nodeName) if (null == child) child = ''; else if ('number' == typeof child) child = String(child); else if ('string' != typeof child) simple = !1;
+	            if (simple && lastSimple) children[children.length - 1] += child; else if (children === EMPTY_CHILDREN) children = [ child ]; else children.push(child);
+	            lastSimple = simple;
 	        }
-	        var p = new VNode(nodeName, attributes || void 0, children || EMPTY_CHILDREN);
-	        if (options.vnode) options.vnode(p);
+	        var p = new VNode();
+	        p.nodeName = nodeName;
+	        p.children = children;
+	        p.attributes = null == attributes ? void 0 : attributes;
+	        p.key = null == attributes ? void 0 : attributes.key;
+	        if (void 0 !== options.vnode) options.vnode(p);
 	        return p;
 	    }
 	    function extend(obj, props) {
-	        if (props) for (var i in props) obj[i] = props[i];
+	        for (var i in props) obj[i] = props[i];
 	        return obj;
-	    }
-	    function clone(obj) {
-	        return extend({}, obj);
-	    }
-	    function delve(obj, key) {
-	        for (var p = key.split('.'), i = 0; i < p.length && obj; i++) obj = obj[p[i]];
-	        return obj;
-	    }
-	    function isFunction(obj) {
-	        return 'function' == typeof obj;
-	    }
-	    function isString(obj) {
-	        return 'string' == typeof obj;
-	    }
-	    function hashToClassName(c) {
-	        var str = '';
-	        for (var prop in c) if (c[prop]) {
-	            if (str) str += ' ';
-	            str += prop;
-	        }
-	        return str;
 	    }
 	    function cloneElement(vnode, props) {
-	        return h(vnode.nodeName, extend(clone(vnode.attributes), props), arguments.length > 2 ? [].slice.call(arguments, 2) : vnode.children);
-	    }
-	    function createLinkedState(component, key, eventPath) {
-	        var path = key.split('.');
-	        return function(e) {
-	            var t = e && e.target || this, state = {}, obj = state, v = isString(eventPath) ? delve(e, eventPath) : t.nodeName ? t.type.match(/^che|rad/) ? t.checked : t.value : e, i = 0;
-	            for (;i < path.length - 1; i++) obj = obj[path[i]] || (obj[path[i]] = !i && component.state[path[i]] || {});
-	            obj[path[i]] = v;
-	            component.setState(state);
-	        };
+	        return h(vnode.nodeName, extend(extend({}, vnode.attributes), props), arguments.length > 2 ? [].slice.call(arguments, 2) : vnode.children);
 	    }
 	    function enqueueRender(component) {
-	        if (!component._dirty && (component._dirty = !0) && 1 == items.push(component)) (options.debounceRendering || defer)(rerender);
+	        if (!component.__d && (component.__d = !0) && 1 == items.push(component)) (options.debounceRendering || setTimeout)(rerender);
 	    }
 	    function rerender() {
 	        var p, list = items;
 	        items = [];
-	        while (p = list.pop()) if (p._dirty) renderComponent(p);
+	        while (p = list.pop()) if (p.__d) renderComponent(p);
 	    }
-	    function isFunctionalComponent(vnode) {
-	        var nodeName = vnode && vnode.nodeName;
-	        return nodeName && isFunction(nodeName) && !(nodeName.prototype && nodeName.prototype.render);
-	    }
-	    function buildFunctionalComponent(vnode, context) {
-	        return vnode.nodeName(getNodeProps(vnode), context || EMPTY);
-	    }
-	    function isSameNodeType(node, vnode) {
-	        if (isString(vnode)) return node instanceof Text;
-	        if (isString(vnode.nodeName)) return !node._componentConstructor && isNamedNode(node, vnode.nodeName);
-	        if (isFunction(vnode.nodeName)) return (node._componentConstructor ? node._componentConstructor === vnode.nodeName : !0) || isFunctionalComponent(vnode); else ;
+	    function isSameNodeType(node, vnode, hydrating) {
+	        if ('string' == typeof vnode || 'number' == typeof vnode) return void 0 !== node.splitText;
+	        if ('string' == typeof vnode.nodeName) return !node._componentConstructor && isNamedNode(node, vnode.nodeName); else return hydrating || node._componentConstructor === vnode.nodeName;
 	    }
 	    function isNamedNode(node, nodeName) {
-	        return node.normalizedNodeName === nodeName || toLowerCase(node.nodeName) === toLowerCase(nodeName);
+	        return node.__n === nodeName || node.nodeName.toLowerCase() === nodeName.toLowerCase();
 	    }
 	    function getNodeProps(vnode) {
-	        var props = clone(vnode.attributes);
+	        var props = extend({}, vnode.attributes);
 	        props.children = vnode.children;
 	        var defaultProps = vnode.nodeName.defaultProps;
-	        if (defaultProps) for (var i in defaultProps) if (void 0 === props[i]) props[i] = defaultProps[i];
+	        if (void 0 !== defaultProps) for (var i in defaultProps) if (void 0 === props[i]) props[i] = defaultProps[i];
 	        return props;
 	    }
+	    function createNode(nodeName, isSvg) {
+	        var node = isSvg ? document.createElementNS('http://www.w3.org/2000/svg', nodeName) : document.createElement(nodeName);
+	        node.__n = nodeName;
+	        return node;
+	    }
 	    function removeNode(node) {
-	        var p = node.parentNode;
-	        if (p) p.removeChild(node);
+	        if (node.parentNode) node.parentNode.removeChild(node);
 	    }
 	    function setAccessor(node, name, old, value, isSvg) {
 	        if ('className' === name) name = 'class';
-	        if ('class' === name && value && 'object' == typeof value) value = hashToClassName(value);
-	        if ('key' === name) ; else if ('class' === name && !isSvg) node.className = value || ''; else if ('style' === name) {
-	            if (!value || isString(value) || isString(old)) node.style.cssText = value || '';
+	        if ('key' === name) ; else if ('ref' === name) {
+	            if (old) old(null);
+	            if (value) value(node);
+	        } else if ('class' === name && !isSvg) node.className = value || ''; else if ('style' === name) {
+	            if (!value || 'string' == typeof value || 'string' == typeof old) node.style.cssText = value || '';
 	            if (value && 'object' == typeof value) {
-	                if (!isString(old)) for (var i in old) if (!(i in value)) node.style[i] = '';
-	                for (var i in value) node.style[i] = 'number' == typeof value[i] && !NON_DIMENSION_PROPS[i] ? value[i] + 'px' : value[i];
+	                if ('string' != typeof old) for (var i in old) if (!(i in value)) node.style[i] = '';
+	                for (var i in value) node.style[i] = 'number' == typeof value[i] && IS_NON_DIMENSIONAL.test(i) === !1 ? value[i] + 'px' : value[i];
 	            }
 	        } else if ('dangerouslySetInnerHTML' === name) {
 	            if (value) node.innerHTML = value.__html || '';
 	        } else if ('o' == name[0] && 'n' == name[1]) {
-	            var l = node._listeners || (node._listeners = {});
-	            name = toLowerCase(name.substring(2));
+	            var useCapture = name !== (name = name.replace(/Capture$/, ''));
+	            name = name.toLowerCase().substring(2);
 	            if (value) {
-	                if (!l[name]) node.addEventListener(name, eventProxy, !!NON_BUBBLING_EVENTS[name]);
-	            } else if (l[name]) node.removeEventListener(name, eventProxy, !!NON_BUBBLING_EVENTS[name]);
-	            l[name] = value;
+	                if (!old) node.addEventListener(name, eventProxy, useCapture);
+	            } else node.removeEventListener(name, eventProxy, useCapture);
+	            (node.__l || (node.__l = {}))[name] = value;
 	        } else if ('list' !== name && 'type' !== name && !isSvg && name in node) {
 	            setProperty(node, name, null == value ? '' : value);
 	            if (null == value || value === !1) node.removeAttribute(name);
 	        } else {
-	            var ns = isSvg && name.match(/^xlink\:?(.+)/);
-	            if (null == value || value === !1) if (ns) node.removeAttributeNS('http://www.w3.org/1999/xlink', toLowerCase(ns[1])); else node.removeAttribute(name); else if ('object' != typeof value && !isFunction(value)) if (ns) node.setAttributeNS('http://www.w3.org/1999/xlink', toLowerCase(ns[1]), value); else node.setAttribute(name, value);
+	            var ns = isSvg && name !== (name = name.replace(/^xlink\:?/, ''));
+	            if (null == value || value === !1) if (ns) node.removeAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase()); else node.removeAttribute(name); else if ('function' != typeof value) if (ns) node.setAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase(), value); else node.setAttribute(name, value);
 	        }
 	    }
 	    function setProperty(node, name, value) {
@@ -1388,20 +1849,7 @@ i
 	        } catch (e) {}
 	    }
 	    function eventProxy(e) {
-	        return this._listeners[e.type](options.event && options.event(e) || e);
-	    }
-	    function collectNode(node) {
-	        removeNode(node);
-	        if (node instanceof Element) {
-	            node._component = node._componentConstructor = null;
-	            var _name = node.normalizedNodeName || toLowerCase(node.nodeName);
-	            (nodes[_name] || (nodes[_name] = [])).push(node);
-	        }
-	    }
-	    function createNode(nodeName, isSvg) {
-	        var name = toLowerCase(nodeName), node = nodes[name] && nodes[name].pop() || (isSvg ? document.createElementNS('http://www.w3.org/2000/svg', nodeName) : document.createElement(nodeName));
-	        node.normalizedNodeName = name;
-	        return node;
+	        return this.__l[e.type](options.event && options.event(e) || e);
 	    }
 	    function flushMounts() {
 	        var c;
@@ -1412,10 +1860,10 @@ i
 	    }
 	    function diff(dom, vnode, context, mountAll, parent, componentRoot) {
 	        if (!diffLevel++) {
-	            isSvgMode = parent && 'undefined' != typeof parent.ownerSVGElement;
-	            hydrating = dom && !(ATTR_KEY in dom);
+	            isSvgMode = null != parent && void 0 !== parent.ownerSVGElement;
+	            hydrating = null != dom && !('__preactattr_' in dom);
 	        }
-	        var ret = idiff(dom, vnode, context, mountAll);
+	        var ret = idiff(dom, vnode, context, mountAll, componentRoot);
 	        if (parent && ret.parentNode !== parent) parent.appendChild(ret);
 	        if (!--diffLevel) {
 	            hydrating = !1;
@@ -1423,132 +1871,139 @@ i
 	        }
 	        return ret;
 	    }
-	    function idiff(dom, vnode, context, mountAll) {
-	        var ref = vnode && vnode.attributes && vnode.attributes.ref;
-	        while (isFunctionalComponent(vnode)) vnode = buildFunctionalComponent(vnode, context);
+	    function idiff(dom, vnode, context, mountAll, componentRoot) {
+	        var out = dom, prevSvgMode = isSvgMode;
 	        if (null == vnode) vnode = '';
-	        if (isString(vnode)) {
-	            if (dom && dom instanceof Text && dom.parentNode) {
+	        if ('string' == typeof vnode) {
+	            if (dom && void 0 !== dom.splitText && dom.parentNode && (!dom._component || componentRoot)) {
 	                if (dom.nodeValue != vnode) dom.nodeValue = vnode;
 	            } else {
-	                if (dom) recollectNodeTree(dom);
-	                dom = document.createTextNode(vnode);
+	                out = document.createTextNode(vnode);
+	                if (dom) {
+	                    if (dom.parentNode) dom.parentNode.replaceChild(out, dom);
+	                    recollectNodeTree(dom, !0);
+	                }
 	            }
-	            return dom;
+	            out.__preactattr_ = !0;
+	            return out;
 	        }
-	        if (isFunction(vnode.nodeName)) return buildComponentFromVNode(dom, vnode, context, mountAll);
-	        var out = dom, nodeName = String(vnode.nodeName), prevSvgMode = isSvgMode, vchildren = vnode.children;
-	        isSvgMode = 'svg' === nodeName ? !0 : 'foreignObject' === nodeName ? !1 : isSvgMode;
-	        if (!dom) out = createNode(nodeName, isSvgMode); else if (!isNamedNode(dom, nodeName)) {
-	            out = createNode(nodeName, isSvgMode);
-	            while (dom.firstChild) out.appendChild(dom.firstChild);
-	            if (dom.parentNode) dom.parentNode.replaceChild(out, dom);
-	            recollectNodeTree(dom);
+	        if ('function' == typeof vnode.nodeName) return buildComponentFromVNode(dom, vnode, context, mountAll);
+	        isSvgMode = 'svg' === vnode.nodeName ? !0 : 'foreignObject' === vnode.nodeName ? !1 : isSvgMode;
+	        if (!dom || !isNamedNode(dom, String(vnode.nodeName))) {
+	            out = createNode(String(vnode.nodeName), isSvgMode);
+	            if (dom) {
+	                while (dom.firstChild) out.appendChild(dom.firstChild);
+	                if (dom.parentNode) dom.parentNode.replaceChild(out, dom);
+	                recollectNodeTree(dom, !0);
+	            }
 	        }
-	        var fc = out.firstChild, props = out[ATTR_KEY];
-	        if (!props) {
-	            out[ATTR_KEY] = props = {};
-	            for (var a = out.attributes, i = a.length; i--; ) props[a[i].name] = a[i].value;
-	        }
-	        if (!hydrating && vchildren && 1 === vchildren.length && 'string' == typeof vchildren[0] && fc && fc instanceof Text && !fc.nextSibling) {
+	        var fc = out.firstChild, props = out.__preactattr_ || (out.__preactattr_ = {}), vchildren = vnode.children;
+	        if (!hydrating && vchildren && 1 === vchildren.length && 'string' == typeof vchildren[0] && null != fc && void 0 !== fc.splitText && null == fc.nextSibling) {
 	            if (fc.nodeValue != vchildren[0]) fc.nodeValue = vchildren[0];
-	        } else if (vchildren && vchildren.length || fc) innerDiffNode(out, vchildren, context, mountAll, !!props.dangerouslySetInnerHTML);
+	        } else if (vchildren && vchildren.length || null != fc) innerDiffNode(out, vchildren, context, mountAll, hydrating || null != props.dangerouslySetInnerHTML);
 	        diffAttributes(out, vnode.attributes, props);
-	        if (ref) (props.ref = ref)(out);
 	        isSvgMode = prevSvgMode;
 	        return out;
 	    }
-	    function innerDiffNode(dom, vchildren, context, mountAll, absorb) {
-	        var j, c, vchild, child, originalChildren = dom.childNodes, children = [], keyed = {}, keyedLen = 0, min = 0, len = originalChildren.length, childrenLen = 0, vlen = vchildren && vchildren.length;
-	        if (len) for (var i = 0; i < len; i++) {
-	            var _child = originalChildren[i], props = _child[ATTR_KEY], key = vlen ? (c = _child._component) ? c.__key : props ? props.key : null : null;
+	    function innerDiffNode(dom, vchildren, context, mountAll, isHydrating) {
+	        var j, c, vchild, child, originalChildren = dom.childNodes, children = [], keyed = {}, keyedLen = 0, min = 0, len = originalChildren.length, childrenLen = 0, vlen = vchildren ? vchildren.length : 0;
+	        if (0 !== len) for (var i = 0; i < len; i++) {
+	            var _child = originalChildren[i], props = _child.__preactattr_, key = vlen && props ? _child._component ? _child._component.__k : props.key : null;
 	            if (null != key) {
 	                keyedLen++;
 	                keyed[key] = _child;
-	            } else if (hydrating || absorb || props || _child instanceof Text) children[childrenLen++] = _child;
+	            } else if (props || (void 0 !== _child.splitText ? isHydrating ? _child.nodeValue.trim() : !0 : isHydrating)) children[childrenLen++] = _child;
 	        }
-	        if (vlen) for (var i = 0; i < vlen; i++) {
+	        if (0 !== vlen) for (var i = 0; i < vlen; i++) {
 	            vchild = vchildren[i];
 	            child = null;
 	            var key = vchild.key;
 	            if (null != key) {
-	                if (keyedLen && key in keyed) {
+	                if (keyedLen && void 0 !== keyed[key]) {
 	                    child = keyed[key];
 	                    keyed[key] = void 0;
 	                    keyedLen--;
 	                }
-	            } else if (!child && min < childrenLen) for (j = min; j < childrenLen; j++) {
-	                c = children[j];
-	                if (c && isSameNodeType(c, vchild)) {
-	                    child = c;
-	                    children[j] = void 0;
-	                    if (j === childrenLen - 1) childrenLen--;
-	                    if (j === min) min++;
-	                    break;
-	                }
+	            } else if (!child && min < childrenLen) for (j = min; j < childrenLen; j++) if (void 0 !== children[j] && isSameNodeType(c = children[j], vchild, isHydrating)) {
+	                child = c;
+	                children[j] = void 0;
+	                if (j === childrenLen - 1) childrenLen--;
+	                if (j === min) min++;
+	                break;
 	            }
 	            child = idiff(child, vchild, context, mountAll);
-	            if (child && child !== dom) if (i >= len) dom.appendChild(child); else if (child !== originalChildren[i]) {
-	                if (child === originalChildren[i + 1]) removeNode(originalChildren[i]);
-	                dom.insertBefore(child, originalChildren[i] || null);
-	            }
+	            if (child && child !== dom) if (i >= len) dom.appendChild(child); else if (child !== originalChildren[i]) if (child === originalChildren[i + 1]) removeNode(originalChildren[i]); else dom.insertBefore(child, originalChildren[i] || null);
 	        }
-	        if (keyedLen) for (var i in keyed) if (keyed[i]) recollectNodeTree(keyed[i]);
-	        while (min <= childrenLen) {
-	            child = children[childrenLen--];
-	            if (child) recollectNodeTree(child);
-	        }
+	        if (keyedLen) for (var i in keyed) if (void 0 !== keyed[i]) recollectNodeTree(keyed[i], !1);
+	        while (min <= childrenLen) if (void 0 !== (child = children[childrenLen--])) recollectNodeTree(child, !1);
 	    }
 	    function recollectNodeTree(node, unmountOnly) {
 	        var component = node._component;
-	        if (component) unmountComponent(component, !unmountOnly); else {
-	            if (node[ATTR_KEY] && node[ATTR_KEY].ref) node[ATTR_KEY].ref(null);
-	            if (!unmountOnly) collectNode(node);
-	            var c;
-	            while (c = node.lastChild) recollectNodeTree(c, unmountOnly);
+	        if (component) unmountComponent(component); else {
+	            if (null != node.__preactattr_ && node.__preactattr_.ref) node.__preactattr_.ref(null);
+	            if (unmountOnly === !1 || null == node.__preactattr_) removeNode(node);
+	            removeChildren(node);
+	        }
+	    }
+	    function removeChildren(node) {
+	        node = node.lastChild;
+	        while (node) {
+	            var next = node.previousSibling;
+	            recollectNodeTree(node, !0);
+	            node = next;
 	        }
 	    }
 	    function diffAttributes(dom, attrs, old) {
 	        var name;
-	        for (name in old) if (!(attrs && name in attrs) && null != old[name]) setAccessor(dom, name, old[name], old[name] = void 0, isSvgMode);
-	        if (attrs) for (name in attrs) if (!('children' === name || 'innerHTML' === name || name in old && attrs[name] === ('value' === name || 'checked' === name ? dom[name] : old[name]))) setAccessor(dom, name, old[name], old[name] = attrs[name], isSvgMode);
+	        for (name in old) if ((!attrs || null == attrs[name]) && null != old[name]) setAccessor(dom, name, old[name], old[name] = void 0, isSvgMode);
+	        for (name in attrs) if (!('children' === name || 'innerHTML' === name || name in old && attrs[name] === ('value' === name || 'checked' === name ? dom[name] : old[name]))) setAccessor(dom, name, old[name], old[name] = attrs[name], isSvgMode);
 	    }
 	    function collectComponent(component) {
-	        var name = component.constructor.name, list = components[name];
-	        if (list) list.push(component); else components[name] = [ component ];
+	        var name = component.constructor.name;
+	        (components[name] || (components[name] = [])).push(component);
 	    }
 	    function createComponent(Ctor, props, context) {
-	        var inst = new Ctor(props, context), list = components[Ctor.name];
-	        Component.call(inst, props, context);
+	        var inst, list = components[Ctor.name];
+	        if (Ctor.prototype && Ctor.prototype.render) {
+	            inst = new Ctor(props, context);
+	            Component.call(inst, props, context);
+	        } else {
+	            inst = new Component(props, context);
+	            inst.constructor = Ctor;
+	            inst.render = doRender;
+	        }
 	        if (list) for (var i = list.length; i--; ) if (list[i].constructor === Ctor) {
-	            inst.nextBase = list[i].nextBase;
+	            inst.__b = list[i].__b;
 	            list.splice(i, 1);
 	            break;
 	        }
 	        return inst;
 	    }
+	    function doRender(props, state, context) {
+	        return this.constructor(props, context);
+	    }
 	    function setComponentProps(component, props, opts, context, mountAll) {
-	        if (!component._disable) {
-	            component._disable = !0;
-	            if (component.__ref = props.ref) delete props.ref;
-	            if (component.__key = props.key) delete props.key;
+	        if (!component.__x) {
+	            component.__x = !0;
+	            if (component.__r = props.ref) delete props.ref;
+	            if (component.__k = props.key) delete props.key;
 	            if (!component.base || mountAll) {
 	                if (component.componentWillMount) component.componentWillMount();
 	            } else if (component.componentWillReceiveProps) component.componentWillReceiveProps(props, context);
 	            if (context && context !== component.context) {
-	                if (!component.prevContext) component.prevContext = component.context;
+	                if (!component.__c) component.__c = component.context;
 	                component.context = context;
 	            }
-	            if (!component.prevProps) component.prevProps = component.props;
+	            if (!component.__p) component.__p = component.props;
 	            component.props = props;
-	            component._disable = !1;
+	            component.__x = !1;
 	            if (0 !== opts) if (1 === opts || options.syncComponentUpdates !== !1 || !component.base) renderComponent(component, 1, mountAll); else enqueueRender(component);
-	            if (component.__ref) component.__ref(component);
+	            if (component.__r) component.__r(component);
 	        }
 	    }
 	    function renderComponent(component, opts, mountAll, isChild) {
-	        if (!component._disable) {
-	            var skip, rendered, inst, cbase, props = component.props, state = component.state, context = component.context, previousProps = component.prevProps || props, previousState = component.prevState || state, previousContext = component.prevContext || context, isUpdate = component.base, nextBase = component.nextBase, initialBase = isUpdate || nextBase, initialChildComponent = component._component;
+	        if (!component.__x) {
+	            var rendered, inst, cbase, props = component.props, state = component.state, context = component.context, previousProps = component.__p || props, previousState = component.__s || state, previousContext = component.__c || context, isUpdate = component.base, nextBase = component.__b, initialBase = isUpdate || nextBase, initialChildComponent = component._component, skip = !1;
 	            if (isUpdate) {
 	                component.props = previousProps;
 	                component.state = previousState;
@@ -1558,23 +2013,21 @@ i
 	                component.state = state;
 	                component.context = context;
 	            }
-	            component.prevProps = component.prevState = component.prevContext = component.nextBase = null;
-	            component._dirty = !1;
+	            component.__p = component.__s = component.__c = component.__b = null;
+	            component.__d = !1;
 	            if (!skip) {
-	                if (component.render) rendered = component.render(props, state, context);
-	                if (component.getChildContext) context = extend(clone(context), component.getChildContext());
-	                while (isFunctionalComponent(rendered)) rendered = buildFunctionalComponent(rendered, context);
+	                rendered = component.render(props, state, context);
+	                if (component.getChildContext) context = extend(extend({}, context), component.getChildContext());
 	                var toUnmount, base, childComponent = rendered && rendered.nodeName;
-	                if (isFunction(childComponent)) {
+	                if ('function' == typeof childComponent) {
 	                    var childProps = getNodeProps(rendered);
 	                    inst = initialChildComponent;
-	                    if (inst && inst.constructor === childComponent && childProps.key == inst.__key) setComponentProps(inst, childProps, 1, context); else {
+	                    if (inst && inst.constructor === childComponent && childProps.key == inst.__k) setComponentProps(inst, childProps, 1, context, !1); else {
 	                        toUnmount = inst;
-	                        inst = createComponent(childComponent, childProps, context);
-	                        inst.nextBase = inst.nextBase || nextBase;
-	                        inst._parentComponent = component;
-	                        component._component = inst;
-	                        setComponentProps(inst, childProps, 0, context);
+	                        component._component = inst = createComponent(childComponent, childProps, context);
+	                        inst.__b = inst.__b || nextBase;
+	                        inst.__u = component;
+	                        setComponentProps(inst, childProps, 0, context, !1);
 	                        renderComponent(inst, 1, mountAll, !0);
 	                    }
 	                    base = inst.base;
@@ -1593,163 +2046,121 @@ i
 	                        baseParent.replaceChild(base, initialBase);
 	                        if (!toUnmount) {
 	                            initialBase._component = null;
-	                            recollectNodeTree(initialBase);
+	                            recollectNodeTree(initialBase, !1);
 	                        }
 	                    }
 	                }
-	                if (toUnmount) unmountComponent(toUnmount, base !== initialBase);
+	                if (toUnmount) unmountComponent(toUnmount);
 	                component.base = base;
 	                if (base && !isChild) {
 	                    var componentRef = component, t = component;
-	                    while (t = t._parentComponent) (componentRef = t).base = base;
+	                    while (t = t.__u) (componentRef = t).base = base;
 	                    base._component = componentRef;
 	                    base._componentConstructor = componentRef.constructor;
 	                }
 	            }
 	            if (!isUpdate || mountAll) mounts.unshift(component); else if (!skip) {
+	                flushMounts();
 	                if (component.componentDidUpdate) component.componentDidUpdate(previousProps, previousState, previousContext);
 	                if (options.afterUpdate) options.afterUpdate(component);
 	            }
-	            var fn, cb = component._renderCallbacks;
-	            if (cb) while (fn = cb.pop()) fn.call(component);
+	            if (null != component.__h) while (component.__h.length) component.__h.pop().call(component);
 	            if (!diffLevel && !isChild) flushMounts();
 	        }
 	    }
 	    function buildComponentFromVNode(dom, vnode, context, mountAll) {
 	        var c = dom && dom._component, originalComponent = c, oldDom = dom, isDirectOwner = c && dom._componentConstructor === vnode.nodeName, isOwner = isDirectOwner, props = getNodeProps(vnode);
-	        while (c && !isOwner && (c = c._parentComponent)) isOwner = c.constructor === vnode.nodeName;
+	        while (c && !isOwner && (c = c.__u)) isOwner = c.constructor === vnode.nodeName;
 	        if (c && isOwner && (!mountAll || c._component)) {
 	            setComponentProps(c, props, 3, context, mountAll);
 	            dom = c.base;
 	        } else {
 	            if (originalComponent && !isDirectOwner) {
-	                unmountComponent(originalComponent, !0);
+	                unmountComponent(originalComponent);
 	                dom = oldDom = null;
 	            }
 	            c = createComponent(vnode.nodeName, props, context);
-	            if (dom && !c.nextBase) {
-	                c.nextBase = dom;
+	            if (dom && !c.__b) {
+	                c.__b = dom;
 	                oldDom = null;
 	            }
 	            setComponentProps(c, props, 1, context, mountAll);
 	            dom = c.base;
 	            if (oldDom && dom !== oldDom) {
 	                oldDom._component = null;
-	                recollectNodeTree(oldDom);
+	                recollectNodeTree(oldDom, !1);
 	            }
 	        }
 	        return dom;
 	    }
-	    function unmountComponent(component, remove) {
+	    function unmountComponent(component) {
 	        if (options.beforeUnmount) options.beforeUnmount(component);
 	        var base = component.base;
-	        component._disable = !0;
+	        component.__x = !0;
 	        if (component.componentWillUnmount) component.componentWillUnmount();
 	        component.base = null;
 	        var inner = component._component;
-	        if (inner) unmountComponent(inner, remove); else if (base) {
-	            if (base[ATTR_KEY] && base[ATTR_KEY].ref) base[ATTR_KEY].ref(null);
-	            component.nextBase = base;
-	            if (remove) {
-	                removeNode(base);
-	                collectComponent(component);
-	            }
-	            var c;
-	            while (c = base.lastChild) recollectNodeTree(c, !remove);
+	        if (inner) unmountComponent(inner); else if (base) {
+	            if (base.__preactattr_ && base.__preactattr_.ref) base.__preactattr_.ref(null);
+	            component.__b = base;
+	            removeNode(base);
+	            collectComponent(component);
+	            removeChildren(base);
 	        }
-	        if (component.__ref) component.__ref(null);
-	        if (component.componentDidUnmount) component.componentDidUnmount();
+	        if (component.__r) component.__r(null);
 	    }
 	    function Component(props, context) {
-	        this._dirty = !0;
+	        this.__d = !0;
 	        this.context = context;
 	        this.props = props;
-	        if (!this.state) this.state = {};
+	        this.state = this.state || {};
 	    }
 	    function render(vnode, parent, merge) {
-	        return diff(merge, vnode, {}, !1, parent);
+	        return diff(merge, vnode, {}, !1, parent, !1);
 	    }
 	    var options = {};
 	    var stack = [];
 	    var EMPTY_CHILDREN = [];
-	    var lcCache = {};
-	    var toLowerCase = function(s) {
-	        return lcCache[s] || (lcCache[s] = s.toLowerCase());
-	    };
-	    var resolved = 'undefined' != typeof Promise && Promise.resolve();
-	    var defer = resolved ? function(f) {
-	        resolved.then(f);
-	    } : setTimeout;
-	    var EMPTY = {};
-	    var ATTR_KEY = 'undefined' != typeof Symbol ? Symbol.for('preactattr') : '__preactattr_';
-	    var NON_DIMENSION_PROPS = {
-	        boxFlex: 1,
-	        boxFlexGroup: 1,
-	        columnCount: 1,
-	        fillOpacity: 1,
-	        flex: 1,
-	        flexGrow: 1,
-	        flexPositive: 1,
-	        flexShrink: 1,
-	        flexNegative: 1,
-	        fontWeight: 1,
-	        lineClamp: 1,
-	        lineHeight: 1,
-	        opacity: 1,
-	        order: 1,
-	        orphans: 1,
-	        strokeOpacity: 1,
-	        widows: 1,
-	        zIndex: 1,
-	        zoom: 1
-	    };
-	    var NON_BUBBLING_EVENTS = {
-	        blur: 1,
-	        error: 1,
-	        focus: 1,
-	        load: 1,
-	        resize: 1,
-	        scroll: 1
-	    };
+	    var IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
 	    var items = [];
-	    var nodes = {};
 	    var mounts = [];
 	    var diffLevel = 0;
 	    var isSvgMode = !1;
 	    var hydrating = !1;
 	    var components = {};
 	    extend(Component.prototype, {
-	        linkState: function(key, eventPath) {
-	            var c = this._linkedStates || (this._linkedStates = {});
-	            return c[key + eventPath] || (c[key + eventPath] = createLinkedState(this, key, eventPath));
-	        },
 	        setState: function(state, callback) {
 	            var s = this.state;
-	            if (!this.prevState) this.prevState = clone(s);
-	            extend(s, isFunction(state) ? state(s, this.props) : state);
-	            if (callback) (this._renderCallbacks = this._renderCallbacks || []).push(callback);
+	            if (!this.__s) this.__s = extend({}, s);
+	            extend(s, 'function' == typeof state ? state(s, this.props) : state);
+	            if (callback) (this.__h = this.__h || []).push(callback);
 	            enqueueRender(this);
 	        },
-	        forceUpdate: function() {
+	        forceUpdate: function(callback) {
+	            if (callback) (this.__h = this.__h || []).push(callback);
 	            renderComponent(this, 2);
 	        },
 	        render: function() {}
 	    });
-	    exports.h = h;
-	    exports.cloneElement = cloneElement;
-	    exports.Component = Component;
-	    exports.render = render;
-	    exports.rerender = rerender;
-	    exports.options = options;
-	});
+	    var preact = {
+	        h: h,
+	        createElement: h,
+	        cloneElement: cloneElement,
+	        Component: Component,
+	        render: render,
+	        rerender: rerender,
+	        options: options
+	    };
+	    if (true) module.exports = preact; else self.preact = preact;
+	}();
 	//# sourceMappingURL=preact.js.map
 
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* eslint-disable */
-	var renderToString = dep(__webpack_require__(6));
+	var renderToString = dep(__webpack_require__(13));
 
 	function dep(obj) { return obj['default'] || obj; }
 
@@ -1759,9 +2170,9 @@ i
 	};
 
 
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
 		 true ? module.exports = factory() :
@@ -1831,7 +2242,7 @@ i
 				str += ';';
 			}
 		}
-		return str;
+		return str || undefined;
 	}
 
 	function hashToClassName(c) {
@@ -1910,6 +2321,8 @@ i
 					rendered = nodeName(props, context);
 				} else {
 					var c = new nodeName(props, context);
+
+					c._disable = c.__x = true;
 					c.props = props;
 					c.context = context;
 					if (c.componentWillMount) c.componentWillMount();
@@ -2053,5 +2466,5 @@ i
 	//# sourceMappingURL=index.js.map
 
 
-/***/ }
+/***/ })
 /******/ ]);
