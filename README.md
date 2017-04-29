@@ -23,7 +23,7 @@ You can download the latest release .jar from Maven Central using the following 
 
 * **groupId**&nbsp;&nbsp;&nbsp; com.github.gwtreact
 * **artifactId**&nbsp;&nbsp;gwt-react
-* **version**&nbsp;&nbsp;&nbsp;  0.5.0
+* **version**&nbsp;&nbsp;&nbsp;  0.6.0
 
 ## Documentation
 
@@ -62,6 +62,7 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 | Date | Version | Description |
 | :---      | :---  | :---  |
+| 4/29/2017 | 0.6.0 | Support React 15.5, Preact 8.1 and GWT 2.8.1   |
 | 3/18/2017 | 0.5.0 | Refactored to use more future proof ES6 styled stateful components and added Preact support  |
 | 10/28/2016 | 0.3.0 | Support react 15.3.2 and GWT 2.8 final release   |
 | 6/18/2016 | 0.2.0 | Update to use gwt-interop-utils library   |
