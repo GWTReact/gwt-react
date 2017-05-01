@@ -3,8 +3,10 @@ GWT Java bindings for React
 
 ## Introduction
 
-<p>gwt-react provides Java [GWT](http://www.gwtproject.org/) bindings for [React v15.4.2](https://facebook.github.io/react/) based on the new JsInterop capabilities introduced in GWT 2.8</p>
-<p>In addition, you can now use the same bindings with [Preact v7.2.0](https://github.com/developit/preact)</p>
+gwt-react provides Java [GWT](http://www.gwtproject.org/) bindings for [React v15.5](https://facebook.github.io/react/) based on the new JsInterop capabilities introduced in GWT 2.8
+<br/>
+<br/>
+In addition, you can now use the same bindings with [Preact v8.1](https://github.com/developit/preact)
 
 ## Prerequisites
 
