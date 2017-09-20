@@ -40,3 +40,9 @@ bin/
 .settings/
 .classpath
 .project
+
+# IDEA projects
+*.iml
+/*.ipr
+/*.iws
+/.idea
