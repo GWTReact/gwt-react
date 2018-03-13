@@ -26,5 +26,5 @@ import jsinterop.annotations.JsFunction;
 
 @JsFunction
 public interface ChildrenMapFn {
-    ReactElement<?, ?> mapChild(ReactElement<?, ?> childElement);
+    ReactElement mapChild(ReactElement childElement);
 }

@@ -48,8 +48,8 @@ public class ReactDOM {
      * @param container the DOM container to render into
      * @return a reference to the component or returns nothing for stateless components
      */
-    public static native <C> ReactElement<?, ?> render(ReactElement<?, ?> element, C container);
-    public static native <C> ReactElement<?, ?> render(ReactElement<?, ?> element, C container, JsProcedure onUpdate);
+    public static native <C> ReactElement render(ReactElement element, C container);
+    public static native <C> ReactElement render(ReactElement element, C container, JsProcedure onUpdate);
     
     /**
      * Remove a mounted React component from the DOM and clean up its event handlers and state. If

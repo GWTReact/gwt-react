@@ -39,5 +39,5 @@ public interface StatelessComponent<P extends BaseProps> {
      * @param props     The props for this component
      * @return          A single {@link ReactElement}
      */
-    ReactElement<?, ?> render(P props);
+    ReactElement render(P props);
 }

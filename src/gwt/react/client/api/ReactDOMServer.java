@@ -47,7 +47,7 @@ public class ReactDOMServer {
      * @param element the element to render
      * @return the HTML markup
      */
-    public static native String renderToString(ReactElement<?, ?> element);
+    public static native String renderToString(ReactElement element);
 
     /**
      * <p>Similar to renderToString, except this doesn't create extra DOM attributes such as
@@ -58,5 +58,5 @@ public class ReactDOMServer {
      * @param element the element to render
      * @return the HTML markup
      */
-    public static native String renderToStaticMarkup(ReactElement<?, ?> element);
+    public static native String renderToStaticMarkup(ReactElement element);
 }
