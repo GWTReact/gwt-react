@@ -50,7 +50,17 @@ public class ReactDOM {
      */
     public static native <C> ReactElement render(ReactElement element, C container);
     public static native <C> ReactElement render(ReactElement element, C container, JsProcedure onUpdate);
-    
+
+	/**
+	 * Render children into a DOM node that exists outside the DOM hierarchy of the parent component
+	 * @param element
+	 * @param container
+	 * @param <C>
+	 * @return
+	 */
+	public static native <C> ReactElement createPortal(ReactElement element, C container);
+	public static native <C> ReactElement createPortal(String element, C container);
+
     /**
      * Remove a mounted React component from the DOM and clean up its event handlers and state. If
      * no component was mounted in the container, calling this function does nothing.

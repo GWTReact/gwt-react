@@ -27,10 +27,14 @@ import gwt.react.client.components.*;
 import gwt.react.client.elements.ReactElement;
 import gwt.react.client.elements.ReactElementChildren;
 import gwt.react.client.proptypes.BaseProps;
+import gwt.react.client.proptypes.FragmentProps;
 import gwt.react.client.proptypes.html.*;
 import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
+
+import static gwt.react.client.api.GwtReact.castAsReactElement;
 
 @JsType(isNative = true, namespace = JsPackage.GLOBAL)
 public class React {
@@ -47,9 +51,9 @@ public class React {
      * @param props the props to pass to the element
      * @return  a {@link ReactElement}
      */
-    public static native <P extends HtmlProps> ReactElement createElement(String type, P props);
-    public static native <P extends HtmlProps> ReactElement createElement(String type, P props, String value);
-    public static native <P extends HtmlProps> ReactElement createElement(String type, P props, ReactElement ...child);
+    public static native <P extends HtmlGlobalFields> ReactElement createElement(String type, P props);
+    public static native <P extends HtmlGlobalFields> ReactElement createElement(String type, P props, String value);
+    public static native <P extends HtmlGlobalFields> ReactElement createElement(String type, P props, ReactElement ...child);
 
     /**
      * Create and return a new ReactElement of the given type.
@@ -100,6 +104,9 @@ public class React {
     public static native <P extends BaseProps> ReactElement createElement(ComponentConstructorFn<P> type, P props, String value);
     public static native <P extends BaseProps> ReactElement createElement(ComponentConstructorFn<P> type, P props, ReactElement ...child);
 
+    @JsProperty
+	private static ComponentConstructorFn<BaseProps> Fragment;
+
     /**
      * <p>Clone and return a new ReactElement using element as the starting point. The resulting
      * element will have the original element's props with the new props merged in shallowly.
@@ -127,86 +134,89 @@ public class React {
         private DOM() {
         }
 
-        public static native ReactElement a(AnchorProps props, String value);
-        public static native ReactElement a(AnchorProps props, ReactElement ...child);
+	    @JsOverlay public static ReactElement fragment(FragmentProps props, ReactElement ...child) { return  createElement(Fragment, props, child); }
+	    @JsOverlay public static ReactElement fragment(ReactElement ...child) { return  createElement(Fragment, null, child); }
 
-        public static native ReactElement article(HtmlProps props, ReactElement ...child);
-        public static native ReactElement audio(AudioProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement a(AnchorProps props, String value) { return  createElement("a", props, value); }
+        @JsOverlay public static ReactElement a(AnchorProps props, ReactElement ...child) { return  createElement("a", props, child); }
 
-        public static native ReactElement br(HtmlProps props);
-        public static native ReactElement br();
+        @JsOverlay public static ReactElement article(HtmlProps props, ReactElement ...child) { return  createElement("article", props, child); }
+        @JsOverlay public static ReactElement audio(AudioProps props, ReactElement ...child) { return  createElement("audio", props, child); }
 
-        public static native ReactElement button(BtnProps props);
-        public static native ReactElement button(BtnProps props, String value);
+        @JsOverlay public static ReactElement br(HtmlProps props) { return  createElement("br", props); }
+        @JsOverlay public static ReactElement br() { return  createElement("br", null); }
 
-        public static native ReactElement canvas(HtmlProps props);
+        @JsOverlay public static ReactElement button(BtnProps props) { return  createElement("button", props); }
+        @JsOverlay public static ReactElement button(BtnProps props, String value) { return  createElement("button", props, value); }
 
-        public static native ReactElement caption(HtmlProps props, String value);
-        public static native ReactElement caption(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement canvas(HtmlProps props) { return  createElement("canvas", props); }
 
-        public static native ReactElement col(ColProps props, ReactElement ...child);
-        public static native ReactElement colgroup(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement caption(HtmlProps props, String value) { return  createElement("caption", props, value); }
+        @JsOverlay public static ReactElement caption(HtmlProps props, ReactElement ...child) { return  createElement("caption", props, child); }
 
-        public static native ReactElement div(HtmlProps props, String value);
-        public static native ReactElement div(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement col(ColProps props, ReactElement ...child) { return  createElement("col", props, child); }
+        @JsOverlay public static ReactElement colgroup(HtmlProps props, ReactElement ...child) { return  createElement("col", props, child); }
 
-        public static native ReactElement footer(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement div(HtmlProps props, String value) { return  createElement("div", props, value); }
+        @JsOverlay public static ReactElement div(HtmlProps props, ReactElement ...child) { return  createElement("div", props, child); }
 
-        public static native ReactElement form(FormProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement footer(HtmlProps props, ReactElement ...child) { return  createElement("footer", props, child); }
 
-        public static native ReactElement header(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement form(FormProps props, ReactElement ...child) { return  createElement("form", props, child); }
 
-        public static native ReactElement h1(HtmlProps props, String value);
-        public static native ReactElement h2(HtmlProps props, String value);
-        public static native ReactElement h3(HtmlProps props, String value);
-        public static native ReactElement h4(HtmlProps props, String value);
-        public static native ReactElement h5(HtmlProps props, String value);
-        public static native ReactElement h6(HtmlProps props, String value);
+        @JsOverlay public static ReactElement header(HtmlProps props, ReactElement ...child) { return  createElement("header", props, child); }
 
-        public static native ReactElement iframe(IFrameProps props);
+        @JsOverlay public static ReactElement h1(HtmlProps props, String value) { return  createElement("h1", props, value); }
+        @JsOverlay public static ReactElement h2(HtmlProps props, String value) { return  createElement("h2", props, value); }
+        @JsOverlay public static ReactElement h3(HtmlProps props, String value) { return  createElement("h3", props, value); }
+        @JsOverlay public static ReactElement h4(HtmlProps props, String value) { return  createElement("h4", props, value); }
+        @JsOverlay public static ReactElement h5(HtmlProps props, String value) { return  createElement("h5", props, value); }
+        @JsOverlay public static ReactElement h6(HtmlProps props, String value) { return  createElement("h6", props, value); }
 
-        public static native ReactElement img(ImgProps props);
+        @JsOverlay public static ReactElement iframe(IFrameProps props) { return  createElement("iframe", props); }
 
-        public static native ReactElement input(InputProps props);
+        @JsOverlay public static ReactElement img(ImgProps props) { return  createElement("img", props); }
 
-        public static native ReactElement label(LabelProps props, String value);
+        @JsOverlay public static ReactElement input(InputProps props) { return  createElement("input", props); }
 
-        public static native ReactElement li(HtmlProps props, String value);
-        public static native ReactElement li(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement label(LabelProps props, String value) { return  createElement("label", props, value); }
 
-        public static native ReactElement ol(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement li(HtmlProps props, String value) { return  createElement("li", props, value); }
+        @JsOverlay public static ReactElement li(HtmlProps props, ReactElement ...child) { return  createElement("li", props, child); }
 
-        public static native ReactElement option(OptionProps props, String value);
-        public static native ReactElement optgroup(OptGroupProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement ol(HtmlProps props, ReactElement ...child) { return  createElement("ol", props, child); }
 
-        public static native ReactElement p(HtmlProps props, String value);
-        public static native ReactElement p(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement option(OptionProps props, String value) { return  createElement("option", props, value); }
+        @JsOverlay public static ReactElement optgroup(OptGroupProps props, ReactElement ...child) { return  createElement("optgroup", props, child); }
 
-        public static native ReactElement span(HtmlProps props, String value);
-        public static native ReactElement span(HtmlProps props, ReactElement child1);
-        public static native ReactElement span(HtmlProps props, ReactElement child1, String value);
+        @JsOverlay public static ReactElement p(HtmlProps props, String value) { return createElement("p", props, value); }
+        @JsOverlay public static ReactElement p(HtmlProps props, ReactElement ...child) { return  createElement("p", props, child); }
 
-        public static native ReactElement select(SelectProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement span(HtmlProps props, String value) { return  createElement("span", props, value); }
+        @JsOverlay public static ReactElement span(HtmlProps props, ReactElement child) { return  createElement("span", props, child); }
+        @JsOverlay public static ReactElement span(HtmlProps props, ReactElement child, String value) { return  createElement("span", props, child); }
 
-        public static native ReactElement section(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement select(SelectProps props, ReactElement ...child) { return  createElement("select", props, child); }
 
-        public static native ReactElement strong(HtmlProps props, String value);
+        @JsOverlay public static ReactElement section(HtmlProps props, ReactElement ...child) { return  createElement("section", props, child); }
 
-        public static native ReactElement source(SourceProps props);
+        @JsOverlay public static ReactElement strong(HtmlProps props, String value) { return  createElement("strong", props, value); }
 
-        public static native ReactElement table(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement source(SourceProps props) { return  createElement("source", null); }
 
-        public static native ReactElement textarea(TextAreaProps props);
+        @JsOverlay public static ReactElement table(HtmlProps props, ReactElement ...child) { return  createElement("table", props, child); }
 
-        public static native ReactElement td(TdProps props, String value);
-        public static native ReactElement td(TdProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement textarea(TextAreaProps props) { return  createElement("textarea", null); }
 
-        public static native ReactElement th(ThProps props, String value);
-        public static native ReactElement th(ThProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement td(TdProps props, String value) { return  createElement("td", props, value); }
+        @JsOverlay public static ReactElement td(TdProps props, ReactElement ...child) { return  createElement("td", props, child); }
 
-        public static native ReactElement tr(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement th(ThProps props, String value) { return  createElement("th", props, value); }
+        @JsOverlay public static ReactElement th(ThProps props, ReactElement ...child) { return  createElement("th", props, child); }
 
-        public static native ReactElement ul(HtmlProps props, ReactElement ...child);
+        @JsOverlay public static ReactElement tr(HtmlProps props, ReactElement ...child) { return  createElement("tr", props, child); }
+
+        @JsOverlay public static ReactElement ul(HtmlProps props, ReactElement ...child) { return  createElement("ul", props, child); }
     }
 
     /**
