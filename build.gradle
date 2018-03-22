@@ -46,7 +46,7 @@ compileJava{
 }
 
 gwt {
-    gwtVersion "2.8.1"
+    gwtVersion "2.8.2"
 
     eclipse.addGwtContainer = false;
 

@@ -1,6 +1,6 @@
 package gwt.react.client.events;
 
-import com.google.gwt.dom.client.DataTransfer;
+import elemental2.dom.DataTransfer;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true)

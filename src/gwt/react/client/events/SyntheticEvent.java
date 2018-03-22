@@ -1,8 +1,8 @@
 package gwt.react.client.events;
 
 import com.google.gwt.core.client.JsDate;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.Event;
+import elemental2.dom.Element;
+import elemental2.dom.Event;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true)

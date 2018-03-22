@@ -44,7 +44,7 @@ Once the project is stable we will be happy to except pull requests. If you find
 
 * Refine the CSS prop types and add enumerations and more useful setter methods where possible
 
-* Remove any dependencies on com.google.gwt.dom.*. Replace with Elemental 2 or something equivalent
+* ~~Remove any dependencies on com.google.gwt.dom.*. Replace with Elemental 2 or something equivalent~~, DONE
 
 * ~~Add facility to create factory interfaces like <code>React.DOM.xxx</code>~~, DONE
 
