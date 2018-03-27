@@ -53,7 +53,8 @@ public class React {
      */
     public static native <P extends HtmlGlobalFields> ReactElement createElement(String type, P props);
     public static native <P extends HtmlGlobalFields> ReactElement createElement(String type, P props, String value);
-    public static native <P extends HtmlGlobalFields> ReactElement createElement(String type, P props, ReactElement ...child);
+    public static native <P extends HtmlGlobalFields> ReactElement createElement(String type, P props, ReactElement ...children);
+	public static native <P extends HtmlGlobalFields> ReactElement createElement(String type, P props, ReactElement child, String value);
 
     /**
      * Create and return a new ReactElement of the given type.
@@ -67,7 +68,7 @@ public class React {
 
     public static native <P extends BaseProps> ReactElement createElement(StatelessComponent<P> type, P props);
     public static native <P extends BaseProps> ReactElement createElement(StatelessComponent<P> type, P props, String value);
-    public static native <P extends BaseProps> ReactElement createElement(StatelessComponent<P> type, P props, ReactElement ...child);
+    public static native <P extends BaseProps> ReactElement createElement(StatelessComponent<P> type, P props, ReactElement ...children);
 
     //Create ES6 Components
 
@@ -102,7 +103,7 @@ public class React {
 
     public static native <P extends BaseProps> ReactElement createElement(ComponentConstructorFn<P> type, P props);
     public static native <P extends BaseProps> ReactElement createElement(ComponentConstructorFn<P> type, P props, String value);
-    public static native <P extends BaseProps> ReactElement createElement(ComponentConstructorFn<P> type, P props, ReactElement ...child);
+    public static native <P extends BaseProps> ReactElement createElement(ComponentConstructorFn<P> type, P props, ReactElement ...children);
 
     @JsProperty
 	private static ComponentConstructorFn<BaseProps> Fragment;
@@ -194,7 +195,7 @@ public class React {
 
         @JsOverlay public static ReactElement span(HtmlProps props, String value) { return  createElement("span", props, value); }
         @JsOverlay public static ReactElement span(HtmlProps props, ReactElement child) { return  createElement("span", props, child); }
-        @JsOverlay public static ReactElement span(HtmlProps props, ReactElement child, String value) { return  createElement("span", props, child); }
+        @JsOverlay public static ReactElement span(HtmlProps props, ReactElement child, String value) { return  createElement("span", props, child, value); }
 
         @JsOverlay public static ReactElement select(SelectProps props, ReactElement ...child) { return  createElement("select", props, child); }
 
@@ -202,11 +203,11 @@ public class React {
 
         @JsOverlay public static ReactElement strong(HtmlProps props, String value) { return  createElement("strong", props, value); }
 
-        @JsOverlay public static ReactElement source(SourceProps props) { return  createElement("source", null); }
+        @JsOverlay public static ReactElement source(SourceProps props) { return  createElement("source", props); }
 
         @JsOverlay public static ReactElement table(HtmlProps props, ReactElement ...child) { return  createElement("table", props, child); }
 
-        @JsOverlay public static ReactElement textarea(TextAreaProps props) { return  createElement("textarea", null); }
+        @JsOverlay public static ReactElement textarea(TextAreaProps props) { return  createElement("textarea", props); }
 
         @JsOverlay public static ReactElement td(TdProps props, String value) { return  createElement("td", props, value); }
         @JsOverlay public static ReactElement td(TdProps props, ReactElement ...child) { return  createElement("td", props, child); }
