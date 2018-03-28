@@ -10,10 +10,10 @@ import jsinterop.annotations.JsType;
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
 public class OptionProps extends HtmlGlobalFields {
 
-    @JsOverlay public final OptionProps disabled(boolean b) { setDisabled(b); return this; }
-    @JsOverlay public final OptionProps label(String s) { setLabel(s);return this;}
-    @JsOverlay public final OptionProps selected(boolean b) { setSelected(b); return this; }
-    @JsOverlay public final OptionProps value(String s) { setValue(s);return this;}
+    @JsOverlay public final OptionProps disabled(boolean b) { disabled = b; return this; }
+    @JsOverlay public final OptionProps label(String s) { label = s;return this;}
+    @JsOverlay public final OptionProps selected(boolean b) { selected = b; return this; }
+    @JsOverlay public final OptionProps value(String s) { value = s;return this;}
 
     //React Specific
     @JsOverlay public final OptionProps key(String s) { key = s; return this; }

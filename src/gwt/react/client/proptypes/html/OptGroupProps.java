@@ -10,6 +10,6 @@ import jsinterop.annotations.JsType;
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
 public class OptGroupProps extends HtmlGlobalFields {
 
-    @JsOverlay public final OptGroupProps disabled(boolean b) { setDisabled(b); return this; }
-    @JsOverlay public final OptGroupProps label(String s) { setLabel(s);return this;}
+    @JsOverlay public final OptGroupProps disabled(boolean b) { disabled = b; return this; }
+    @JsOverlay public final OptGroupProps label(String s) { label = s;return this;}
 }

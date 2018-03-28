@@ -16,15 +16,15 @@ import jsinterop.annotations.JsType;
 @JsType(isNative=true, namespace=JsPackage.GLOBAL, name="Object")
 public class FormProps extends HtmlGlobalFields {
 
-    @JsOverlay public final FormProps acceptCharset(String s) { setAcceptCharset(s); return this; }
-    @JsOverlay public final FormProps action(String s) { setAction(s); return this; }
-    @JsOverlay public final FormProps autoComplete(OnOff s) { setAutoComplete(s.name()); return this; }
-    @JsOverlay public final FormProps formEncType(String s) { setFormEncType(s); return this; }
-    @JsOverlay public final FormProps formMethod(FormMethod s) { setFormMethod(s.name()); return this; }
-    @JsOverlay public final FormProps name(String s) { setName(s); return this; }
-    @JsOverlay public final FormProps formNoValidate(boolean b) { setFormNoValidate(b); return this; }
-    @JsOverlay public final FormProps formTarget(Target t) { setFormTarget(t.name()); return this; }
-    @JsOverlay public final FormProps formTarget(String s) { setFormTarget(s); return this; }
+    @JsOverlay public final FormProps acceptCharset(String s) { acceptCharset = s; return this; }
+    @JsOverlay public final FormProps action(String s) { action = s; return this; }
+    @JsOverlay public final FormProps autoComplete(OnOff s) { autoComplete = s.name(); return this; }
+    @JsOverlay public final FormProps formEncType(String s) { formEncType = s; return this; }
+    @JsOverlay public final FormProps formMethod(FormMethod s) { formMethod = s.name(); return this; }
+    @JsOverlay public final FormProps name(String s) { name = s; return this; }
+    @JsOverlay public final FormProps formNoValidate(boolean b) { formNoValidate = b; return this; }
+    @JsOverlay public final FormProps formTarget(Target t) { formTarget = t.name(); return this; }
+    @JsOverlay public final FormProps formTarget(String s) { formTarget = s; return this; }
 
     //React Specific
     @JsOverlay public final FormProps ref(String s) { ref = s; return this; }
@@ -32,59 +32,59 @@ public class FormProps extends HtmlGlobalFields {
     @JsOverlay public final FormProps key(String s) { key = s; return this; }
 
     //Global HTML props
-    @JsOverlay public final FormProps accessKey(String s) { setAccessKey(s);return this;}
-    @JsOverlay public final FormProps className(String s) { setClassName(s); return this; }
-    @JsOverlay public final FormProps contentEditable(boolean b) { setContentEditable(b); return this; }
-    @JsOverlay public final FormProps contextMenu(String s) { setContextMenu(s); return this; }
-    @JsOverlay public final FormProps dir(String s) { setDir(s); return this; }
-    @JsOverlay public final FormProps draggable(boolean b) { setDraggable(b); return this; }
-    @JsOverlay public final FormProps hidden(boolean b) { setHidden(b); return this; }
-    @JsOverlay public final FormProps id(String s) { setId(s); return this; }
-    @JsOverlay public final FormProps lang(String s) { setLang(s); return this; }
-    @JsOverlay public final FormProps spellcheck(boolean b) { setSpellCheck(b); return this; }
-    @JsOverlay public final FormProps style(CssProps s) { setStyle(s); return this; }
-    @JsOverlay public final FormProps tabIndex(int i) { setTabIndex(i); return this; }
-    @JsOverlay public final FormProps title(String s) { setTitle(s); return this; }
-    @JsOverlay public final FormProps translate(YesNo s) { setTranslate(s.name()); return this; }
+    @JsOverlay public final FormProps accessKey(String s) { accessKey = s;return this;}
+    @JsOverlay public final FormProps className(String s) { className = s; return this; }
+    @JsOverlay public final FormProps contentEditable(boolean b) { contentEditable = b; return this; }
+    @JsOverlay public final FormProps contextMenu(String s) { contextMenu = s; return this; }
+    @JsOverlay public final FormProps dir(String s) { dir = s; return this; }
+    @JsOverlay public final FormProps draggable(boolean b) { draggable = b; return this; }
+    @JsOverlay public final FormProps hidden(boolean b) { hidden = b; return this; }
+    @JsOverlay public final FormProps id(String s) { id = s; return this; }
+    @JsOverlay public final FormProps lang(String s) { lang = s; return this; }
+    @JsOverlay public final FormProps spellcheck(boolean b) { spellCheck = b; return this; }
+    @JsOverlay public final FormProps style(CssProps s) { style = s; return this; }
+    @JsOverlay public final FormProps tabIndex(int i) { tabIndex = i; return this; }
+    @JsOverlay public final FormProps title(String s) { title = s; return this; }
+    @JsOverlay public final FormProps translate(YesNo s) { translate = s.name(); return this; }
 
     //Applicable Event Handlers
 
     // Focus Events
-    @JsOverlay public final FormProps onBlur(FocusEventHandler handler) { setOnBlur(handler); return this; }
-    @JsOverlay public final FormProps onFocus(FocusEventHandler handler) { setOnFocus(handler); return this; }
+    @JsOverlay public final FormProps onBlur(FocusEventHandler handler) { onBlur = handler; return this; }
+    @JsOverlay public final FormProps onFocus(FocusEventHandler handler) { onFocus = handler; return this; }
 
     // Form Events
-    @JsOverlay public final FormProps onChange(FormEventHandler handler) { setOnChange(handler); return this; }
-    @JsOverlay public final FormProps onInput(FormEventHandler handler) { setOnInput(handler); return this; }
-    @JsOverlay public final FormProps onSubmit(FormEventHandler handler) { setOnSubmit(handler); return this; }
+    @JsOverlay public final FormProps onChange(FormEventHandler handler) { onChange = handler; return this; }
+    @JsOverlay public final FormProps onInput(FormEventHandler handler) { onInput = handler; return this; }
+    @JsOverlay public final FormProps onSubmit(FormEventHandler handler) { onSubmit = handler; return this; }
 
     // Keyboard Events
-    @JsOverlay public final FormProps onKeyDown(KeyboardEventHandler handler) { setOnKeyDown(handler); return this; }
-    @JsOverlay public final FormProps onKeyPress(KeyboardEventHandler handler) { setOnKeyPress(handler); return this; }
-    @JsOverlay public final FormProps onKeyUp(KeyboardEventHandler handler) { setOnKeyUp(handler); return this; }
+    @JsOverlay public final FormProps onKeyDown(KeyboardEventHandler handler) { onKeyDown = handler; return this; }
+    @JsOverlay public final FormProps onKeyPress(KeyboardEventHandler handler) { onKeyPress = handler; return this; }
+    @JsOverlay public final FormProps onKeyUp(KeyboardEventHandler handler) { onKeyUp = handler; return this; }
 
-    @JsOverlay public final FormProps onClick(MouseEventHandler handler) { setOnClick(handler); return this; }
-    @JsOverlay public final FormProps onContextMenu(MouseEventHandler handler) { setOnContextMenu(handler); return this; }
-    @JsOverlay public final FormProps onDoubleClick(MouseEventHandler handler) { setOnDoubleClick(handler); return this; }
-    @JsOverlay public final FormProps onDrag(DragEventHandler handler) { setOnDrag(handler); return this; }
-    @JsOverlay public final FormProps onDragEnd(DragEventHandler handler) { setOnDragEnd(handler); return this; }
-    @JsOverlay public final FormProps onDragEnter(DragEventHandler handler) { setOnDragEnter(handler); return this; }
-    @JsOverlay public final FormProps onDragExit(DragEventHandler handler) { setOnDragExit(handler); return this; }
-    @JsOverlay public final FormProps onDragLeave(DragEventHandler handler) { setOnDragLeave(handler); return this; }
-    @JsOverlay public final FormProps onDragOver(DragEventHandler handler) { setOnDragOver(handler); return this; }
-    @JsOverlay public final FormProps onDragStart(DragEventHandler handler) { setOnDragStart(handler); return this; }
-    @JsOverlay public final FormProps onDrop(DragEventHandler handler) { setOnDrop(handler); return this; }
-    @JsOverlay public final FormProps onMouseDown(MouseEventHandler handler) { setOnMouseDown(handler); return this; }
-    @JsOverlay public final FormProps onMouseEnter(MouseEventHandler handler) { setOnMouseEnter(handler); return this; }
-    @JsOverlay public final FormProps onMouseLeave(MouseEventHandler handler) { setOnMouseLeave(handler); return this; }
-    @JsOverlay public final FormProps onMouseMove(MouseEventHandler handler) { setOnMouseMove(handler); return this; }
-    @JsOverlay public final FormProps onMouseOut(MouseEventHandler handler) { setOnMouseOut(handler); return this; }
-    @JsOverlay public final FormProps onMouseOver(MouseEventHandler handler) { setOnMouseOver(handler); return this; }
-    @JsOverlay public final FormProps onMouseUp(MouseEventHandler handler) { setOnMouseUp(handler); return this; }
+    @JsOverlay public final FormProps onClick(MouseEventHandler handler) { onClick = handler; return this; }
+    @JsOverlay public final FormProps onContextMenu(MouseEventHandler handler) { onContextMenu = handler; return this; }
+    @JsOverlay public final FormProps onDoubleClick(MouseEventHandler handler) { onDoubleClick = handler; return this; }
+    @JsOverlay public final FormProps onDrag(DragEventHandler handler) { onDrag = handler; return this; }
+    @JsOverlay public final FormProps onDragEnd(DragEventHandler handler) { onDragEnd = handler; return this; }
+    @JsOverlay public final FormProps onDragEnter(DragEventHandler handler) { onDragEnter = handler; return this; }
+    @JsOverlay public final FormProps onDragExit(DragEventHandler handler) { onDragExit = handler; return this; }
+    @JsOverlay public final FormProps onDragLeave(DragEventHandler handler) { onDragLeave = handler; return this; }
+    @JsOverlay public final FormProps onDragOver(DragEventHandler handler) { onDragOver = handler; return this; }
+    @JsOverlay public final FormProps onDragStart(DragEventHandler handler) { onDragStart = handler; return this; }
+    @JsOverlay public final FormProps onDrop(DragEventHandler handler) { onDrop = handler; return this; }
+    @JsOverlay public final FormProps onMouseDown(MouseEventHandler handler) { onMouseDown = handler; return this; }
+    @JsOverlay public final FormProps onMouseEnter(MouseEventHandler handler) { onMouseEnter = handler; return this; }
+    @JsOverlay public final FormProps onMouseLeave(MouseEventHandler handler) { onMouseLeave = handler; return this; }
+    @JsOverlay public final FormProps onMouseMove(MouseEventHandler handler) { onMouseMove = handler; return this; }
+    @JsOverlay public final FormProps onMouseOut(MouseEventHandler handler) { onMouseOut = handler; return this; }
+    @JsOverlay public final FormProps onMouseOver(MouseEventHandler handler) { onMouseOver = handler; return this; }
+    @JsOverlay public final FormProps onMouseUp(MouseEventHandler handler) { onMouseUp = handler; return this; }
 
     // Touch Events
-    @JsOverlay public final FormProps onTouchCancel(TouchEventHandler handler) { setOnTouchCancel(handler); return this; }
-    @JsOverlay public final FormProps onTouchEnd(TouchEventHandler handler) { setOnTouchEnd(handler); return this; }
-    @JsOverlay public final FormProps onTouchMove(TouchEventHandler handler) { setOnTouchMove(handler); return this; }
-    @JsOverlay public final FormProps onTouchStart(TouchEventHandler handler) { setOnTouchStart(handler); return this; }
+    @JsOverlay public final FormProps onTouchCancel(TouchEventHandler handler) { onTouchCancel = handler; return this; }
+    @JsOverlay public final FormProps onTouchEnd(TouchEventHandler handler) { onTouchEnd = handler; return this; }
+    @JsOverlay public final FormProps onTouchMove(TouchEventHandler handler) { onTouchMove = handler; return this; }
+    @JsOverlay public final FormProps onTouchStart(TouchEventHandler handler) { onTouchStart = handler; return this; }
 }
