@@ -24,11 +24,8 @@ SOFTWARE. */
 import gwt.interop.utils.shared.collections.Array;
 import gwt.react.client.elements.ReactElement;
 import gwt.react.client.elements.ReactElementChildren;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsPackage;
-import jsinterop.annotations.JsType;
+import jsinterop.base.Js;
 
-@JsType(isNative = true, namespace = JsPackage.GLOBAL, name="GWTReact")
 public class GwtReact {
     /**
      * This is a static class.
@@ -38,12 +35,15 @@ public class GwtReact {
 
     //The following methods are used to work around limitations in the Java type system when
     //creating React Elements
-    @JsMethod(name = "cast")
-    public static native ReactElement castAsReactElement(Array<? extends ReactElement> children);
+    public static ReactElement castAsReactElement(Array<? extends ReactElement> children) {
+    	return Js.uncheckedCast(children);
+    }
 
-    @JsMethod(name = "cast")
-    public static native ReactElement castAsReactElement(ReactElementChildren children);
+    public static ReactElement castAsReactElement(ReactElementChildren children) {
+	    return Js.uncheckedCast(children);
+    }
 
-    @JsMethod(name = "cast")
-    public static native ReactElement stringLiteral(String value);
+    public static ReactElement stringLiteral(String value) {
+	    return Js.uncheckedCast(value);
+    }
 }

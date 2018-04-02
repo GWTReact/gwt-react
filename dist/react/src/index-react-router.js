@@ -19,16 +19,4 @@ window.ReactDOMServer = ReactDOMServer;
 //If you don't use React Router comment out the following line
 window.ReactRouter = ReactRouter;
 
-//*****************************************************************************
-// Support JS required for GWT React
-//*****************************************************************************
-
-var GWTReact = {};
-
-GWTReact.cast = function(obj) {
-    return obj;
-};
-
-window.GWTReact = GWTReact;
-
 

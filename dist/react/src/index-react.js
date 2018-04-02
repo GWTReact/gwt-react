@@ -13,16 +13,4 @@ window.ReactDOM = ReactDOM;
 //If you don't need rendering to strings comment out the following line
 window.ReactDOMServer = ReactDOMServer;
 
-//*****************************************************************************
-// Support JS required for GWT React
-//*****************************************************************************
-
-var GWTReact = {};
-
-GWTReact.cast = function(obj) {
-    return obj;
-};
-
-window.GWTReact = GWTReact;
-
 
