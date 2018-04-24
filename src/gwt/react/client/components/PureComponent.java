@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
 import gwt.interop.utils.client.plainobjects.JsPlainObj;
-import gwt.interop.utils.shared.collections.StringMap;
-import gwt.interop.utils.shared.functional.JsProcedure;
 import gwt.react.client.api.React;
 import gwt.react.client.components.lifecycle.ComponentDidMount;
 import gwt.react.client.components.lifecycle.ComponentDidUpdate;
@@ -34,8 +32,6 @@ import gwt.react.client.components.lifecycle.ComponentWillUpdate;
 import gwt.react.client.components.lifecycle.ShouldComponentUpdate;
 import gwt.react.client.elements.ReactElement;
 import gwt.react.client.proptypes.BaseProps;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 /**

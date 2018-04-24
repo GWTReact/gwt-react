@@ -23,7 +23,7 @@ SOFTWARE. */
 
 import gwt.interop.utils.client.plainobjects.JsPlainObj;
 import gwt.interop.utils.shared.collections.StringMap;
-import gwt.interop.utils.shared.functional.JsProcedure;
+import gwt.interop.utils.shared.functional.JsRunnable;
 import gwt.react.client.api.React;
 import gwt.react.client.components.lifecycle.ComponentDidMount;
 import gwt.react.client.components.lifecycle.ComponentDidUpdate;
@@ -103,7 +103,7 @@ public abstract class Component<P extends BaseProps, S extends JsPlainObj> {
 	 * @param callback callback function that will be executed once setState is completed and
 	 *                 the component is re-rendered.
 	 */
-	protected native void setState(S state, JsProcedure callback);
+	protected native void setState(S state, JsRunnable callback);
 
 
 	/**
@@ -136,7 +136,7 @@ public abstract class Component<P extends BaseProps, S extends JsPlainObj> {
 	 *
 	 * @param callBack callback function that will be executed once the component has been updated
 	 */
-	protected native void forceUpdate(JsProcedure callBack);
+	protected native void forceUpdate(JsRunnable callBack);
 	protected native void forceUpdate();
 
     /**

@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-import gwt.interop.utils.shared.functional.JsProcedure;
+import gwt.interop.utils.shared.functional.JsRunnable;
 import gwt.react.client.elements.ReactElement;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
@@ -49,7 +49,7 @@ public class ReactDOM {
      * @return a reference to the component or returns nothing for stateless components
      */
     public static native <C> ReactElement render(ReactElement element, C container);
-    public static native <C> ReactElement render(ReactElement element, C container, JsProcedure onUpdate);
+    public static native <C> ReactElement render(ReactElement element, C container, JsRunnable onUpdate);
 
 	/**
 	 * Render children into a DOM node that exists outside the DOM hierarchy of the parent component
