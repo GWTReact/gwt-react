@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLAnchorElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.YesNo;
@@ -24,8 +26,9 @@ public class AnchorProps extends HtmlGlobalFields {
 
     //React Specific
 
-    @JsOverlay public final AnchorProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final AnchorProps ref(String s) { ref = s; return this; }
     @JsOverlay public final AnchorProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final AnchorProps ref(ReactRef<HTMLAnchorElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final AnchorProps key(String s) { key = s; return this; }
 
     //Global HTML props

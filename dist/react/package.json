@@ -1,26 +1,38 @@
 {
   "name": "gwt-react",
-  "version": "0.0.1-alpha.1",
+  "version": "1.0.0",
   "main": "lib/gwt-react-bundle.js",
   "scripts": {
     "clean": "./node_modules/.bin/rimraf lib node_modules",
     "build": "webpack -d index=./src/index-react.js --output-filename=./lib/gwt-react-bundle.js",
     "build:min": "webpack -p index=./src/index-react.js --output-filename=./lib/gwt-react-bundle.min.js",
     "build-react-router": "webpack -d index=./src/index-react-router.js --output-filename=./lib/gwt-react-router-bundle.js",
-    "build-react-router:min": "webpack -p index=./src/index-react-router.js --output-filename=./lib/gwt-react-router-bundle.min.js"
+    "build-react-router:min": "webpack -p index=./src/index-react-router.js --output-filename=./lib/gwt-react-router-bundle.min.js",
+    "build-react-component-interop": "webpack -d index=./src/index-react-component-interop.js --output-filename=./lib/gwt-react-component-interop-bundle.js",
+    "build-react-component-interop:min": "webpack -p index=./src/index-react-component-interop.js --output-filename=./lib/gwt-react-component-interop-bundle.min.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
+    "babel-core": "^6.26.0",
     "compression-webpack-plugin": "0.3.2",
     "rimraf": "^2.3.4",
-    "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12"
+    "style-loader": "^0.20.3",
+    "css-loader": "^0.28.11",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14"
   },
   "dependencies": {
-    "react": "^16.2",
-    "react-dom": "^16.2",
-    "react-router": "^3.2.1"
+    "react": "^16.3",
+    "react-dom": "^16.3",
+
+    "fine-uploader": "^5.16.2",
+    "fine-uploader-wrappers": "^1.0.1",
+    "react-fine-uploader": "^1.1.0",
+    "react-transition-group": "^1.x",
+    "prop-types": "^15.6.1",
+
+    "react-router": "^3.2.2"
   }
 }

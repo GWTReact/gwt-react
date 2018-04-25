@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLFormElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.FormMethod;
@@ -27,8 +29,9 @@ public class FormProps extends HtmlGlobalFields {
     @JsOverlay public final FormProps formTarget(String s) { formTarget = s; return this; }
 
     //React Specific
-    @JsOverlay public final FormProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final FormProps ref(String s) { ref = s; return this; }
     @JsOverlay public final FormProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final FormProps ref(ReactRef<HTMLFormElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final FormProps key(String s) { key = s; return this; }
 
     //Global HTML props

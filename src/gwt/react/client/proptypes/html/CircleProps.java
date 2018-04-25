@@ -1,5 +1,6 @@
 package gwt.react.client.proptypes.html;
 
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.YesNo;
@@ -26,8 +27,9 @@ public class CircleProps extends HtmlGlobalFields {
 
     //React Specific
 
-    @JsOverlay public final CircleProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final CircleProps ref(String s) { ref = s; return this; }
     @JsOverlay public final CircleProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final <T> CircleProps ref(ReactRef<T> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final CircleProps key(String s) { key = s; return this; }
 
     //Global HTML props

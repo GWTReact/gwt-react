@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLTableRowElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.HeaderScope;
@@ -20,8 +22,9 @@ public class ThProps extends HtmlGlobalFields {
     @JsOverlay public final ThProps scope(HeaderScope s) { scope = s.name(); return this; }
 
     //React Specific
-    @JsOverlay public final ThProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final ThProps ref(String s) { ref = s; return this; }
     @JsOverlay public final ThProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final ThProps ref(ReactRef<HTMLTableRowElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final ThProps key(String s) { key = s; return this; }
 
     //Global HTML props

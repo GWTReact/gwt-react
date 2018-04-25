@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLIFrameElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.YesNo;
@@ -21,8 +23,9 @@ public class IFrameProps extends HtmlGlobalFields {
     @JsOverlay public final IFrameProps frameBorder(String s) { frameBorder = s; return this; }
 
     //React Specific
-    @JsOverlay public final IFrameProps ref(String s) { ref = s; return this; }
+	@Deprecated @JsOverlay public final IFrameProps ref(String s) { ref = s; return this; }
     @JsOverlay public final IFrameProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final IFrameProps ref(ReactRef<HTMLIFrameElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final IFrameProps key(String s) { key = s; return this; }
 
     //Global HTML props

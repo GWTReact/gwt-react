@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLInputElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.InputType;
@@ -49,8 +51,9 @@ public class InputProps extends HtmlGlobalFields {
 
     @JsOverlay public final InputProps defaultChecked(boolean b) { defaultChecked = b; return this; };
     @JsOverlay public final InputProps defaultValue(String s) { defaultValue = s; return this; }
-    @JsOverlay public final InputProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final InputProps ref(String s) { ref = s; return this; }
     @JsOverlay public final InputProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final InputProps ref(ReactRef<HTMLInputElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final InputProps key(String s) { key = s; return this; }
 
     //Global HTML props

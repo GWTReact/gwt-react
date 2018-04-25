@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLAudioElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.AudioPreload;
@@ -22,8 +24,9 @@ public class AudioProps extends HtmlGlobalFields {
     @JsOverlay public final AudioProps src(String s) { src = s; return this; }
 
     //React Specific
-    @JsOverlay public final AudioProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final AudioProps ref(String s) { ref = s; return this; }
     @JsOverlay public final AudioProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final AudioProps ref(ReactRef<HTMLAudioElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final AudioProps key(String s) { key = s; return this; }
 
     //Global HTML props

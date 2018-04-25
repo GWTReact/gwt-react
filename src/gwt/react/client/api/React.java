@@ -34,8 +34,6 @@ import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
-import static gwt.react.client.api.GwtReact.castAsReactElement;
-
 @JsType(isNative = true, namespace = JsPackage.GLOBAL)
 public class React {
 	/**
@@ -108,6 +106,9 @@ public class React {
 	@JsProperty
 	private static ComponentConstructorFn<BaseProps> Fragment;
 
+	@JsProperty
+	private static ComponentConstructorFn<BaseProps> StrictMode;
+
 	/**
 	 * <p>Clone and return a new ReactElement using element as the starting point. The resulting
 	 * element will have the original element's props with the new props merged in shallowly.
@@ -124,6 +125,25 @@ public class React {
 	public static native boolean isValidElement(Object object);
 
 	/**
+	 * Create a reference to hold a reference to either a DOM node or React Element
+	 *
+	 * @param <T> The type of object the reference refers to
+	 * @return A Reference object
+	 */
+	public static native <T> ReactRef<T> createRef();
+
+	/**
+	 * Create a forward ref wrapper
+	 *
+	 * @param props
+	 * @param ref
+	 * @param <T> The type of object the ref refers to
+	 * @param <P> The prop type
+	 * @return A react element where ref will be forwarded.
+	 */
+	public static native <T, P extends BaseProps> ForwardRefCallback<T> forwardRef(P props, ReactRef<T> ref);
+
+	/**
 	 * React.DOM provides convenience wrappers around React.createElement for DOM components.
 	 * For example React.DOM.div(null, 'Hello World!')
 	 */
@@ -137,6 +157,8 @@ public class React {
 
 		@JsOverlay public static ReactElement fragment(FragmentProps props, ReactElement ...child) { return  createElement(Fragment, props, child); }
 		@JsOverlay public static ReactElement fragment(ReactElement ...child) { return  createElement(Fragment, null, child); }
+
+		@JsOverlay public static ReactElement strictMode(ReactElement ...child) { return  createElement(StrictMode, null, child); }
 
 		@JsOverlay public static ReactElement a(AnchorProps props, String value) { return  createElement("a", props, value); }
 		@JsOverlay public static ReactElement a(AnchorProps props, ReactElement ...child) { return  createElement("a", props, child); }

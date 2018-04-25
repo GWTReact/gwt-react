@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLSelectElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.YesNo;
@@ -24,8 +26,9 @@ public class SelectProps extends HtmlGlobalFields {
     @JsOverlay public final SelectProps defaultValue(String s) { defaultValue = s; return this; }
 
     //React Specific
-    @JsOverlay public final SelectProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final SelectProps ref(String s) { ref = s; return this; }
     @JsOverlay public final SelectProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final SelectProps ref(ReactRef<HTMLSelectElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final SelectProps key(String s) { key = s; return this; }
 
 

@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLButtonElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.ButtonType;
@@ -30,8 +32,9 @@ public class BtnProps extends HtmlGlobalFields {
 
     @JsOverlay public final BtnProps defaultChecked(boolean b) { defaultChecked = b; return this; }
     @JsOverlay public final BtnProps defaultValue(String s) { defaultValue = s; return this; }
-    @JsOverlay public final BtnProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final BtnProps ref(String s) { ref = s; return this; }
     @JsOverlay public final BtnProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final BtnProps ref(ReactRef<HTMLButtonElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final BtnProps key(String s) { key = s; return this; }
 
     //Global HTML props

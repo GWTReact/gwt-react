@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLTableElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.YesNo;
@@ -16,8 +18,9 @@ public class TableProps extends HtmlGlobalFields {
     //React Specific
 
     @JsOverlay public final TableProps dangerouslyinnerHTML(String s) { setDangerouslyInnerHTML(s); return this; }
-    @JsOverlay public final TableProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final TableProps ref(String s) { ref = s; return this; }
     @JsOverlay public final TableProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final TableProps ref(ReactRef<HTMLTableElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final TableProps key(String s) { key = s; return this; }
 
     //Global HTML props

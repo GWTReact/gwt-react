@@ -31,6 +31,7 @@ import jsinterop.annotations.JsType;
 /**
  * Implement this interface when using {@link Component} or {@link PureComponent} to receive the {@link #componentWillUpdate(P,S)} lifecycle event.
  */
+@Deprecated
 @JsType
 public interface ComponentWillUpdate<P extends BaseProps, S extends JsPlainObj> {
 	/**

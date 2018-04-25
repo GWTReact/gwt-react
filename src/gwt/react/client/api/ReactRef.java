@@ -1,7 +1,7 @@
-package gwt.react.client.components.lifecycle;
+package gwt.react.client.api;
 /* The MIT License (MIT)
 
-Copyright (c) 2016 GWT React
+Copyright (c) 2018 GWT React
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,23 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-import gwt.react.client.components.Component;
-import gwt.react.client.components.PureComponent;
-import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 /**
- * Implement this interface when using {@link Component} or {@link PureComponent} to receive the {@link #componentWillMount()} lifecycle event.
+ * Defines a reference to either a DOM element or React Element
+ *
+ * @param <T>
  */
-@Deprecated
-@JsType
-public interface ComponentWillMount {
-	/**
-	 * {@link #componentWillMount()} is invoked immediately before mounting occurs. 
-	 * It is called before {@link Component#render()}, therefore setting state in this method will not trigger a re-rendering.
-	 * Avoid introducing any side-effects or subscriptions in this method.
-	 * This is the only lifecycle hook called on server rendering. Generally, we recommend using the constructor instead. 
-	 */
-	@JsMethod
-	void componentWillMount();
+@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "Object")
+public class ReactRef<T> {
+	@JsProperty
+	public T current;
 }

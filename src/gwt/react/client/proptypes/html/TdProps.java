@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLTableCellElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.YesNo;
@@ -18,8 +20,9 @@ public class TdProps extends HtmlGlobalFields {
     @JsOverlay public final TdProps rowSpan(int i) { rowSpan = i; return this; }
 
     //React Specific
-    @JsOverlay public final TdProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final TdProps ref(String s) { ref = s; return this; }
     @JsOverlay public final TdProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final TdProps ref(ReactRef<HTMLTableCellElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final TdProps key(String s) { key = s; return this; }
 
     //Global HTML props

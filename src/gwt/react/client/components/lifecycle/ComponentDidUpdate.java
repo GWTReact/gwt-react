@@ -43,7 +43,8 @@ public interface ComponentDidUpdate<P extends BaseProps, S extends JsPlainObj> {
 	 * 
 	 * @param nextProps
 	 * @param nextState
+	 * @param snapshotValue
 	 */
 	@JsMethod
-	void componentDidUpdate(P nextProps, S nextState);
+	void componentDidUpdate(P nextProps, S nextState, Object snapshotValue);
 }

@@ -1,5 +1,7 @@
 package gwt.react.client.proptypes.html;
 
+import elemental2.dom.HTMLTableColElement;
+import gwt.react.client.api.ReactRef;
 import gwt.react.client.events.*;
 import gwt.react.client.proptypes.ReactRefCallback;
 import gwt.react.client.proptypes.html.attributeTypes.YesNo;
@@ -16,8 +18,9 @@ public class ColProps extends HtmlGlobalFields {
     @JsOverlay public final ColProps span(int i) { span = i; return this; }
 
     //React Specific
-    @JsOverlay public final ColProps ref(String s) { ref = s; return this; }
+    @Deprecated @JsOverlay public final ColProps ref(String s) { ref = s; return this; }
     @JsOverlay public final ColProps ref(ReactRefCallback callback) { ref = callback; return this; }
+	@JsOverlay public final ColProps ref(ReactRef<HTMLTableColElement> reactRef) { ref = reactRef; return this; }
     @JsOverlay public final ColProps key(String s) { key = s; return this; }
 
     //Global HTML props
