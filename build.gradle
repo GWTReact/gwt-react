@@ -6,7 +6,7 @@ apply plugin: 'signing'
 
 group = 'com.github.gwtreact'
 archivesBaseName = 'gwt-react'
-version = "0.6.0"
+version = "1.0.0"
 
 buildscript {
     repositories {
@@ -54,7 +54,10 @@ gwt {
     maxHeapSize = "4096M";
 
     dependencies {
-        gwt group: 'com.github.gwtreact', name: 'gwt-interop-utils', version: '0.4.0'
+        gwt group: 'com.github.gwtreact', name: 'gwt-interop-utils', version: '1.0.0'
+        gwt group: 'com.google.jsinterop',  name: 'base', version: '1.0.0-RC1'
+        gwt group: 'com.google.elemental2',  name: 'elemental2-core', version: '1.0.0-RC1'
+        gwt group: 'com.google.elemental2',  name: 'elemental2-dom', version: '1.0.0-RC1'
     }
 }
 

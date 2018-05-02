@@ -36,7 +36,7 @@ public interface GetSnapshotBeforeUpdate<P extends BaseProps, S extends JsPlainO
 	/**
 	 * The new getSnapshotBeforeUpdate lifecycle is called right before mutations are made (e.g. before the DOM is updated).
 	 * The return value for this lifecycle will be passed as the third parameter to componentDidUpdate.
-	 * (This lifecycle isn’t often needed, but can be useful in cases like manually preserving scroll position during rerenders.)
+	 * (This lifecycle isn't often needed, but can be useful in cases like manually preserving scroll position during rerenders.)
      *
 	 * Together with componentDidUpdate, this new lifecycle should cover all use cases for the legacy componentWillUpdate.
 	 * 
